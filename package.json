@@ -9,7 +9,10 @@
   "repository": "https://github.com/inspireteam/geoplatform/tree/master/packages/link-proxy",
   "dependencies": {
     "delayed-jobs": "^0.2.2",
-    "lerna": "^2.4.0"
+    "lerna": "^2.4.0",
+    "micro": "^9.0.0",
+    "mongodb": "^2.2.33",
+    "plunger": "^1.2.1"
   },
   "author": "Bertrand Marron <bertrand.marron@gmail.com>",
   "license": "MIT",
