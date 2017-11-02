@@ -1,8 +1,11 @@
 const delayed = require('delayed-jobs')
 
 const configureWorkers = require('./lib/config/worker')
+const mongo = require('./lib/mongo')
 
 configureWorkers()
 
-delayed.startProcessing()
-delayed.getApp().listen(4000)
+mongo.connect(process.env.MONGO_URL || 'mongodb://localhost/link-proxy').then(() => {
+  delayed.startProcessing()
+  delayed.getApp().listen(4000)
+})

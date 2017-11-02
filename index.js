@@ -24,7 +24,12 @@ async function postHandler(req) {
 
   const check = await checkLink(json.location)
 
-  enqueue('check', check)
+  enqueue('check', {
+    checkId: check._id,
+    linkId: check.linkId,
+    location: check.location,
+    number: check.number
+  })
 
   return check
 }

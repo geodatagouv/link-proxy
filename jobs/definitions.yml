@@ -1,2 +1,4 @@
 - name: check
   concurrency: 10
+  uniqueKey: linkId
+  timeout: 10000
