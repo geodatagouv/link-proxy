@@ -16,7 +16,7 @@ async function getUrlCache(token) {
 async function setUrlCache(token) {
   const now = new Date()
 
-  mongo.db.collection('links').findOneAndUpdate({
+  mongo.db.collection('links').updateOne({
     locations: {
       $elemMatch: {
         $eq: token.url
@@ -36,8 +36,7 @@ async function setUrlCache(token) {
       }
     }
   }, {
-    upsert: true,
-    returnOriginal: false
+    upsert: true
   })
 }
 
