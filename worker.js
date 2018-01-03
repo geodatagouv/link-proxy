@@ -5,7 +5,9 @@ const mongo = require('./lib/mongo')
 
 configureWorkers()
 
-mongo.connect(process.env.MONGO_URL || 'mongodb://localhost/link-proxy').then(() => {
-  delayed.startProcessing()
-  delayed.getApp().listen(4000)
-})
+mongo
+  .connect(process.env.MONGO_URL || 'mongodb://localhost', process.env.MONGO_DB || 'link-proxy')
+  .then(() => {
+    delayed.startProcessing()
+    delayed.getApp().listen(4000)
+  })

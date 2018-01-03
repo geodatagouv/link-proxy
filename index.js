@@ -3,7 +3,6 @@ const micro = require('micro')
 const {enqueue} = require('delayed-jobs')
 
 const configureWorkers = require('./lib/config/worker')
-const mongo = require('./lib/mongo')
 
 async function getHandler(req) {
   const {pathname, query} = parse(req.url, true)
@@ -46,6 +45,4 @@ const server = micro(async (req, res) => {
 })
 
 configureWorkers()
-mongo.connect(process.env.MONGO_URL || 'mongodb://localhost/link-proxy').then(() => {
-  server.listen(process.env.PORT || 5000)
-})
+server.listen(process.env.PORT || 5000)
