@@ -2,6 +2,7 @@ const {analyzeLocation, extractFiles} = require('plunger')
 const debug = require('debug')('link-proxy:check')
 
 const mongo = require('../lib/mongo')
+const {checkLink} = require('../lib/link')
 
 async function getUrlCache(token) {
   const link = await mongo.db.collection('links').findOne({
@@ -40,10 +41,12 @@ async function setUrlCache(token) {
   })
 }
 
-async function handler({data: {location, number}}) {
-  debug(`Running check #${number} for link "${location}".`)
+async function handler({data: {location}}) {
+  const check = await checkLink(location)
 
-  const tree = await analyzeLocation(location, {
+  debug(`Running check #${check.number} for link "${check.location}".`)
+
+  const tree = await analyzeLocation(check.location, {
     cache: {
       getUrlCache,
       setUrlCache
@@ -56,7 +59,14 @@ async function handler({data: {location, number}}) {
 
   debug(`Found ${res.files.length} new files.`)
 
-  debug(`Check #${number} for link "${location}" ended successfully.`)
+  res.files.forEach(file => {
+    console.log('####################################\n')
+    console.log(file.fromUrl)
+    console.log(file.fileName + ` (${file.type})`)
+    console.log(`Related: ${(file.related || []).length}`)
+  })
+
+  debug(`Check #${check.number} for link "${check.location}" ended successfully.`)
 }
 
 module.exports = {handler}
