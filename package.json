@@ -10,6 +10,7 @@
   "dependencies": {
     "debug": "^3.1.0",
     "delayed-jobs": "^0.2.2",
+    "js-yaml": "^3.10.0",
     "micro": "^9.0.2",
     "mongodb": "^3.0.1",
     "plunger": "^1.4.0"
