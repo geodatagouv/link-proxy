@@ -8,8 +8,8 @@
   },
   "repository": "https://github.com/inspireteam/geoplatform/tree/master/packages/link-proxy",
   "dependencies": {
+    "bull": "^3.3.8",
     "debug": "^3.1.0",
-    "delayed-jobs": "^0.2.2",
     "js-yaml": "^3.10.0",
     "micro": "^9.0.2",
     "mongodb": "^3.0.1",

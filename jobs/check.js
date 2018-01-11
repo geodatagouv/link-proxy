@@ -5,6 +5,7 @@ const debug = require('debug')('link-proxy:check')
 const {safeLoad} = require('js-yaml')
 
 const mongo = require('../lib/mongo')
+const {checkQueue} = require('../lib/queues')
 const {checkLink} = require('../lib/link')
 
 const chalk = require('chalk')
@@ -106,7 +107,7 @@ async function getFileCache(token) {
   return false
 }
 
-async function handler({data: {location}}) {
+checkQueue.process(async ({data: {location}}) => {
   const check = await checkLink(location)
 
   debug(`Running check #${check.number} for link "${check.location}".`)
@@ -120,6 +121,4 @@ async function handler({data: {location}}) {
   })
 
   debug(`Check #${check.number} for link "${check.location}" ended successfully.`)
-}
-
-module.exports = {handler}
+})

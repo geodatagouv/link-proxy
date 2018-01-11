@@ -1,8 +1,7 @@
 const {parse} = require('url')
 const micro = require('micro')
-const {enqueue} = require('delayed-jobs')
 
-const configureWorkers = require('./lib/config/worker')
+const {checkQueue} = require('./lib/queues')
 
 async function getHandler(req) {
   const {pathname, query} = parse(req.url, true)
@@ -19,8 +18,13 @@ async function postHandler(req) {
     throw micro.createError(400, 'location is required')
   }
 
-  enqueue('check', {
+  checkQueue.add({
     location: json.location
+  }, {
+    jobId: json.location,
+    removeOnComplete: true,
+    removeOnFail: true,
+    timeout: 1000
   })
 
   return {
@@ -44,5 +48,4 @@ const server = micro(async (req, res) => {
   }
 })
 
-configureWorkers()
 server.listen(process.env.PORT || 5000)

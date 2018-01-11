@@ -1,4 +1,0 @@
-- name: check
-  concurrency: 10
-  uniqueKey: location
-  timeout: 10000
