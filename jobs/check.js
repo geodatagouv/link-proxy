@@ -13,8 +13,6 @@ const chalk = require('chalk')
 const fileTypes = safeLoad(readFileSync(join(__dirname, '../types.yml')))
 
 async function getUrlCache(token) {
-  return null
-
   const link = await mongo.db.collection('links').findOne({
     locations: token.url
   })
