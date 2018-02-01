@@ -34,7 +34,7 @@
     - mid
 
 - name: tab
-  extemsions:
+  extensions:
     - tab
   related:
     - dat
@@ -57,8 +57,8 @@
     - csv
     - tsv
 
-- name: image
-  extensions:
-    - ecw
-    - tiff
-    - jp2
+# - name: image
+#   extensions:
+#     - ecw
+#     - tiff
+#     - jp2

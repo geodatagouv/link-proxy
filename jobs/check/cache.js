@@ -1,16 +1,4 @@
-const {readFileSync} = require('fs')
-const {join} = require('path')
-const {analyzeLocation} = require('plunger')
-const debug = require('debug')('link-proxy:check')
-const {safeLoad} = require('js-yaml')
-
-const mongo = require('../lib/mongo')
-const {checkQueue} = require('../lib/queues')
-const {checkLink} = require('../lib/link')
-
-const chalk = require('chalk')
-
-const fileTypes = safeLoad(readFileSync(join(__dirname, '../types.yml')))
+const mongo = require('../../lib/mongo')
 
 async function getUrlCache(token) {
   const link = await mongo.db.collection('links').findOne({
@@ -37,8 +25,6 @@ async function getUrlCache(token) {
 }
 
 async function setUrlCache(token) {
-  console.log(chalk.bold('[LINK-CACHE-MISS]'), chalk.yellow(token.url))
-
   const now = new Date()
 
   await mongo.db.collection('links').updateOne({
@@ -83,11 +69,8 @@ async function getFileCache(token) {
   })
 
   if (cache) {
-    console.log(chalk.green('[FILE-CACHE-HIT!]'), chalk.grey(token.digest), chalk.cyan(token.filePath || token.fileName))
     return true
   }
-
-  console.log(chalk.bold('[FILE-CACHE-MISS]'), chalk.grey(token.digest), chalk.cyan(token.filePath || token.fileName))
 
   const now = new Date()
 
@@ -105,18 +88,4 @@ async function getFileCache(token) {
   return false
 }
 
-checkQueue.process(async ({data: {location}}) => {
-  const check = await checkLink(location)
-
-  debug(`Running check #${check.number} for link "${check.location}".`)
-
-  await analyzeLocation(check.location, {
-    cache: {
-      getFileCache,
-      getUrlCache,
-      setUrlCache
-    }
-  })
-
-  debug(`Check #${check.number} for link "${check.location}" ended successfully.`)
-})
+module.exports = {getUrlCache, setUrlCache, getFileCache}

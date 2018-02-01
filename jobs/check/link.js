@@ -1,4 +1,4 @@
-const mongo = require('./mongo')
+const mongo = require('../../lib/mongo')
 
 async function checkLink(location) {
   const now = new Date()
@@ -42,7 +42,8 @@ async function checkLink(location) {
     linkId: value._id,
     number: latest ? (latest.number || 0) + 1 : 1,
     createdAt: now,
-    state: 'pending',
+    updatedAt: now,
+    state: 'started',
     location
   })
 
