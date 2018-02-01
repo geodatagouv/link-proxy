@@ -38,7 +38,7 @@ checkQueue.process(async ({data: {location}}) => {
   await mongo.db.collection('links').updateOne({_id: check._id}, {
     $set: {
       state: 'analyzing',
-      updateAt: new Date()
+      updatedAt: new Date()
     }
   })
 
@@ -73,7 +73,7 @@ checkQueue.process(async ({data: {location}}) => {
   await mongo.db.collection('checks').updateOne({_id: check._id}, {
     $set: {
       state: 'finished',
-      updateAt: new Date()
+      updatedAt: new Date()
     }
   })
 
