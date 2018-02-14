@@ -1,10 +1,7 @@
-const {readFileSync} = require('fs')
 const {cpus} = require('os')
-const {join} = require('path')
 const Bluebird = require('bluebird')
 const {analyzeLocation} = require('plunger')
 const debug = require('debug')('link-proxy:check')
-const {safeLoad} = require('js-yaml')
 const bytes = require('bytes')
 
 const pkg = require('../../package.json')
@@ -17,7 +14,6 @@ const {flatten} = require('./flatten')
 const {upload} = require('./upload')
 
 const concurrency = cpus().length
-const fileTypes = safeLoad(readFileSync(join(__dirname, '../../types.yml')))
 
 checkQueue.process(async ({data: {location}}) => {
   const check = await checkLink(location)

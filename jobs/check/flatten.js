@@ -1,5 +1,9 @@
-const {extname} = require('path')
+const {readFileSync} = require('fs')
+const {extname, join} = require('path')
 const {remove} = require('lodash')
+const {safeLoad} = require('js-yaml')
+
+const fileTypes = safeLoad(readFileSync(join(__dirname, '../../types.yml')))
 
 function getRelated(tokens, token, type) {
   return tokens.filter(t => {
@@ -16,20 +20,34 @@ function matchPatterns(nodes, fileTypes) {
 
   fileTypes.forEach(type => {
     const matchingNodes = rest.filter(node => type.extensions.some(ext =>
-      node.fileTypes.some(type => type.ext === ext)
+      node.fileTypes.some(type => type.ext.toLowerCase() === ext.toLowerCase())
     ))
 
     matchingNodes.forEach(node => {
       const file = {
         type: type.name,
-        main: node
+        main: node,
+
+        // This field is the total amount of files (main + related)
+        total: 1,
+
+        // This field is the amount of changed files (cache misses)
+        changed: node.unchanged ? 0 : 1
       }
 
       remove(rest, node)
 
       if (type.related && type.related.length > 0) {
         file.related = getRelated(nodes, node, type)
-        file.related.forEach(n => remove(rest, n))
+        file.total += file.related.length
+
+        file.related.forEach(n => {
+          if (!n.unchanged) {
+            ++file.changed
+          }
+
+          remove(rest, n)
+        })
       }
 
       files.push(file)
@@ -39,7 +57,7 @@ function matchPatterns(nodes, fileTypes) {
   return files
 }
 
-function flatten(nodes, fileTypes) {
+function flatten(nodes) {
   if (!Array.isArray(nodes)) {
     nodes = [nodes]
   }
@@ -47,7 +65,6 @@ function flatten(nodes, fileTypes) {
   const files = []
   const result = {
     errors: [],
-    unchanged: [],
     warnings: [],
     files: [],
     temporary: []
@@ -56,11 +73,6 @@ function flatten(nodes, fileTypes) {
   nodes.forEach(node => {
     if (node.error) {
       result.errors.push(node)
-      return
-    }
-
-    if (node.type === 'unchanged') {
-      result.unchanged.push(node)
       return
     }
 
@@ -80,7 +92,6 @@ function flatten(nodes, fileTypes) {
       const childResult = flatten(node.children, fileTypes)
 
       result.errors = result.errors.concat(childResult.errors)
-      result.unchanged = result.unchanged.concat(childResult.unchanged)
       result.warnings = result.warnings.concat(childResult.warnings)
       result.files = result.files.concat(childResult.files)
     }
