@@ -24,7 +24,7 @@ async function postHandler(req) {
     jobId: json.location,
     removeOnComplete: true,
     removeOnFail: true,
-    timeout: 1000 * 60 * 10
+    timeout: 1000 * 60 * 30
   })
 
   return {

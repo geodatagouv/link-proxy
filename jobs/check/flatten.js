@@ -14,47 +14,43 @@ function getRelated(tokens, token, type) {
   })
 }
 
-function matchPatterns(nodes, fileTypes) {
-  const files = []
-  const rest = [...nodes]
+function matchPatterns(files, fileTypes) {
+  const bundles = []
+  const rest = [...files]
 
   fileTypes.forEach(type => {
-    const matchingNodes = rest.filter(node => type.extensions.some(ext =>
-      node.fileTypes.some(type => type.ext.toLowerCase() === ext.toLowerCase())
+    const matchingNodes = rest.filter(file => type.extensions.some(ext =>
+      file.fileTypes.some(type => type.ext.toLowerCase() === ext.toLowerCase())
     ))
 
     matchingNodes.forEach(node => {
-      const file = {
+      const bundle = {
         type: type.name,
-        main: node,
-
-        // This field is the total amount of files (main + related)
-        total: 1,
-
-        // This field is the amount of changed files (cache misses)
+        files: [node],
         changed: node.unchanged ? 0 : 1
       }
 
       remove(rest, node)
 
       if (type.related && type.related.length > 0) {
-        file.related = getRelated(nodes, node, type)
-        file.total += file.related.length
+        const related = getRelated(files, node, type)
 
-        file.related.forEach(n => {
+        bundle.files = bundle.files.concat(related)
+
+        related.forEach(n => {
           if (!n.unchanged) {
-            ++file.changed
+            ++bundle.changed
           }
 
           remove(rest, n)
         })
       }
 
-      files.push(file)
+      bundles.push(bundle)
     })
   })
 
-  return files
+  return bundles
 }
 
 function flatten(nodes) {
@@ -66,7 +62,7 @@ function flatten(nodes) {
   const result = {
     errors: [],
     warnings: [],
-    files: [],
+    bundles: [],
     temporary: []
   }
 
@@ -93,11 +89,11 @@ function flatten(nodes) {
 
       result.errors = result.errors.concat(childResult.errors)
       result.warnings = result.warnings.concat(childResult.warnings)
-      result.files = result.files.concat(childResult.files)
+      result.bundles = result.bundles.concat(childResult.bundles)
     }
   })
 
-  result.files = result.files.concat(matchPatterns(files, fileTypes))
+  result.bundles = result.bundles.concat(matchPatterns(files, fileTypes))
 
   return result
 }

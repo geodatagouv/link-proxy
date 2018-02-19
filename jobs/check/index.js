@@ -22,7 +22,7 @@ checkQueue.process(async ({data: {location}}) => {
 
   const tree = await analyzeLocation(check.location, {
     userAgent: `link-proxy/${pkg.version} (+https://geo.data.gouv.fr/doc/link-proxy)`,
-    maxDownloadSize: bytes('500MB'),
+    maxDownloadSize: bytes('1GB'),
     concurrency,
     cache: {
       getFileCache,
@@ -31,45 +31,78 @@ checkQueue.process(async ({data: {location}}) => {
     }
   })
 
-  await mongo.db.collection('links').updateOne({_id: check._id}, {
+  await mongo.db.collection('checks').updateOne({_id: check._id}, {
     $set: {
       state: 'analyzing',
       updatedAt: new Date()
     }
   })
 
-  const result = flatten(tree, fileTypes)
-
+  const result = flatten(tree)
   const now = new Date()
 
-  await Bluebird.map(result.files, async file => {
-    const doc = {
+  const downloads = await Bluebird.map(result.bundles, async bundle => {
+    const main = bundle.files[0]
+
+    const link = await mongo.db.collection('links').findOne({
+      locations: main.fromUrl || main.url
+    }, {
+      projection: {
+        _id: 1
+      }
+    })
+
+    const download = {
+      linkId: link._id,
       createdAt: now,
-      linkId: check.linkId,
-      type: file.type,
-      name: file.main.fileName
+      type: bundle.type,
+      files: bundle.files.map(f => f.fileName)
     }
 
-    if (file.related) {
-      doc.related = file.related.map(r => r.fileName)
+    let previous
+    if (bundle.changed !== bundle.files.length) {
+      previous = await mongo.db.collection('downloads').findOne({
+        linkId: link._id,
+        type: bundle.type,
+        files: {
+          $all: bundle.files.filter((f, idx) => idx === 0 || f.unchanged).map(f => f.fileName)
+        }
+      }, {
+        sort: {
+          createdAt: -1
+        },
+        projection: {
+          url: 1
+        }
+      })
     }
 
-    const {ops} = await mongo.db.collection('downloads').insertOne(doc)
-    const download = ops[0]
+    if (previous) {
+      download.previousVersion = previous._id
+    }
 
-    const {Location} = await upload(file, download)
+    await mongo.db.collection('downloads').insertOne(download)
+
+    const {Location} = await upload(bundle, download, previous)
 
     await mongo.db.collection('downloads').updateOne({_id: download._id}, {
       $set: {
         url: Location
       }
     })
+
+    return download
   }, {concurrency})
 
   await mongo.db.collection('checks').updateOne({_id: check._id}, {
     $set: {
       state: 'finished',
       updatedAt: new Date()
+    },
+    $addToSet: {
+      downloads: {
+        $each: downloads.map(d => d._id)
+      }
     }
   })
 
