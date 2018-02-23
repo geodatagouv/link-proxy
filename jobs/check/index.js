@@ -8,7 +8,7 @@ const pkg = require('../../package.json')
 const mongo = require('../../lib/mongo')
 const {checkQueue} = require('../../lib/queues')
 
-const {checkLink} = require('./link')
+const {checkLink, updateLink} = require('./link')
 const {getUrlCache, setUrlCache, getFileCache} = require('./cache')
 const {flatten} = require('./flatten')
 const {upload} = require('./upload')
@@ -41,7 +41,7 @@ checkQueue.process(async ({data: {location}}) => {
   const result = flatten(tree)
   const now = new Date()
 
-  const downloads = await Bluebird.map(result.bundles, async bundle => {
+  const changes = await Bluebird.map(result.bundles, async bundle => {
     const main = bundle.files[0]
 
     const link = await mongo.db.collection('links').findOne({
@@ -91,7 +91,19 @@ checkQueue.process(async ({data: {location}}) => {
       }
     })
 
-    return download
+    const change = {
+      name: main.fileName,
+      action: previous ? 'replaced' : 'added',
+      downloadId: download._id,
+      filesCount: bundle.files.length
+    }
+
+    if (previous) {
+      change.previousDownloadId = previous._id
+      change.changedFiles = bundle.files.filter(f => !f.unchanged).map(f => f.fileName)
+    }
+
+    return change
   }, {concurrency})
 
   await mongo.db.collection('checks').updateOne({_id: check._id}, {
@@ -100,11 +112,13 @@ checkQueue.process(async ({data: {location}}) => {
       updatedAt: new Date()
     },
     $addToSet: {
-      downloads: {
-        $each: downloads.map(d => d._id)
+      changes: {
+        $each: changes
       }
     }
   })
+
+  await updateLink(check, changes)
 
   debug(`Check #${check.number} for link "${check.location}" ended successfully.`)
 })
