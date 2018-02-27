@@ -4,7 +4,8 @@
   "description": "Analyze links in your (geo)data catalogs",
   "main": "index.js",
   "scripts": {
-    "lint": "xo"
+    "lint": "xo",
+    "test": "jest"
   },
   "repository": "https://github.com/inspireteam/geoplatform/tree/master/packages/link-proxy",
   "dependencies": {
@@ -23,6 +24,10 @@
     "slug": "^0.9.1",
     "unzip-stream": "^0.3.0",
     "yazl": "^2.4.3"
+  },
+  "devDependencies": {
+    "jest": "^22.4.2",
+    "nock": "^9.2.2"
   },
   "author": "Bertrand Marron <bertrand.marron@gmail.com>",
   "license": "MIT",
