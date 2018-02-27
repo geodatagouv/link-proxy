@@ -31,7 +31,14 @@ beforeAll(async () => {
   await mongo.connect('mongodb://localhost', NAME)
   await mongo.db.dropDatabase()
 })
+
 afterAll(async () => {
+  const objects = await store.client.listObjects({Bucket: NAME}).promise()
+  await store.client.deleteObjects({
+    Bucket: NAME,
+    Delete: {Objects: objects.Contents.map(({Key}) => ({Key}))}
+  }).promise()
+
   await store.client.deleteBucket({Bucket: NAME}).promise()
   await mongo.close()
 })
