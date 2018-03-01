@@ -1,28 +1,12 @@
 const nock = require('nock')
-const {ZipFile} = require('yazl')
 
 const mongo = require('../../lib/mongo')
 const store = require('../../lib/store')
 const analyze = require('../../jobs/check/analyze')
 
+const {shapefile} = require('../../__test-helpers__/archive')
+
 const NAME = 'test-zip-shp'
-
-nock('http://test')
-  .get('/data.zip')
-  .reply(200, () => {
-    const zip = new ZipFile()
-
-    zip.addBuffer(Buffer.from('shp content'), 'data.shp')
-    zip.addBuffer(Buffer.from('shx content'), 'data.shx')
-    zip.addBuffer(Buffer.from('dbf content'), 'data.dbf')
-    zip.addBuffer(Buffer.from('prj content'), 'data.prj')
-
-    zip.end()
-
-    return zip.outputStream
-  }, {
-    'Transfer-Encoding': 'chunked'
-  })
 
 beforeAll(async () => {
   process.env.S3_BUCKET = NAME
@@ -45,6 +29,10 @@ afterAll(async () => {
 
 describe('zip-shp', () => {
   it('should find a shapefile within the zip file', async () => {
+    nock('http://test').get('/data.zip').reply(200, () => shapefile('data'), {
+      'Transfer-Encoding': 'chunked'
+    })
+
     await analyze('http://test/data.zip')
   })
 })
