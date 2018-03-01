@@ -37,20 +37,27 @@ async function analyze(location) {
     }
   })
 
-  const result = flatten(tree, tree)
+  const result = flatten(tree)
   const now = new Date()
 
   const changes = await Bluebird.map(result.bundles, async bundle => {
     const main = bundle.files[0]
 
-    const link = await mongo.db.collection('links').findOne({
-      locations: main.fromUrl || main.url
-    }, {
-      projection: {
-        _id: 1,
-        downloads: 1
+  const links = await mongo.db.collection('links')
+    .find({
+      locations: {
+        $in: Object.keys(result.urls)
       }
     })
+    .project({
+      _id: 1,
+      locations: 1
+    })
+    .toArray()
+
+  const changes = await Bluebird.map(result.bundles, async bundle => {
+    const main = bundle.files[0]
+    const link = links.find(l => l.locations.includes(main.fromUrl || main.url))
 
     const download = {
       linkId: link._id,

@@ -53,13 +53,15 @@ function matchPatterns(files, fileTypes) {
   return bundles
 }
 
-function flatten(nodes) {
+function flatten(nodes, parentNode) {
   if (!Array.isArray(nodes)) {
     nodes = [nodes]
   }
 
   const files = []
+  const urls = []
   const result = {
+    urls: {},
     errors: [],
     warnings: [],
     bundles: [],
@@ -84,14 +86,24 @@ function flatten(nodes) {
       files.push(node)
     }
 
+    if (node.url) {
+      urls.push(node.url)
+    }
+
     if (node.children) {
-      const childResult = flatten(node.children, fileTypes)
+      const childResult = flatten(node.children, node)
 
       result.errors = result.errors.concat(childResult.errors)
       result.warnings = result.warnings.concat(childResult.warnings)
       result.bundles = result.bundles.concat(childResult.bundles)
+
+      Object.assign(result.urls, childResult.urls)
     }
   })
+
+  if (parentNode && parentNode.url) {
+    result.urls[parentNode.url] = urls
+  }
 
   result.bundles = result.bundles.concat(matchPatterns(files, fileTypes))
 

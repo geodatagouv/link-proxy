@@ -56,6 +56,10 @@ async function getFileCache(token) {
         $eq: token.url || token.fromUrl
       }
     }
+  }, {
+    projection: {
+      _id: 1
+    }
   })
 
   const cache = await mongo.db.collection('files').findOne({
