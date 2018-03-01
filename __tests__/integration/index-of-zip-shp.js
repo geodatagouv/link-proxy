@@ -4,9 +4,10 @@ const mongo = require('../../lib/mongo')
 const store = require('../../lib/store')
 const analyze = require('../../jobs/check/analyze')
 
+const indexOf = require('../../__test-helpers__/index-of')
 const {shapefile} = require('../../__test-helpers__/archive')
 
-const NAME = 'test-zip-shp'
+const NAME = 'test-index-of-zip-shp'
 
 beforeAll(async () => {
   process.env.S3_BUCKET = NAME
@@ -28,11 +29,17 @@ afterAll(async () => {
 })
 
 describe(NAME, () => {
-  it('should find a shapefile within the zip file', async () => {
+  it('should find a shapefile within the zip file of the index-of', async () => {
     nock(`http://${NAME}`).get('/data.zip').reply(200, () => shapefile('data'), {
       'Transfer-Encoding': 'chunked'
     })
 
-    await analyze(`http://${NAME}/data.zip`)
+    const iof = indexOf('/data.zip')
+    nock(`http://${NAME}`).get('/').reply(200, iof, {
+      'Content-Type': 'text/html',
+      'Content-Length': iof.length
+    })
+
+    await analyze(`http://${NAME}`)
   })
 })
