@@ -29,7 +29,6 @@ beforeAll(async () => {
 
   await store.client.createBucket({Bucket: NAME}).promise()
   await mongo.connect('mongodb://localhost', NAME)
-  await mongo.db.dropDatabase()
 })
 
 afterAll(async () => {
@@ -40,7 +39,8 @@ afterAll(async () => {
   }).promise()
 
   await store.client.deleteBucket({Bucket: NAME}).promise()
-  await mongo.close()
+  await mongo.db.dropDatabase()
+  await mongo.disconnect(true)
 })
 
 describe('zip-shp', () => {
