@@ -29,10 +29,10 @@ afterAll(async () => {
 
 describe('zip-shp', () => {
   it('should find a shapefile within the zip file', async () => {
-    nock('http://test').get('/data.zip').reply(200, () => shapefile('data'), {
+    nock(`http://${NAME}`).get('/data.zip').reply(200, () => shapefile('data'), {
       'Transfer-Encoding': 'chunked'
     })
 
-    await analyze('http://test/data.zip')
+    await analyze(`http://${NAME}/data.zip`)
   })
 })
