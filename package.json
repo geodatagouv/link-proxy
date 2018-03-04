@@ -20,7 +20,7 @@
     "lodash": "^4.17.5",
     "micro": "^9.1.0",
     "mongodb": "^3.0.3",
-    "plunger": "^2.3.0",
+    "plunger": "^2.3.1",
     "slug": "^0.9.1",
     "unzip-stream": "^0.3.0",
     "yazl": "^2.4.3"
