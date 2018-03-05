@@ -75,4 +75,21 @@ describe(NAME, () => {
     const link = await upsertLink(url)
     await analyze(link, url)
   })
+
+  it('should find a shapefile listed in the index-of', async () => {
+    const files = ['/cool.shp', '/cool.shx', '/cool.dbf', '/cool.prj']
+    for (const file of files) {
+      nock(`http://${NAME}`).get(file).reply(200, 'foo', {'Transfer-Encoding': 'chunked'})
+    }
+
+    const iof = indexOf(files)
+    nock(`http://${NAME}`).get('/').reply(200, iof, {
+      'Content-Type': 'text/html',
+      'Content-Length': iof.length
+    })
+
+    const url = `http://${NAME}`
+    const link = await upsertLink(url)
+    await analyze(link, url)
+  })
 })
