@@ -1,7 +1,8 @@
 const nock = require('nock')
 
-const mongo = require('../../lib/mongo')
-const store = require('../../lib/store')
+const mongo = require('../../lib/utils/mongo')
+const store = require('../../lib/utils/store')
+const {upsertLink} = require('../../lib/link')
 const analyze = require('../../jobs/check/analyze')
 
 const {shapefile} = require('../../__test-helpers__/archive')
@@ -33,6 +34,8 @@ describe(NAME, () => {
       'Transfer-Encoding': 'chunked'
     })
 
-    await analyze(`http://${NAME}/data.zip`)
+    const url = `http://${NAME}/data.zip`
+    const link = await upsertLink(url)
+    await analyze(link, url)
   })
 })

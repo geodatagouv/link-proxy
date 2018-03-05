@@ -1,8 +1,13 @@
-const mongo = require('./lib/mongo')
+const mongo = require('./lib/utils/mongo')
 
-mongo
-  .connect(process.env.MONGO_URL || 'mongodb://localhost', process.env.MONGO_DB || 'link-proxy')
-  .then(() => {
-    // eslint-disable-next-line import/no-unassigned-import
-    require('./jobs/check')
-  })
+async function main() {
+  const mongoUrl = process.env.MONGO_URL || 'mongodb://localhost'
+  const mongoDb = process.env.MONGO_DB || 'link-proxy'
+
+  await mongo.connect(mongoUrl, mongoDb)
+
+  // eslint-disable-next-line import/no-unassigned-import
+  require('./jobs/check')
+}
+
+main()

@@ -6,7 +6,7 @@ const {ZipFile} = require('yazl')
 const got = require('got')
 const unzip = require('unzip-stream')
 
-const store = require('../../lib/store')
+const store = require('../../lib/utils/store')
 
 function formatName(file, ext) {
   let name = file.fileName

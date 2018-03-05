@@ -87,6 +87,7 @@ function flatten(nodes, parentNode) {
     }
 
     if (node.url) {
+      result.urls[node.url] = {}
       urls.push(node.url)
     }
 

@@ -5,21 +5,22 @@ const bytes = require('bytes')
 const debug = require('debug')('link-proxy:check')
 
 const pkg = require('../../package.json')
-const mongo = require('../../lib/mongo')
+const mongo = require('../../lib/utils/mongo')
 
-const {checkLink, updateLink} = require('./link')
+const {createCheck} = require('./check')
+const {updateLink} = require('./link')
 const {getUrlCache, setUrlCache, getFileCache} = require('./cache')
 const {flatten} = require('./flatten')
 const {upload} = require('./upload')
 
 const concurrency = cpus().length
 
-async function analyze(location) {
-  const check = await checkLink(location)
+async function analyze(link, location) {
+  const check = await createCheck(link, location)
 
   debug(`Running check #${check.number} for link "${check.location}".`)
 
-  const tree = await analyzeLocation(check.location, {
+  const tree = await analyzeLocation(location, {
     userAgent: `link-proxy/${pkg.version} (+https://geo.data.gouv.fr/doc/link-proxy)`,
     maxDownloadSize: bytes('1GB'),
     concurrency,
@@ -27,13 +28,6 @@ async function analyze(location) {
       getFileCache,
       getUrlCache,
       setUrlCache
-    }
-  })
-
-  await mongo.db.collection('checks').updateOne({_id: check._id}, {
-    $set: {
-      state: 'analyzing',
-      updatedAt: new Date()
     }
   })
 

@@ -1,4 +1,4 @@
-const mongo = require('../../lib/mongo')
+const mongo = require('../../lib/utils/mongo')
 
 async function checkLink(location) {
   const now = new Date()

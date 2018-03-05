@@ -1,7 +1,10 @@
 const {parse} = require('url')
 const micro = require('micro')
 
-const {checkQueue} = require('./lib/queues')
+const mongo = require('./lib/utils/mongo')
+const {checkQueue} = require('./lib/utils/queues')
+
+const {upsertLink} = require('./lib/link')
 
 async function getHandler(req) {
   const {pathname, query} = parse(req.url, true)
@@ -18,18 +21,19 @@ async function postHandler(req) {
     throw micro.createError(400, 'location is required')
   }
 
+  const link = await upsertLink(json.location)
+
   checkQueue.add({
-    location: json.location
+    name: json.location,
+    link
   }, {
-    jobId: json.location,
+    jobId: link._id,
     removeOnComplete: true,
     removeOnFail: true,
     timeout: 1000 * 60 * 30
   })
 
-  return {
-    location: json.location
-  }
+  return link
 }
 
 const server = micro(async (req, res) => {
@@ -48,4 +52,15 @@ const server = micro(async (req, res) => {
   }
 })
 
-server.listen(process.env.PORT || 5000)
+async function main() {
+  const port = process.env.PORT || 5000
+  const mongoUrl = process.env.MONGO_URL || 'mongodb://localhost'
+  const mongoDb = process.env.MONGO_DB || 'link-proxy'
+
+  await mongo.connect(mongoUrl, mongoDb)
+  await server.listen(port)
+
+  console.log(`Server running on port ${port}`)
+}
+
+main()

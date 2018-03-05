@@ -1,4 +1,4 @@
-const mongo = require('../../lib/mongo')
+const mongo = require('../../lib/utils/mongo')
 
 async function getUrlCache(token) {
   const link = await mongo.db.collection('links').findOne({
@@ -41,7 +41,9 @@ async function setUrlCache(token) {
     },
     $addToSet: {
       locations: {
-        $each: [token.url, token.finalUrl, ...token.redirectUrls]
+        // In the future, it may be interesting to link token.finalUrl and ...token.redirectUrls here.
+        // We’re disabling it for now as it could lead to duplicate entries in the DB.
+        $each: [token.url]
       }
     }
   })
