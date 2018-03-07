@@ -1,56 +1,48 @@
-const {parse} = require('url')
 const micro = require('micro')
+const {get, post, router} = require('microrouter')
 
 const mongo = require('./lib/utils/mongo')
 const {checkQueue} = require('./lib/utils/queues')
 
-const {upsertLink} = require('./lib/link')
+const {upsertLink, getLinkSummary} = require('./lib/link')
 
-async function getHandler(req) {
-  const {pathname, query} = parse(req.url, true)
+const server = micro(
+  router(
 
-  console.log(pathname, query)
+    get('/:link', async req => {
+      const summary = await getLinkSummary(req.params.link)
 
-  return 'ok'
-}
+      if (!summary) {
+        throw micro.createError(404, `link with id ${req.params.link} was not found`)
+      }
 
-async function postHandler(req) {
-  const json = await micro.json(req)
+      return summary
+    }),
 
-  if (!json.location) {
-    throw micro.createError(400, 'location is required')
-  }
+    post('/', async req => {
+      const json = await micro.json(req)
 
-  const link = await upsertLink(json.location)
+      if (!json.location) {
+        throw micro.createError(400, 'location is required')
+      }
 
-  checkQueue.add({
-    name: json.location,
-    link
-  }, {
-    jobId: link._id,
-    removeOnComplete: true,
-    removeOnFail: true,
-    timeout: 1000 * 60 * 30
-  })
+      const link = await upsertLink(json.location)
 
-  return link
-}
+      checkQueue.add({
+        name: json.location,
+        link
+      }, {
+        jobId: link._id,
+        removeOnComplete: true,
+        removeOnFail: true,
+        timeout: 1000 * 60 * 30
+      })
 
-const server = micro(async (req, res) => {
-  try {
-    switch (req.method) {
-      case 'GET':
-        return await getHandler(req)
-      case 'POST':
-        return await postHandler(req)
+      return link
+    })
+  )
 
-      default:
-        return micro.send(res, 405, 'Invalid method')
-    }
-  } catch (err) {
-    micro.sendError(req, res, err)
-  }
-})
+)
 
 async function main() {
   const port = process.env.PORT || 5000

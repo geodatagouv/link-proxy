@@ -52,8 +52,6 @@ async function analyze(link, location) {
     return acc
   }, {})
 
-  const now = new Date()
-
   await Bluebird.map(Object.entries(result.links), async ([url, res]) => {
     const link = linkMap[url]
 
@@ -70,7 +68,8 @@ async function analyze(link, location) {
     await Bluebird.map(res.bundles, async bundle => {
       const download = {
         linkId: link._id,
-        createdAt: now,
+        checkId: check._id,
+        createdAt: new Date(),
         type: bundle.type,
         files: bundle.files.map(f => f.fileName)
       }
