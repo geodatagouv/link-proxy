@@ -71,6 +71,7 @@ async function analyze(link, location) {
         checkId: check._id,
         createdAt: new Date(),
         type: bundle.type,
+        archive: bundle.files.length > 1,
         files: bundle.files.map(f => f.fileName)
       }
 
