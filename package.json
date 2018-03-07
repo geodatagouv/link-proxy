@@ -22,6 +22,7 @@
     "microrouter": "^3.1.1",
     "mongodb": "^3.0.3",
     "plunger": "^2.3.1",
+    "rimraf": "^2.6.2",
     "slug": "^0.9.1",
     "unzip-stream": "^0.3.0",
     "yazl": "^2.4.3"

@@ -6,6 +6,7 @@ const debug = require('debug')('link-proxy:check')
 
 const pkg = require('../../package.json')
 const mongo = require('../../lib/utils/mongo')
+const rm = require('../../lib/utils/rm')
 
 const {createCheck} = require('./check')
 const {updateLink} = require('./link')
@@ -122,6 +123,8 @@ async function analyze(link, location) {
       updatedAt: new Date()
     }
   })
+
+  await Promise.all(result.temporaries.map(temp => rm(temp)))
 
   debug(`Check #${check.number} for link "${check.location}" ended successfully.`)
 }
