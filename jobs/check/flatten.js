@@ -53,60 +53,77 @@ function matchPatterns(files, fileTypes) {
   return bundles
 }
 
-function flatten(nodes, parentNode) {
-  if (!Array.isArray(nodes)) {
-    nodes = [nodes]
-  }
-
+function flattenNodes(result, nodes, parentNode) {
   const files = []
-  const urls = []
-  const result = {
-    urls: {},
-    errors: [],
-    warnings: [],
-    bundles: [],
-    temporary: []
-  }
+  const parentLink = parentNode ? result.links[parentNode.url || parentNode.fromUrl] : null
 
-  nodes.forEach(node => {
+  for (const node of nodes) {
+    let nodeLink
+
+    if (node.url) {
+      result.links[node.url] = {
+        urls: [],
+        bundles: [],
+        errors: [],
+        warnings: []
+      }
+
+      if (parentLink) {
+        parentLink.urls.push(node.url)
+      }
+
+      nodeLink = result.links[node.url]
+    }
+
     if (node.error) {
-      result.errors.push(node)
+      if (nodeLink) {
+        nodeLink.errors.push(node.error)
+        continue
+      }
+
+      parentLink.errors.push(node.error)
       return
     }
 
     if (node.warning) {
-      result.warnings.push(node)
-    }
-
-    if (node.temporary) {
-      result.temporary.push(node.temporary)
+      (nodeLink || parentLink).warnings.push(node.warning)
     }
 
     if (node.type === 'file') {
       files.push(node)
     }
 
-    if (node.url) {
-      result.urls[node.url] = {}
-      urls.push(node.url)
+    if (node.temporary) {
+      result.temporaries.push(node.temporary)
     }
 
     if (node.children) {
-      const childResult = flatten(node.children, node)
-
-      result.errors = result.errors.concat(childResult.errors)
-      result.warnings = result.warnings.concat(childResult.warnings)
-      result.bundles = result.bundles.concat(childResult.bundles)
-
-      Object.assign(result.urls, childResult.urls)
+      flattenNodes(result, node.children, node)
     }
-  })
-
-  if (parentNode && parentNode.url) {
-    result.urls[parentNode.url] = urls
   }
 
-  result.bundles = result.bundles.concat(matchPatterns(files, fileTypes))
+  for (const bundle of matchPatterns(files, fileTypes)) {
+    const firstUrl = bundle.files[0].url
+
+    if (bundle.files.length === 1 && firstUrl) {
+      result.links[firstUrl].bundles.push(bundle)
+    } else {
+      // Big question: What happens if there’s a shapefile by itself?
+      // Should we add it to an archive by itself?
+      // This does not. It will be stored unarchived.
+
+      parentLink.bundles.push(bundle)
+    }
+  }
+}
+
+function flatten(node) {
+  const result = {
+    temporaries: [],
+    links: {}
+  }
+
+  flattenNodes(result, [node])
 
   return result
 }

@@ -1,19 +1,20 @@
 const mongo = require('../../lib/utils/mongo')
 
-async function updateLink(check, changes) {
-  const remove = changes.filter(c => c.previousDownloadId)
-
+async function updateLink(link, changes) {
   const bulk = mongo.db.collection('links').initializeOrderedBulkOp()
 
-  bulk.find({_id: check.linkId}).updateOne({
+  bulk.find({_id: link._id}).updateOne({
     $pullAll: {
-      downloads: remove.map(r => r.previousDownloadId)
+      downloads: changes.bundles.remove
     }
   })
-  bulk.find({_id: check.linkId}).updateOne({
+  bulk.find({_id: link._id}).updateOne({
     $addToSet: {
+      links: {
+        $each: changes.links.add
+      },
       downloads: {
-        $each: changes.map(c => c.downloadId)
+        $each: changes.bundles.add
       }
     }
   })

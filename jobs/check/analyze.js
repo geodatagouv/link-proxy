@@ -32,12 +32,11 @@ async function analyze(link, location) {
   })
 
   const result = flatten(tree)
-  const now = new Date()
 
   const links = await mongo.db.collection('links')
     .find({
       locations: {
-        $in: Object.keys(result.urls)
+        $in: Object.keys(result.links)
       }
     })
     .project({
@@ -46,77 +45,83 @@ async function analyze(link, location) {
     })
     .toArray()
 
-  const changes = await Bluebird.map(result.bundles, async bundle => {
-    const main = bundle.files[0]
-    const link = links.find(l => l.locations.includes(main.fromUrl || main.url))
+  const linkMap = links.reduce((acc, link) => {
+    for (const loc of link.locations) {
+      acc[loc] = link
+    }
+    return acc
+  }, {})
 
-    const download = {
-      linkId: link._id,
-      createdAt: now,
-      type: bundle.type,
-      files: bundle.files.map(f => f.fileName)
+  const now = new Date()
+
+  await Bluebird.map(Object.entries(result.links), async ([url, res]) => {
+    const link = linkMap[url]
+
+    const changes = {
+      links: {
+        add: res.urls.map(u => linkMap[u]._id)
+      },
+      bundles: {
+        remove: [],
+        add: []
+      }
     }
 
-    let previous
-    if (bundle.changed !== bundle.files.length) {
-      previous = await mongo.db.collection('downloads').findOne({
+    await Bluebird.map(res.bundles, async bundle => {
+      const download = {
         linkId: link._id,
+        createdAt: now,
         type: bundle.type,
-        files: {
-          $all: bundle.files.filter((f, idx) => idx === 0 || f.unchanged).map(f => f.fileName)
+        files: bundle.files.map(f => f.fileName)
+      }
+
+      let previous
+      if (bundle.changed !== bundle.files.length) {
+        previous = await mongo.db.collection('downloads').findOne({
+          linkId: link._id,
+          type: bundle.type,
+          files: {
+            $all: bundle.files.filter((f, idx) => idx === 0 || f.unchanged).map(f => f.fileName)
+          }
+        }, {
+          sort: {
+            createdAt: -1
+          },
+          projection: {
+            url: 1
+          }
+        })
+      }
+
+      if (previous) {
+        changes.bundles.remove.push(previous._id)
+
+        download.previous = {
+          _id: previous._id,
+          changedFiles: bundle.files.filter(f => !f.unchanged).map(f => f.fileName)
         }
-      }, {
-        sort: {
-          createdAt: -1
-        },
-        projection: {
-          url: 1
+      }
+
+      await mongo.db.collection('downloads').insertOne(download)
+      const {Location} = await upload(bundle, download, previous)
+      await mongo.db.collection('downloads').updateOne({_id: download._id}, {
+        $set: {
+          url: Location
         }
       })
-    }
 
-    if (previous) {
-      download.previousVersion = previous._id
-    }
+      changes.bundles.add.push(download._id)
+    }, {concurrency})
 
-    await mongo.db.collection('downloads').insertOne(download)
-
-    const {Location} = await upload(bundle, download, previous)
-
-    await mongo.db.collection('downloads').updateOne({_id: download._id}, {
-      $set: {
-        url: Location
-      }
-    })
-
-    const change = {
-      name: main.fileName,
-      action: previous ? 'replaced' : 'added',
-      downloadId: download._id,
-      filesCount: bundle.files.length
-    }
-
-    if (previous) {
-      change.previousDownloadId = previous._id
-      change.changedFiles = bundle.files.filter(f => !f.unchanged).map(f => f.fileName)
-    }
-
-    return change
+    return updateLink(link, changes)
   }, {concurrency})
 
   await mongo.db.collection('checks').updateOne({_id: check._id}, {
     $set: {
       state: 'finished',
       updatedAt: new Date()
-    },
-    $addToSet: {
-      changes: {
-        $each: changes
-      }
     }
   })
-
-  await updateLink(check, changes)
 
   debug(`Check #${check.number} for link "${check.location}" ended successfully.`)
 }
