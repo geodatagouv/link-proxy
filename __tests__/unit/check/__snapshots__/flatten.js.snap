@@ -1,0 +1,126 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`check.flatten should flatten a shapefile in an index-of 1`] = `
+Object {
+  "links": Object {
+    "http://foo": Object {
+      "bundles": Array [
+        Object {
+          "changed": 2,
+          "files": Array [
+            Object {
+              "fileName": "foo.shp",
+              "fileTypes": Array [
+                Object {
+                  "ext": "shp",
+                },
+              ],
+              "type": "file",
+              "url": "http://foo/1.shp",
+            },
+            Object {
+              "fileName": "foo.shx",
+              "fileTypes": Array [
+                Object {
+                  "ext": "shx",
+                },
+              ],
+              "type": "file",
+              "url": "http://foo/1.shx",
+            },
+          ],
+          "type": "shp",
+        },
+      ],
+      "errors": Array [],
+      "urls": Array [
+        "http://foo/1.shp",
+        "http://foo/1.shx",
+      ],
+      "warnings": Array [],
+    },
+    "http://foo/1.shp": Object {
+      "bundles": Array [],
+      "errors": Array [],
+      "urls": Array [],
+      "warnings": Array [],
+    },
+    "http://foo/1.shx": Object {
+      "bundles": Array [],
+      "errors": Array [],
+      "urls": Array [],
+      "warnings": Array [],
+    },
+  },
+  "temporaries": Array [],
+}
+`;
+
+exports[`check.flatten should return a sole shapefile in an index-of 1`] = `
+Object {
+  "links": Object {
+    "http://foo": Object {
+      "bundles": Array [],
+      "errors": Array [],
+      "urls": Array [
+        "http://foo/1.shp",
+      ],
+      "warnings": Array [],
+    },
+    "http://foo/1.shp": Object {
+      "bundles": Array [
+        Object {
+          "changed": 1,
+          "files": Array [
+            Object {
+              "fileName": "foo.shp",
+              "fileTypes": Array [
+                Object {
+                  "ext": "shp",
+                },
+              ],
+              "type": "file",
+              "url": "http://foo/1.shp",
+            },
+          ],
+          "type": "shp",
+        },
+      ],
+      "errors": Array [],
+      "urls": Array [],
+      "warnings": Array [],
+    },
+  },
+  "temporaries": Array [],
+}
+`;
+
+exports[`check.flatten should return the file for a simple document 1`] = `
+Object {
+  "links": Object {
+    "http://foo": Object {
+      "bundles": Array [
+        Object {
+          "changed": 1,
+          "files": Array [
+            Object {
+              "fileTypes": Array [
+                Object {
+                  "ext": "txt",
+                },
+              ],
+              "type": "file",
+              "url": "http://foo",
+            },
+          ],
+          "type": "document",
+        },
+      ],
+      "errors": Array [],
+      "urls": Array [],
+      "warnings": Array [],
+    },
+  },
+  "temporaries": Array [],
+}
+`;
