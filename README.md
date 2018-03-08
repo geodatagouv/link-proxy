@@ -35,3 +35,32 @@ This exposes two services:
 
 - A web service that you can run using `yarn start:web`.
 - A worker service that you can run using `yarn start:worker`.
+
+
+## Web API
+
+### `POST /`
+
+Create a check for a given URL.
+
+It takes a JSON object with a required `location` property, containing the URL to check.
+
+**Example**
+
+```bash
+$ curl localhost:5000 -d '{"location": "https://geo.data.gouv.fr/robots.txt"}'
+
+{"_id":"5aa167645d88a1a73a42995e","createdAt":"2018-03-08T16:40:03.011Z","locations":["https://geo.data.gouv.fr/robots.txt"],"updatedAt":"2018-03-08T16:40:03.011Z"}
+```
+
+### `GET /:linkId`
+
+Retrieve all the downloads for the given link.
+
+**Example**
+
+```bash
+$ curl localhost:5000/5aa167645d88a1a73a42995e
+
+{"_id":"5aa167645d88a1a73a42995e","createdAt":"2018-03-08T16:40:03.011Z","updatedAt":"2018-03-08T16:40:03.081Z","locations":["https://geo.data.gouv.fr/robots.txt"],"downloads":[{"createdAt":"2018-03-08T16:40:03.094Z","type":"document","archive":false,"files":["robots.txt"],"url":"http://localhost:9000/link-proxy-files/geo.data.gouv.fr/2018-03-08/5aa16763670cb515e9bf2d12-robots.txt"}]}
+```
