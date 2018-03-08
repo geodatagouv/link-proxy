@@ -16,7 +16,11 @@ const {upload} = require('./upload')
 
 const concurrency = cpus().length
 
-async function analyze(link, location) {
+async function analyze(linkId, location) {
+  const link = await mongo.db.collection('links').findOne({
+    _id: new mongo.ObjectID(linkId)
+  })
+
   const check = await createCheck(link, location)
 
   debug(`Running check #${check.number} for link "${check.location}".`)

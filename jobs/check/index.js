@@ -2,6 +2,6 @@ const {checkQueue} = require('../../lib/utils/queues')
 
 const analyze = require('./analyze')
 
-checkQueue.process(async ({data: {link, name: location}}) => {
-  await analyze(link, location)
+checkQueue.process(async ({data: {linkId, name: location}}) => {
+  await analyze(linkId, location)
 })

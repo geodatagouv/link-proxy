@@ -30,7 +30,7 @@ const server = micro(
 
       checkQueue.add({
         name: json.location,
-        link
+        linkId: link._id
       }, {
         jobId: link._id,
         removeOnComplete: true,
