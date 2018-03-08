@@ -1,5 +1,17 @@
 #!/usr/bin/env sh
 
+# In order for this script to run properly, you will need to install minio/mc locally
+# On a Mac, just run `brew install mc`.
+#
+# Then you will need to add the following `host` configuration to ~/.mc/config.json.
+#
+# "geoplatform": {
+#   "url": "http://localhost:9000",
+#   "accessKey": "minio",
+#   "secretKey": "minio-s3cr3t",
+#   "api": "s3v4"
+# }
+
 guard() {
   $@ && echo "✨  Done" || echo "❌  Failed"
 }
