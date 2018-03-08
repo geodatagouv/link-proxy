@@ -46,10 +46,8 @@ const server = micro(
 
 async function main() {
   const port = process.env.PORT || 5000
-  const mongoUrl = process.env.MONGO_URL || 'mongodb://localhost'
-  const mongoDb = process.env.MONGO_DB || 'link-proxy'
 
-  await mongo.connect(mongoUrl, mongoDb)
+  await mongo.connect()
   await server.listen(port)
 
   console.log(`Server running on port ${port}`)
