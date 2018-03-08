@@ -21,7 +21,7 @@ This requires a few services in order to function properly:
   - `REDIS_HOST` defaults to `localhost`
   - `REDIS_PORT` defaults to `6379`
 
-> The [`docker-compose`](https://github.com/inspireteam/geoplatform/blob/master/docker-compose.yml) file in the root of this repository exposes all these services for an easy development setup.
+> The [`docker-compose`](https://github.com/inspireteam/geoplatform/blob/master/docker/docker-compose.yml) file in the root of this repository exposes all these services for an easy development setup.
 
 It also requires the following:
 
