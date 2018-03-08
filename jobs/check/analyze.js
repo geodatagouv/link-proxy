@@ -32,6 +32,14 @@ async function analyze(link, location) {
     }
   })
 
+  await mongo.db.collection('checks').updateOne({_id: check._id}, {
+    $set: {
+      state: 'analyzing',
+      updatedAt: new Date(),
+      statusCode: tree.statusCode
+    }
+  })
+
   const result = flatten(tree)
 
   const links = await mongo.db.collection('links')
