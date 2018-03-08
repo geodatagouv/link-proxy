@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "lint": "xo",
-    "test": "jest"
+    "test": "jest",
+    "start:web": "node index.js",
+    "start:worker": "node worker.js"
   },
   "repository": "https://github.com/inspireteam/geoplatform/tree/master/packages/link-proxy",
   "dependencies": {
