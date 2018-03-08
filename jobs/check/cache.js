@@ -3,6 +3,11 @@ const mongo = require('../../lib/utils/mongo')
 async function getUrlCache(token) {
   const link = await mongo.db.collection('links').findOne({
     locations: token.url
+  }, {
+    projection: {
+      etag: 1,
+      lastMOdified: 1
+    }
   })
 
   if (link) {
