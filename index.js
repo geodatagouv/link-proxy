@@ -5,6 +5,7 @@ const mongo = require('./lib/utils/mongo')
 const {checkQueue} = require('./lib/utils/queues')
 
 const {upsertLink, getLinkSummary} = require('./lib/link')
+const {getLinkChecks} = require('./lib/check')
 
 const server = micro(
   router(
@@ -17,6 +18,16 @@ const server = micro(
       }
 
       return summary
+    }),
+
+    get('/:link/checks', async req => {
+      const checks = await getLinkChecks(req.params.link)
+
+      if (!checks) {
+        throw micro.createError(404, `link with id ${req.params.link} was not found`)
+      }
+
+      return checks
     }),
 
     post('/', async req => {

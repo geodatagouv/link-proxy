@@ -89,3 +89,23 @@ $ curl localhost:5000/5aa167645d88a1a73a42995e
   ]
 }
 ```
+
+### `GET /:linkId/checks`
+
+Retrieve the list of the past 20 checks for a link.
+
+**Example**
+
+```bash
+$ curl localhost:5000/5aa167645d88a1a73a42995e/checks
+
+[
+  {
+  "number": 1,
+  "createdAt": "2018-03-08T16:40:03.011Z",
+  "updatedAt": "2018-03-08T16:40:03.081Z",
+  "state": "finished",
+  "statusCode": 200
+  }
+]
+```
