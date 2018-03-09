@@ -2,7 +2,7 @@ const nock = require('nock')
 
 const mongo = require('../../lib/utils/mongo')
 const store = require('../../lib/utils/store')
-const {upsertLink} = require('../../lib/link')
+const {upsertLink, getLinkSummary} = require('../../lib/link')
 const analyze = require('../../jobs/check/analyze')
 
 const indexOf = require('../../__test-helpers__/index-of')
@@ -48,6 +48,13 @@ describe(NAME, () => {
     const url = `http://${NAME}`
     const {_id} = await upsertLink(url)
     await analyze(_id, url)
+
+    const summary = await getLinkSummary(_id)
+    expect(summary.downloads.map(({type, archive, files}) => ({
+      type,
+      archive,
+      files
+    }))).toMatchSnapshot()
   })
 
   it('should find a shapefile within the zip file of the index-of of the index-of', async () => {
@@ -74,6 +81,13 @@ describe(NAME, () => {
     const url = `http://${NAME}`
     const {_id} = await upsertLink(url)
     await analyze(_id, url)
+
+    const summary = await getLinkSummary(_id)
+    expect(summary.downloads.map(({type, archive, files}) => ({
+      type,
+      archive,
+      files
+    }))).toMatchSnapshot()
   })
 
   it('should find a shapefile listed in the index-of', async () => {
@@ -91,5 +105,12 @@ describe(NAME, () => {
     const url = `http://${NAME}`
     const {_id} = await upsertLink(url)
     await analyze(_id, url)
+
+    const summary = await getLinkSummary(_id)
+    expect(summary.downloads.map(({type, archive, files}) => ({
+      type,
+      archive,
+      files
+    }))).toMatchSnapshot()
   })
 })
