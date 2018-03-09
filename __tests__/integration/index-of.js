@@ -46,8 +46,8 @@ describe(NAME, () => {
     })
 
     const url = `http://${NAME}`
-    const link = await upsertLink(url)
-    await analyze(link, url)
+    const {_id} = await upsertLink(url)
+    await analyze(_id, url)
   })
 
   it('should find a shapefile within the zip file of the index-of of the index-of', async () => {
@@ -72,8 +72,8 @@ describe(NAME, () => {
     })
 
     const url = `http://${NAME}`
-    const link = await upsertLink(url)
-    await analyze(link, url)
+    const {_id} = await upsertLink(url)
+    await analyze(_id, url)
   })
 
   it('should find a shapefile listed in the index-of', async () => {
@@ -89,7 +89,7 @@ describe(NAME, () => {
     })
 
     const url = `http://${NAME}`
-    const link = await upsertLink(url)
-    await analyze(link, url)
+    const {_id} = await upsertLink(url)
+    await analyze(_id, url)
   })
 })

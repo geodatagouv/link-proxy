@@ -35,7 +35,7 @@ describe(NAME, () => {
     })
 
     const url = `http://${NAME}/data.zip`
-    const link = await upsertLink(url)
-    await analyze(link, url)
+    const {_id} = await upsertLink(url)
+    await analyze(_id, url)
   })
 })
