@@ -90,6 +90,32 @@ $ curl localhost:5000/5aa167645d88a1a73a42995e
 }
 ```
 
+### `GET /?location=[location]`
+
+Find a link based on its URL. It will redirect (302) to the matching link, if found.
+
+**Example**
+
+```bash
+$ curl -v 'http://localhost:5000/?location=https://geo.data.gouv.fr/robots.txt'
+
+*   Trying ::1...
+* TCP_NODELAY set
+* Connected to localhost (::1) port 5000 (#0)
+> GET /?location=https://geo.data.gouv.fr/robots.txt HTTP/1.1
+> Host: localhost:5000
+> User-Agent: curl/7.54.0
+> Accept: */*
+>
+< HTTP/1.1 302 Found
+< Location: /5aa167645d88a1a73a42995e
+< Date: Fri, 09 Mar 2018 15:54:16 GMT
+< Connection: keep-alive
+< Content-Length: 0
+<
+* Connection #0 to host localhost left intact
+```
+
 ### `GET /:linkId/checks`
 
 Retrieve the list of the past 20 checks for a link.

@@ -4,11 +4,27 @@ const {get, post, router} = require('microrouter')
 const mongo = require('./lib/utils/mongo')
 const {checkQueue} = require('./lib/utils/queues')
 
-const {upsertLink, getLinkSummary} = require('./lib/link')
+const {findLink, upsertLink, getLinkSummary} = require('./lib/link')
 const {getLinkChecks} = require('./lib/check')
 
 const server = micro(
   router(
+
+    get('/', async (req, res) => {
+      if (!req.query.location) {
+        throw micro.createError(400, 'location is required')
+      }
+
+      const link = await findLink(req.query.location)
+
+      if (!link) {
+        throw micro.createError(404, `link with location ${req.query.location} was not found`)
+      }
+
+      res.statusCode = 302
+      res.setHeader('Location', `/${link._id}`)
+      res.end()
+    }),
 
     get('/:link', async req => {
       const summary = await getLinkSummary(req.params.link)
