@@ -1,14 +1,18 @@
 const mongo = require('../../lib/utils/mongo')
 
-async function getUrlCache(token) {
-  const link = await mongo.db.collection('links').findOne({
-    locations: token.url
+function getLink(url) {
+  return mongo.db.collection('links').findOne({
+    locations: url
   }, {
     projection: {
       etag: 1,
       lastMOdified: 1
     }
   })
+}
+
+async function getUrlCache(token) {
+  const link = await getLink(token.url)
 
   if (link) {
     return {
@@ -30,7 +34,14 @@ async function getUrlCache(token) {
 }
 
 async function setUrlCache(token) {
-  const now = new Date()
+  const link = await getLink(token.url)
+
+  if (link &&
+      link.lastModified === token.lastModified &&
+      link.etag === token.etag
+  ) {
+    return false
+  }
 
   await mongo.db.collection('links').updateOne({
     locations: {
@@ -40,16 +51,14 @@ async function setUrlCache(token) {
     }
   }, {
     $set: {
-      updatedAt: now,
+      updatedAt: new Date(),
       etag: token.etag,
       lastModified: token.lastModified
     },
     $addToSet: {
-      locations: {
-        // In the future, it may be interesting to link token.finalUrl and ...token.redirectUrls here.
-        // We’re disabling it for now as it could lead to duplicate entries in the DB.
-        $each: [token.url]
-      }
+      // In the future, it may be interesting to link token.finalUrl and ...token.redirectUrls here.
+      // We’re disabling it for now as it could lead to duplicate entries in the DB.
+      locations: token.url
     }
   })
 
