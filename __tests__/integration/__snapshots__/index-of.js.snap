@@ -5,50 +5,6 @@ Array [
   Object {
     "archive": true,
     "files": Array [
-      "data.shp",
-      "data.cpg",
-      "data.dbf",
-      "data.prj",
-      "data.shx",
-    ],
-    "type": "shp",
-  },
-  Object {
-    "archive": true,
-    "files": Array [
-      "data2.shp",
-      "data2.cpg",
-      "data2.dbf",
-      "data2.prj",
-      "data2.shx",
-    ],
-    "type": "shp",
-  },
-  Object {
-    "archive": true,
-    "files": Array [
-      "data1.shp",
-      "data1.cpg",
-      "data1.dbf",
-      "data1.prj",
-      "data1.shx",
-    ],
-    "type": "shp",
-  },
-  Object {
-    "archive": true,
-    "files": Array [
-      "data2.shp",
-      "data2.cpg",
-      "data2.dbf",
-      "data2.prj",
-      "data2.shx",
-    ],
-    "type": "shp",
-  },
-  Object {
-    "archive": true,
-    "files": Array [
       "cool.shp",
       "cool.shx",
       "cool.dbf",
@@ -64,22 +20,22 @@ Array [
   Object {
     "archive": true,
     "files": Array [
-      "data.shp",
-      "data.cpg",
-      "data.dbf",
-      "data.prj",
-      "data.shx",
+      "house.shp",
+      "house.cpg",
+      "house.dbf",
+      "house.prj",
+      "house.shx",
     ],
     "type": "shp",
   },
   Object {
     "archive": true,
     "files": Array [
-      "data2.shp",
-      "data2.cpg",
-      "data2.dbf",
-      "data2.prj",
-      "data2.shx",
+      "hotel.shp",
+      "hotel.cpg",
+      "hotel.dbf",
+      "hotel.prj",
+      "hotel.shx",
     ],
     "type": "shp",
   },
@@ -88,28 +44,6 @@ Array [
 
 exports[`test-index-of should find a shapefile within the zip file of the index-of of the index-of 1`] = `
 Array [
-  Object {
-    "archive": true,
-    "files": Array [
-      "data.shp",
-      "data.cpg",
-      "data.dbf",
-      "data.prj",
-      "data.shx",
-    ],
-    "type": "shp",
-  },
-  Object {
-    "archive": true,
-    "files": Array [
-      "data2.shp",
-      "data2.cpg",
-      "data2.dbf",
-      "data2.prj",
-      "data2.shx",
-    ],
-    "type": "shp",
-  },
   Object {
     "archive": true,
     "files": Array [

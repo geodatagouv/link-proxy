@@ -17,33 +17,36 @@ beforeAll(async () => {
   await mongo.connect('mongodb://localhost', NAME)
 })
 
-afterAll(async () => {
+afterEach(async () => {
   const objects = await store.client.listObjects({Bucket: NAME}).promise()
   await store.client.deleteObjects({
     Bucket: NAME,
     Delete: {Objects: objects.Contents.map(({Key}) => ({Key}))}
   }).promise()
 
-  await store.client.deleteBucket({Bucket: NAME}).promise()
   await mongo.db.dropDatabase()
+})
+
+afterAll(async () => {
+  await store.client.deleteBucket({Bucket: NAME}).promise()
   await mongo.disconnect(true)
 })
 
 describe(NAME, () => {
   it('should find a shapefile within the zip file of the index-of', async () => {
-    nock(`http://${NAME}`).get('/data.zip').reply(200, () => shapefile('data'), {
-      'Transfer-Encoding': 'chunked'
-    })
+    const iof = indexOf(['/house.zip', '/hotel.zip'])
 
-    nock(`http://${NAME}`).get('/data2.zip').reply(200, () => shapefile('data2'), {
-      'Transfer-Encoding': 'chunked'
-    })
-
-    const iof = indexOf(['/data.zip', '/data2.zip'])
-    nock(`http://${NAME}`).get('/').reply(200, iof, {
-      'Content-Type': 'text/html',
-      'Content-Length': iof.length
-    })
+    nock(`http://${NAME}`)
+      .get('/house.zip').reply(200, () => shapefile('house'), {
+        'Transfer-Encoding': 'chunked'
+      })
+      .get('/hotel.zip').reply(200, () => shapefile('hotel'), {
+        'Transfer-Encoding': 'chunked'
+      })
+      .get('/').reply(200, iof, {
+        'Content-Type': 'text/html',
+        'Content-Length': iof.length
+      })
 
     const url = `http://${NAME}`
     const {_id} = await upsertLink(url)
@@ -58,21 +61,21 @@ describe(NAME, () => {
   })
 
   it('should find a shapefile within the zip file of the index-of of the index-of', async () => {
-    nock(`http://${NAME}`).get('/sub/data1.zip').reply(200, () => shapefile('data1'), {
-      'Transfer-Encoding': 'chunked'
-    })
-
-    nock(`http://${NAME}`).get('/sub/data2.zip').reply(200, () => shapefile('data2'), {
-      'Transfer-Encoding': 'chunked'
-    })
-
     const iof1 = indexOf(['/sub/data1.zip', '/sub/data2.zip'])
-    nock(`http://${NAME}`).get('/sub').reply(200, iof1, {
-      'Content-Type': 'text/html',
-      'Content-Length': iof1.length
-    })
-
     const iof2 = indexOf('/sub')
+
+    nock(`http://${NAME}`)
+      .get('/sub/data1.zip').reply(200, () => shapefile('data1'), {
+        'Transfer-Encoding': 'chunked'
+      })
+      .get('/sub/data2.zip').reply(200, () => shapefile('data2'), {
+        'Transfer-Encoding': 'chunked'
+      })
+      .get('/sub').reply(200, iof1, {
+        'Content-Type': 'text/html',
+        'Content-Length': iof1.length
+      })
+
     nock(`http://${NAME}`).get('/').reply(200, iof2, {
       'Content-Type': 'text/html',
       'Content-Length': iof2.length
