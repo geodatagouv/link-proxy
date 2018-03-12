@@ -97,7 +97,7 @@ Find a link based on its URL. It will redirect (302) to the matching link, if fo
 **Example**
 
 ```bash
-$ curl -v 'http://localhost:5000/?location=https://geo.data.gouv.fr/robots.txt'
+$ curl -v 'localhost:5000/?location=https://geo.data.gouv.fr/robots.txt'
 
 *   Trying ::1...
 * TCP_NODELAY set
