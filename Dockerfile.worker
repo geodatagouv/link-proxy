@@ -1,0 +1,11 @@
+FROM node:8-alpine
+
+RUN mkdir -p /opt/link-proxy-worker
+WORKDIR /opt/link-proxy-worker
+
+COPY package.json /opt/link-proxy-worker
+RUN yarn --production
+
+COPY . /opt/link-proxy-worker
+
+CMD ["yarn", "start:worker"]

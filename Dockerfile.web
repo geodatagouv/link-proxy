@@ -1,0 +1,13 @@
+FROM node:8-alpine
+
+EXPOSE 5000
+
+RUN mkdir -p /opt/link-proxy-web
+WORKDIR /opt/link-proxy-web
+
+COPY package.json /opt/link-proxy-web
+RUN yarn --production
+
+COPY . /opt/link-proxy-web
+
+CMD ["yarn", "start:web"]
