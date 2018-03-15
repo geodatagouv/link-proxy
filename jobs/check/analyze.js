@@ -79,13 +79,20 @@ async function analyze(linkId, location) {
     }
 
     await Bluebird.map(res.bundles, async bundle => {
+      const mainFile = bundle.files[0]
+
       const download = {
         linkId: link._id,
         checkId: check._id,
         createdAt: new Date(),
         type: bundle.type,
         archive: bundle.files.length > 1,
-        files: bundle.files.map(f => f.fileName)
+        name: mainFile.fileName,
+        files: bundle.files.map(f => ({
+          name: f.fileName,
+          size: f.fileSize,
+          digest: f.digest
+        }))
       }
 
       let previous
@@ -93,9 +100,7 @@ async function analyze(linkId, location) {
         previous = await mongo.db.collection('downloads').findOne({
           linkId: link._id,
           type: bundle.type,
-          files: {
-            $all: bundle.files.filter((f, idx) => idx === 0 || f.unchanged).map(f => f.fileName)
-          }
+          name: mainFile.fileName
         }, {
           sort: {
             createdAt: -1
