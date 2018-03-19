@@ -25,6 +25,11 @@ async function analyze(linkId, location) {
 
   debug(`Running check #${check.number} for link "${check.location}".`)
 
+  if (check.state !== 'started') {
+    debug(`Check #${check.number} for link "${check.location}" was ${check.state}.`)
+    return
+  }
+
   const tree = await analyzeLocation(location, {
     userAgent: `link-proxy/${pkg.version} (+https://geo.data.gouv.fr/doc/link-proxy)`,
     maxDownloadSize: bytes('1GB'),

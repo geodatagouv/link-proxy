@@ -6,7 +6,8 @@ function getLink(url) {
   }, {
     projection: {
       etag: 1,
-      lastMOdified: 1
+      lastModified: 1,
+      cacheControl: 1
     }
   })
 }
@@ -27,6 +28,8 @@ async function getUrlCache(token) {
     createdAt: now,
     updatedAt: now,
     etag: token.etag,
+    lastModified: token.lastModified,
+    cacheControl: token.cacheControl,
     locations: [token.url]
   })
 
@@ -38,7 +41,8 @@ async function setUrlCache(token) {
 
   if (link &&
       link.lastModified === token.lastModified &&
-      link.etag === token.etag
+      link.etag === token.etag &&
+      link.cacheControl === token.cacheControl
   ) {
     return false
   }
@@ -53,7 +57,8 @@ async function setUrlCache(token) {
     $set: {
       updatedAt: new Date(),
       etag: token.etag,
-      lastModified: token.lastModified
+      lastModified: token.lastModified,
+      cacheControl: token.cacheControl
     },
     $addToSet: {
       // In the future, it may be interesting to link token.finalUrl and ...token.redirectUrls here.

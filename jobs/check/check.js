@@ -1,3 +1,6 @@
+const differenceInSeconds = require('date-fns/difference_in_seconds')
+const cacheControl = require('@tusbar/cache-control')
+
 const mongo = require('../../lib/utils/mongo')
 
 async function createCheck(link, location) {
@@ -7,6 +10,7 @@ async function createCheck(link, location) {
     linkId: link._id
   }, {
     projection: {
+      createdAt: 1,
       number: 1,
       _id: 0
     },
@@ -15,16 +19,26 @@ async function createCheck(link, location) {
     }
   })
 
-  const {ops} = await mongo.db.collection('checks').insertOne({
+  const check = {
     linkId: link._id,
     number: lastCheck ? (lastCheck.number || 0) + 1 : 1,
     createdAt: now,
     updatedAt: now,
     state: 'started',
     location
-  })
+  }
 
-  return ops[0]
+  if (link.cacheControl) {
+    const cc = cacheControl.parse(link.cacheControl)
+
+    if (differenceInSeconds(lastCheck.createdAt, now) < cc.maxAge) {
+      check.state = 'skipped'
+    }
+  }
+
+  await mongo.db.collection('checks').insertOne(check)
+
+  return check
 }
 
 module.exports = {createCheck}
