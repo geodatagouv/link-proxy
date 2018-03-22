@@ -1,0 +1,122 @@
+version: 2
+
+defaults:
+  workspace_root: &workspace_root
+    ~/link-proxy
+
+  nodejs_container: &nodejs_container
+    working_directory: *workspace_root
+    docker:
+      - image: circleci/node:8-stretch
+
+  test_container: &test_container
+    working_directory: *workspace_root
+    docker:
+      - image: circleci/node:8-stretch
+      - image: mongo:3
+      - image: minio/minio:latest
+        command: server /data
+        environment:
+          MINIO_ACCESS_KEY: minio
+          MINIO_SECRET_KEY: minio-s3cr3t
+
+  filters: &default_filters
+    tags:
+      only: '/v[0-9]+(\.[0-9]+)*/'
+
+  attach_workspace: &attach_workspace
+    attach_workspace:
+      at: *workspace_root
+
+  restore_node_modules: &restore_node_modules
+    restore_cache:
+      name: Restore node_modules cache
+      keys:
+        - v1-link-proxy-node-{{ checksum "yarn.lock" }}
+        - v1-link-proxy-node-
+
+jobs:
+  checkout:
+    <<: *nodejs_container
+    steps:
+      - checkout
+
+      - persist_to_workspace:
+          root: *workspace_root
+          paths:
+            - ./
+
+  install:
+    <<: *nodejs_container
+    steps:
+      - *attach_workspace
+      - *restore_node_modules
+
+      - restore_cache:
+          name: Restore yarn cache
+          keys:
+            - v1-link-proxy-yarn-{{ checksum "yarn.lock" }}
+            - v1-link-proxy-yarn-
+
+      - run:
+          name: Install dependencies
+          command: yarn
+
+      - save_cache:
+          name: Save yarn cache
+          key: v1-link-proxy-yarn-{{ checksum "yarn.lock" }}
+          paths:
+            - ~/.cache/yarn
+
+      - save_cache:
+          name: Save node_modules cache
+          key: v1-link-proxy-node-{{ checksum "yarn.lock" }}
+          paths:
+            - node_modules
+
+  lint:
+    <<: *nodejs_container
+    steps:
+      - *attach_workspace
+      - *restore_node_modules
+
+      - run:
+          name: Lint
+          command: yarn lint
+
+  test:
+    <<: *test_container
+    steps:
+      - *attach_workspace
+      - *restore_node_modules
+
+      - run:
+          name: Install unar
+          command: sudo apt-get install -y unar
+
+      - run:
+          name: Run tests
+          command: yarn test
+
+workflows:
+  version: 2
+
+  push:
+    jobs:
+      - checkout:
+          filters: *default_filters
+
+      - install:
+          requires:
+            - checkout
+          filters: *default_filters
+
+      - lint:
+          requires:
+            - install
+          filters: *default_filters
+
+      - test:
+          requires:
+            - install
+          filters: *default_filters
