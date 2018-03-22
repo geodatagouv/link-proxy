@@ -40,6 +40,26 @@ This exposes two services:
 - A web service that you can run using `yarn start:web`.
 - A worker service that you can run using `yarn start:worker`.
 
+## Docker
+
+Both services are available as docker images:
+
+### Web service
+
+[![Docker Pulls](https://img.shields.io/docker/pulls/inspireteam/link-proxy-web.svg)](https://hub.docker.com/r/inspireteam/link-proxy-web)
+
+```bash
+$ docker pull inspireteam/link-proxy-web:latest
+```
+
+### Worker service
+
+[![Docker Pulls](https://img.shields.io/docker/pulls/inspireteam/link-proxy-worker.svg)](https://hub.docker.com/r/inspireteam/link-proxy-worker)
+
+```bash
+$ docker pull inspireteam/link-proxy-worker:latest
+```
+
 
 ## Web API
 
