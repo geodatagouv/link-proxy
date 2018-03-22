@@ -128,13 +128,14 @@ async function analyze(linkId, location) {
       }
 
       await mongo.db.collection('downloads').insertOne(download)
-      const {Location} = await upload(bundle, download, previous)
+      const {Location, ETag} = await upload(bundle, download, previous)
 
       await mongo.db.collection('downloads').updateOne({_id: download._id}, {
         $set: {
           // TODO: Remove url.resolve whenever https://github.com/minio/minio/issues/5687 is fixed
           //       Multipart uploads do not return a fully qualified URL.
-          url: resolve(store.client.endpoint.href, Location)
+          url: resolve(store.client.endpoint.href, Location),
+          etag: ETag
         }
       })
 
