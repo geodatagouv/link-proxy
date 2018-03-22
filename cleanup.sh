@@ -5,7 +5,7 @@
 #
 # Then you will need to add the following `host` configuration to ~/.mc/config.json.
 #
-# "geoplatform": {
+# "link-proxy": {
 #   "url": "http://localhost:9000",
 #   "accessKey": "minio",
 #   "secretKey": "minio-s3cr3t",
@@ -22,15 +22,15 @@ guard docker run -it --rm mongo:latest mongo link-proxy --host docker.for.mac.ho
 echo
 
 echo "2️⃣  Drop mc bucket"
-guard mc rm -r --force geoplatform/link-proxy-files
+guard mc rm -r --force link-proxy/link-proxy-files
 
 echo
 
 echo "3️⃣  Create mc bucket"
-guard mc mb geoplatform/link-proxy-files
+guard mc mb link-proxy/link-proxy-files
 
 echo
 
 echo "4️⃣  Set public policy on mc bucket"
-guard mc policy download geoplatform/link-proxy-files
+guard mc policy download link-proxy/link-proxy-files
 

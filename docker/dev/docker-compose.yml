@@ -1,0 +1,48 @@
+version: '3.1'
+
+volumes:
+  mongo-data: {}
+  redis-data: {}
+  minio-data: {}
+
+services:
+  mongo:
+    image: mongo:3
+    volumes:
+      - mongo-data:/data/db
+    ports:
+      - 27017:27017
+
+  mongo-express:
+    image: mongo-express:latest
+    links:
+      - mongo:mongo
+    ports:
+      - 8081:8081
+
+  redis:
+    image: redis:4
+    volumes:
+      - redis-data:/data
+    ports:
+      - 6379:6379
+
+  arena:
+    image: odlevakp/arena
+    links:
+      - redis:redis
+    volumes:
+      - ./queues.json:/opt/arena/src/server/config/index.json
+    ports:
+      - 4567:4567
+
+  minio:
+    image: minio/minio
+    command: server /data
+    volumes:
+      - minio-data:/data
+    environment:
+      MINIO_ACCESS_KEY: minio
+      MINIO_SECRET_KEY: minio-s3cr3t
+    ports:
+      - 9000:9000

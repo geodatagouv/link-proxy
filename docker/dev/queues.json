@@ -1,0 +1,11 @@
+{
+  "queues": [
+    {
+      "host": "redis",
+      "hostId": "docker",
+      "name": "check",
+      "port": 6379,
+      "prefix": "link-proxy"
+    }
+  ]
+}
