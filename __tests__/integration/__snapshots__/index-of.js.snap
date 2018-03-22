@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`test-index-of should find a shapefile listed in the index-of 1`] = `
+exports[`test-link-proxy-index-of should find a shapefile listed in the index-of 1`] = `
 Array [
   Object {
     "archive": true,
@@ -31,7 +31,7 @@ Array [
 ]
 `;
 
-exports[`test-index-of should find a shapefile within the zip file of the index-of 1`] = `
+exports[`test-link-proxy-index-of should find a shapefile within the zip file of the index-of 1`] = `
 Array [
   Object {
     "archive": true,
@@ -98,7 +98,7 @@ Array [
 ]
 `;
 
-exports[`test-index-of should find a shapefile within the zip file of the index-of of the index-of 1`] = `
+exports[`test-link-proxy-index-of should find a shapefile within the zip file of the index-of of the index-of 1`] = `
 Array [
   Object {
     "archive": true,

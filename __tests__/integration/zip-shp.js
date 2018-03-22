@@ -1,30 +1,20 @@
 const nock = require('nock')
 
 const mongo = require('../../lib/utils/mongo')
-const store = require('../../lib/utils/store')
 const {upsertLink, getLinkSummary} = require('../../lib/link')
 const analyze = require('../../jobs/check/analyze')
 
 const {shapefile} = require('../../__test-helpers__/archive')
 
-const NAME = 'test-zip-shp'
+const NAME = 'test-link-proxy-zip-shp'
 
-beforeAll(async () => {
-  process.env.S3_BUCKET = NAME
-
-  await store.client.createBucket({Bucket: NAME}).promise()
-  await mongo.connect('mongodb://localhost', NAME)
+beforeAll(() => {
+  process.env.MONGO_DB = NAME
+  return mongo.connect()
 })
 
 afterAll(async () => {
-  const objects = await store.client.listObjects({Bucket: NAME}).promise()
-  await store.client.deleteObjects({
-    Bucket: NAME,
-    Delete: {Objects: objects.Contents.map(({Key}) => ({Key}))}
-  }).promise()
-
   await mongo.db.dropDatabase()
-  await store.client.deleteBucket({Bucket: NAME}).promise()
   await mongo.disconnect(true)
 })
 

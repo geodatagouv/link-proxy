@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`test-zip-shp should find a shapefile within the zip file 1`] = `
+exports[`test-link-proxy-zip-shp should find a shapefile within the zip file 1`] = `
 Array [
   Object {
     "archive": true,

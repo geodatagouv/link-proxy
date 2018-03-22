@@ -13,7 +13,7 @@ defaults:
     working_directory: *workspace_root
     docker:
       - image: circleci/node:8-stretch
-      - image: mongo:3
+      - image: mongo:3.7
       - image: minio/minio:latest
         command: server /data
         environment:
