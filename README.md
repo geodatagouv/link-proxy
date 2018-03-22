@@ -1,4 +1,4 @@
-# geoplatform/link-proxy [![CircleCI](https://circleci.com/gh/inspireteam/link-proxy.svg?style=svg)](https://circleci.com/gh/inspireteam/link-proxy)
+# link-proxy [![CircleCI](https://circleci.com/gh/inspireteam/link-proxy.svg?style=svg)](https://circleci.com/gh/inspireteam/link-proxy)
 
 > Analyze links and extract relevant data.
 
