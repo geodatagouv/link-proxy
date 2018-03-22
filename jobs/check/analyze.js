@@ -1,4 +1,5 @@
 const {cpus} = require('os')
+const {resolve} = require('url')
 const Bluebird = require('bluebird')
 const {analyzeLocation} = require('plunger')
 const bytes = require('bytes')
@@ -6,6 +7,7 @@ const debug = require('debug')('link-proxy:check')
 
 const pkg = require('../../package.json')
 const mongo = require('../../lib/utils/mongo')
+const store = require('../../lib/utils/store')
 const rm = require('../../lib/utils/rm')
 
 const {createCheck} = require('./check')
@@ -127,9 +129,12 @@ async function analyze(linkId, location) {
 
       await mongo.db.collection('downloads').insertOne(download)
       const {Location} = await upload(bundle, download, previous)
+
       await mongo.db.collection('downloads').updateOne({_id: download._id}, {
         $set: {
-          url: Location
+          // TODO: Remove url.resolve whenever https://github.com/minio/minio/issues/5687 is fixed
+          //       Multipart uploads do not return a fully qualified URL.
+          url: resolve(store.client.endpoint.href, Location)
         }
       })
 
