@@ -23,18 +23,21 @@ afterAll(async () => {
     Delete: {Objects: objects.Contents.map(({Key}) => ({Key}))}
   }).promise()
 
-  await store.client.deleteBucket({Bucket: NAME}).promise()
   await mongo.db.dropDatabase()
+  await store.client.deleteBucket({Bucket: NAME}).promise()
   await mongo.disconnect(true)
 })
 
 describe(NAME, () => {
   it('should find a shapefile within the zip file', async () => {
-    nock(`http://${NAME}`).get('/data.zip').reply(200, () => shapefile('data'), {
-      'Transfer-Encoding': 'chunked'
-    })
+    const URL = `http://${NAME}-shp-zip`
 
-    const url = `http://${NAME}/data.zip`
+    nock(URL)
+      .get('/data.zip').reply(200, () => shapefile('data'), {
+        'Transfer-Encoding': 'chunked'
+      })
+
+    const url = `${URL}/data.zip`
     const {_id} = await upsertLink(url)
     await analyze(_id, url)
 
