@@ -2,7 +2,9 @@
 
 Analyze links and extract relevant data.
 
+[![dependencies Status](https://david-dm.org/inspireteam/link-proxy/status.svg)](https://david-dm.org/inspireteam/link-proxy)
 [![codecov](https://codecov.io/gh/inspireteam/link-proxy/branch/master/graph/badge.svg)](https://codecov.io/gh/inspireteam/link-proxy)
+[![XO code style](https://img.shields.io/badge/code_style-XO-5ed9c7.svg)](https://github.com/sindresorhus/xo)
 
 ## Getting started
 
