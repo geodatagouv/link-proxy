@@ -32,9 +32,21 @@
   },
   "devDependencies": {
     "jest": "^22.4.2",
-    "nock": "^9.2.3"
+    "nock": "^9.2.3",
+    "xo": "^0.20.3"
   },
   "author": "Bertrand Marron <bertrand.marron@gmail.com>",
   "license": "MIT",
-  "xo": false
+  "xo": {
+    "space": 2,
+    "semicolon": false,
+    "overrides": [
+      {
+        "files": "__tests__/**/*.js",
+        "envs": [
+          "jest"
+        ]
+      }
+    ]
+  }
 }

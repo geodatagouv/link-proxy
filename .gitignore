@@ -1,0 +1,8 @@
+# Editor stuff
+.vscode/
+
+# Node.js
+node_modules/
+
+# Temporary files
+*.log
