@@ -5,11 +5,31 @@ Array [
   Object {
     "archive": true,
     "files": Array [
-      "data.shp",
-      "data.cpg",
-      "data.dbf",
-      "data.prj",
-      "data.shx",
+      Object {
+        "digest": "sha384-+1t5TeJcJ5X34OTBKFd9lDXmWfSP4yyKwNCd6HqLGKChrQodibskoUMz8lbBRABG",
+        "name": "data.shp",
+        "size": 11,
+      },
+      Object {
+        "digest": "sha384-g/OOiDmdzWdrQElweiK218tYBpzU+Sqpg39YDz/OGKo2bHgTMSfs8PTUFsXaKRtU",
+        "name": "data.cpg",
+        "size": 11,
+      },
+      Object {
+        "digest": "sha384-N0PxnfQbUbtgRHdg85YR5d23TJyCCw9dkMQ2b7sKrMLplKm2yiK2a+bPBWapI+PA",
+        "name": "data.dbf",
+        "size": 11,
+      },
+      Object {
+        "digest": "sha384-KjIjW8mDGhYle3IvWHrtMZ3Yng0z3375s8hE8w9gcirOr8Ha1mldECb4q04fg4vc",
+        "name": "data.prj",
+        "size": 11,
+      },
+      Object {
+        "digest": "sha384-FA1fzHfLn30z4w1QOE8IM3GlS45Xvmodk+MQdzWCkx8ceyOzE3aLBV9Gl7XXZJ4e",
+        "name": "data.shx",
+        "size": 11,
+      },
     ],
     "type": "shp",
   },

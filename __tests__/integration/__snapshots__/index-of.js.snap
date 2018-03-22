@@ -5,10 +5,26 @@ Array [
   Object {
     "archive": true,
     "files": Array [
-      "cool.shp",
-      "cool.shx",
-      "cool.dbf",
-      "cool.prj",
+      Object {
+        "digest": "sha384-mMEf/f3VQGdrGhN8saIrKnA1DJpEFx1rEYDGvly7LuP3nVMsih3Z7y6OCOdSo7q7",
+        "name": "cool.shp",
+        "size": 3,
+      },
+      Object {
+        "digest": "sha384-mMEf/f3VQGdrGhN8saIrKnA1DJpEFx1rEYDGvly7LuP3nVMsih3Z7y6OCOdSo7q7",
+        "name": "cool.shx",
+        "size": 3,
+      },
+      Object {
+        "digest": "sha384-mMEf/f3VQGdrGhN8saIrKnA1DJpEFx1rEYDGvly7LuP3nVMsih3Z7y6OCOdSo7q7",
+        "name": "cool.dbf",
+        "size": 3,
+      },
+      Object {
+        "digest": "sha384-mMEf/f3VQGdrGhN8saIrKnA1DJpEFx1rEYDGvly7LuP3nVMsih3Z7y6OCOdSo7q7",
+        "name": "cool.prj",
+        "size": 3,
+      },
     ],
     "type": "shp",
   },
@@ -20,22 +36,62 @@ Array [
   Object {
     "archive": true,
     "files": Array [
-      "house.shp",
-      "house.cpg",
-      "house.dbf",
-      "house.prj",
-      "house.shx",
+      Object {
+        "digest": "sha384-+1t5TeJcJ5X34OTBKFd9lDXmWfSP4yyKwNCd6HqLGKChrQodibskoUMz8lbBRABG",
+        "name": "house.shp",
+        "size": 11,
+      },
+      Object {
+        "digest": "sha384-g/OOiDmdzWdrQElweiK218tYBpzU+Sqpg39YDz/OGKo2bHgTMSfs8PTUFsXaKRtU",
+        "name": "house.cpg",
+        "size": 11,
+      },
+      Object {
+        "digest": "sha384-N0PxnfQbUbtgRHdg85YR5d23TJyCCw9dkMQ2b7sKrMLplKm2yiK2a+bPBWapI+PA",
+        "name": "house.dbf",
+        "size": 11,
+      },
+      Object {
+        "digest": "sha384-KjIjW8mDGhYle3IvWHrtMZ3Yng0z3375s8hE8w9gcirOr8Ha1mldECb4q04fg4vc",
+        "name": "house.prj",
+        "size": 11,
+      },
+      Object {
+        "digest": "sha384-FA1fzHfLn30z4w1QOE8IM3GlS45Xvmodk+MQdzWCkx8ceyOzE3aLBV9Gl7XXZJ4e",
+        "name": "house.shx",
+        "size": 11,
+      },
     ],
     "type": "shp",
   },
   Object {
     "archive": true,
     "files": Array [
-      "hotel.shp",
-      "hotel.cpg",
-      "hotel.dbf",
-      "hotel.prj",
-      "hotel.shx",
+      Object {
+        "digest": "sha384-+1t5TeJcJ5X34OTBKFd9lDXmWfSP4yyKwNCd6HqLGKChrQodibskoUMz8lbBRABG",
+        "name": "hotel.shp",
+        "size": 11,
+      },
+      Object {
+        "digest": "sha384-g/OOiDmdzWdrQElweiK218tYBpzU+Sqpg39YDz/OGKo2bHgTMSfs8PTUFsXaKRtU",
+        "name": "hotel.cpg",
+        "size": 11,
+      },
+      Object {
+        "digest": "sha384-N0PxnfQbUbtgRHdg85YR5d23TJyCCw9dkMQ2b7sKrMLplKm2yiK2a+bPBWapI+PA",
+        "name": "hotel.dbf",
+        "size": 11,
+      },
+      Object {
+        "digest": "sha384-KjIjW8mDGhYle3IvWHrtMZ3Yng0z3375s8hE8w9gcirOr8Ha1mldECb4q04fg4vc",
+        "name": "hotel.prj",
+        "size": 11,
+      },
+      Object {
+        "digest": "sha384-FA1fzHfLn30z4w1QOE8IM3GlS45Xvmodk+MQdzWCkx8ceyOzE3aLBV9Gl7XXZJ4e",
+        "name": "hotel.shx",
+        "size": 11,
+      },
     ],
     "type": "shp",
   },
@@ -47,22 +103,62 @@ Array [
   Object {
     "archive": true,
     "files": Array [
-      "data1.shp",
-      "data1.cpg",
-      "data1.dbf",
-      "data1.prj",
-      "data1.shx",
+      Object {
+        "digest": "sha384-+1t5TeJcJ5X34OTBKFd9lDXmWfSP4yyKwNCd6HqLGKChrQodibskoUMz8lbBRABG",
+        "name": "data1.shp",
+        "size": 11,
+      },
+      Object {
+        "digest": "sha384-g/OOiDmdzWdrQElweiK218tYBpzU+Sqpg39YDz/OGKo2bHgTMSfs8PTUFsXaKRtU",
+        "name": "data1.cpg",
+        "size": 11,
+      },
+      Object {
+        "digest": "sha384-N0PxnfQbUbtgRHdg85YR5d23TJyCCw9dkMQ2b7sKrMLplKm2yiK2a+bPBWapI+PA",
+        "name": "data1.dbf",
+        "size": 11,
+      },
+      Object {
+        "digest": "sha384-KjIjW8mDGhYle3IvWHrtMZ3Yng0z3375s8hE8w9gcirOr8Ha1mldECb4q04fg4vc",
+        "name": "data1.prj",
+        "size": 11,
+      },
+      Object {
+        "digest": "sha384-FA1fzHfLn30z4w1QOE8IM3GlS45Xvmodk+MQdzWCkx8ceyOzE3aLBV9Gl7XXZJ4e",
+        "name": "data1.shx",
+        "size": 11,
+      },
     ],
     "type": "shp",
   },
   Object {
     "archive": true,
     "files": Array [
-      "data2.shp",
-      "data2.cpg",
-      "data2.dbf",
-      "data2.prj",
-      "data2.shx",
+      Object {
+        "digest": "sha384-+1t5TeJcJ5X34OTBKFd9lDXmWfSP4yyKwNCd6HqLGKChrQodibskoUMz8lbBRABG",
+        "name": "data2.shp",
+        "size": 11,
+      },
+      Object {
+        "digest": "sha384-g/OOiDmdzWdrQElweiK218tYBpzU+Sqpg39YDz/OGKo2bHgTMSfs8PTUFsXaKRtU",
+        "name": "data2.cpg",
+        "size": 11,
+      },
+      Object {
+        "digest": "sha384-N0PxnfQbUbtgRHdg85YR5d23TJyCCw9dkMQ2b7sKrMLplKm2yiK2a+bPBWapI+PA",
+        "name": "data2.dbf",
+        "size": 11,
+      },
+      Object {
+        "digest": "sha384-KjIjW8mDGhYle3IvWHrtMZ3Yng0z3375s8hE8w9gcirOr8Ha1mldECb4q04fg4vc",
+        "name": "data2.prj",
+        "size": 11,
+      },
+      Object {
+        "digest": "sha384-FA1fzHfLn30z4w1QOE8IM3GlS45Xvmodk+MQdzWCkx8ceyOzE3aLBV9Gl7XXZJ4e",
+        "name": "data2.shx",
+        "size": 11,
+      },
     ],
     "type": "shp",
   },
