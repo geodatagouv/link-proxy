@@ -1,6 +1,8 @@
 # link-proxy [![CircleCI](https://circleci.com/gh/inspireteam/link-proxy.svg?style=svg)](https://circleci.com/gh/inspireteam/link-proxy)
 
-> Analyze links and extract relevant data.
+Analyze links and extract relevant data.
+
+[![codecov](https://codecov.io/gh/inspireteam/link-proxy/branch/master/graph/badge.svg)](https://codecov.io/gh/inspireteam/link-proxy)
 
 ## Getting started
 

@@ -32,12 +32,25 @@
     "yazl": "^2.4.3"
   },
   "devDependencies": {
+    "codecov": "^3.0.0",
     "jest": "^22.4.2",
+    "jest-junit": "^3.6.0",
     "nock": "^9.2.3",
     "xo": "^0.20.3"
   },
   "author": "Bertrand Marron <bertrand.marron@gmail.com>",
   "license": "MIT",
+  "jest": {
+    "collectCoverage": true,
+    "coverageReporters": [
+      "lcov",
+      "text-summary"
+    ],
+    "testResultsProcessor": "jest-junit"
+  },
+  "jest-junit": {
+    "output": "reports/tests/junit.xml"
+  },
   "xo": {
     "space": 2,
     "semicolon": false,
