@@ -4,15 +4,15 @@ ENV S3_ACCESS_KEY_FILE=s3_access_key
 ENV S3_SECRET_KEY_FILE=s3_secret_key
 
 RUN mkdir -p /opt/bin
-COPY docker/scripts/entrypoint.sh /opt/bin
+COPY docker/scripts/entrypoint.sh /opt/bin/
 
 RUN mkdir -p /opt/link-proxy-worker
 WORKDIR /opt/link-proxy-worker
 
-COPY package.json yarn.lock /opt/link-proxy-web
+COPY package.json yarn.lock /opt/link-proxy-web/
 RUN yarn --production
 
-COPY . /opt/link-proxy-worker
+COPY . /opt/link-proxy-worker/
 
 ENTRYPOINT ["/opt/bin/entrypoint.sh"]
 CMD ["yarn", "start:worker"]
