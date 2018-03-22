@@ -1,7 +1,7 @@
 const {createReadStream} = require('fs')
 const {parse} = require('url')
 const formatDate = require('date-fns/format')
-const slug = require('slug')
+const slugify = require('slugify')
 const {ZipFile} = require('yazl')
 const got = require('got')
 const unzip = require('unzip-stream')
@@ -23,9 +23,7 @@ function formatName(file, ext) {
     }
   }
 
-  return slug(name, {
-    mode: 'rfc3986'
-  })
+  return slugify(name)
 }
 
 function uploadSingle(bundle, distribution) {

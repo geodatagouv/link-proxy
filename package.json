@@ -27,7 +27,7 @@
     "mongodb": "^3.0.3",
     "plunger": "^2.3.2",
     "rimraf": "^2.6.2",
-    "slug": "^0.9.1",
+    "slugify": "^1.2.9",
     "unzip-stream": "^0.3.0",
     "yazl": "^2.4.3"
   },
