@@ -11,7 +11,7 @@ COPY docker/scripts/entrypoint.sh /opt/bin
 RUN mkdir -p /opt/link-proxy-web
 WORKDIR /opt/link-proxy-web
 
-COPY package.json /opt/link-proxy-web
+COPY package.json yarn.lock /opt/link-proxy-web
 RUN yarn --production
 
 COPY . /opt/link-proxy-web

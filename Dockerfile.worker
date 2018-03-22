@@ -9,7 +9,7 @@ COPY docker/scripts/entrypoint.sh /opt/bin
 RUN mkdir -p /opt/link-proxy-worker
 WORKDIR /opt/link-proxy-worker
 
-COPY package.json /opt/link-proxy-worker
+COPY package.json yarn.lock /opt/link-proxy-web
 RUN yarn --production
 
 COPY . /opt/link-proxy-worker
