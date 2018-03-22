@@ -34,9 +34,10 @@ afterAll(async () => {
 
 describe(NAME, () => {
   it('should find a shapefile within the zip file of the index-of', async () => {
+    const URL = `http://${NAME}-shp-zip-index-of`
     const iof = indexOf(['/house.zip', '/hotel.zip'])
 
-    nock(`http://${NAME}`)
+    nock(URL)
       .get('/house.zip').reply(200, () => shapefile('house'), {
         'Transfer-Encoding': 'chunked'
       })
@@ -48,9 +49,8 @@ describe(NAME, () => {
         'Content-Length': iof.length
       })
 
-    const url = `http://${NAME}`
-    const {_id} = await upsertLink(url)
-    await analyze(_id, url)
+    const {_id} = await upsertLink(URL)
+    await analyze(_id, URL)
 
     const summary = await getLinkSummary(_id)
     expect(summary.downloads.map(({type, archive, files}) => ({
@@ -61,10 +61,11 @@ describe(NAME, () => {
   })
 
   it('should find a shapefile within the zip file of the index-of of the index-of', async () => {
+    const URL = `http://${NAME}-shp-zip-index-of-index-of`
     const iof1 = indexOf(['/sub/data1.zip', '/sub/data2.zip'])
     const iof2 = indexOf('/sub')
 
-    nock(`http://${NAME}`)
+    nock(URL)
       .get('/sub/data1.zip').reply(200, () => shapefile('data1'), {
         'Transfer-Encoding': 'chunked'
       })
@@ -76,14 +77,13 @@ describe(NAME, () => {
         'Content-Length': iof1.length
       })
 
-    nock(`http://${NAME}`).get('/').reply(200, iof2, {
+    nock(URL).get('/').reply(200, iof2, {
       'Content-Type': 'text/html',
       'Content-Length': iof2.length
     })
 
-    const url = `http://${NAME}`
-    const {_id} = await upsertLink(url)
-    await analyze(_id, url)
+    const {_id} = await upsertLink(URL)
+    await analyze(_id, URL)
 
     const summary = await getLinkSummary(_id)
     expect(summary.downloads.map(({type, archive, files}) => ({
@@ -94,20 +94,21 @@ describe(NAME, () => {
   })
 
   it('should find a shapefile listed in the index-of', async () => {
+    const URL = `http://${NAME}-shp-index-of`
     const files = ['/cool.shp', '/cool.shx', '/cool.dbf', '/cool.prj']
+
     for (const file of files) {
-      nock(`http://${NAME}`).get(file).reply(200, 'foo', {'Transfer-Encoding': 'chunked'})
+      nock(URL).get(file).reply(200, 'foo', {'Transfer-Encoding': 'chunked'})
     }
 
     const iof = indexOf(files)
-    nock(`http://${NAME}`).get('/').reply(200, iof, {
+    nock(URL).get('/').reply(200, iof, {
       'Content-Type': 'text/html',
       'Content-Length': iof.length
     })
 
-    const url = `http://${NAME}`
-    const {_id} = await upsertLink(url)
-    await analyze(_id, url)
+    const {_id} = await upsertLink(URL)
+    await analyze(_id, URL)
 
     const summary = await getLinkSummary(_id)
     expect(summary.downloads.map(({type, archive, files}) => ({
