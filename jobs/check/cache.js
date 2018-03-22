@@ -41,8 +41,7 @@ async function setUrlCache(token) {
 
   if (link &&
       link.lastModified === token.lastModified &&
-      link.etag === token.etag &&
-      link.cacheControl === token.cacheControl
+      link.etag === token.etag
   ) {
     return false
   }
