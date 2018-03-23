@@ -1,5 +1,5 @@
 # 1/2 Create build image
-FROM node:8-alpine AS build
+FROM node:8 AS build
 
 RUN mkdir -p /opt/link-proxy-worker
 WORKDIR /opt/link-proxy-worker
@@ -8,8 +8,11 @@ COPY package.json yarn.lock ./
 RUN yarn --production
 
 # 2/2 Create production image
-FROM node:8-alpine
+FROM node:8
 ARG SOURCE_COMMIT=unknown
+
+RUN apt-get update -qq && \
+    apt-get install -qq -y unar
 
 RUN mkdir -p /opt/link-proxy-worker
 WORKDIR /opt/link-proxy-worker
@@ -17,11 +20,11 @@ WORKDIR /opt/link-proxy-worker
 COPY --from=build /opt/link-proxy-worker .
 COPY . .
 
-ENV NODE_ENV=production
-ENV S3_ACCESS_KEY_FILE=s3_access_key
-ENV S3_SECRET_KEY_FILE=s3_secret_key
-ENV SENTRY_DSN_FILE=sentry_dsn
-ENV SENTRY_RELEASE ${SOURCE_COMMIT}
+ENV NODE_ENV=production \
+    S3_ACCESS_KEY_FILE=s3_access_key \
+    S3_SECRET_KEY_FILE=s3_secret_key \
+    SENTRY_DSN_FILE=sentry_dsn \
+    SENTRY_RELEASE=${SOURCE_COMMIT}
 
 RUN mkdir -p /opt/bin
 COPY docker/scripts/entrypoint.sh /opt/bin/
