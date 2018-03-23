@@ -2,7 +2,7 @@ const nock = require('nock')
 
 const mongo = require('../../lib/utils/mongo')
 const {upsertLink, getLinkSummary} = require('../../lib/link')
-const analyze = require('../../jobs/check/analyze')
+const check = require('../../jobs/check')
 
 const {shapefile} = require('../../__test-helpers__/archive')
 
@@ -29,7 +29,7 @@ describe(NAME, () => {
 
     const url = `${URL}/data.zip`
     const {_id} = await upsertLink(url)
-    await analyze(_id, url)
+    await check(_id, url)
 
     const summary = await getLinkSummary(_id)
     expect(summary.downloads.map(({type, archive, files}) => ({
