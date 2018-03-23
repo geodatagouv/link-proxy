@@ -2,7 +2,7 @@ const nock = require('nock')
 
 const mongo = require('../../lib/utils/mongo')
 const {upsertLink, getLinkSummary} = require('../../lib/link')
-const analyze = require('../../jobs/check/analyze')
+const check = require('../../jobs/check')
 
 const indexOf = require('../../__test-helpers__/index-of')
 const {shapefile} = require('../../__test-helpers__/archive')
@@ -37,7 +37,7 @@ describe(NAME, () => {
       })
 
     const {_id} = await upsertLink(URL)
-    await analyze(_id, URL)
+    await check(_id, URL)
 
     const summary = await getLinkSummary(_id)
     expect(summary.downloads.map(({type, archive, files}) => ({
@@ -70,7 +70,7 @@ describe(NAME, () => {
     })
 
     const {_id} = await upsertLink(URL)
-    await analyze(_id, URL)
+    await check(_id, URL)
 
     const summary = await getLinkSummary(_id)
     expect(summary.downloads.map(({type, archive, files}) => ({
@@ -95,7 +95,7 @@ describe(NAME, () => {
     })
 
     const {_id} = await upsertLink(URL)
-    await analyze(_id, URL)
+    await check(_id, URL)
 
     const summary = await getLinkSummary(_id)
     expect(summary.downloads.map(({type, archive, files}) => ({

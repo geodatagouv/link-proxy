@@ -1,6 +1,8 @@
 .git
 .gitignore
 node_modules
+coverage
+reports
 
 __tests__
 __test-helpers__
@@ -9,3 +11,10 @@ scripts
 
 README.md
 cleanup.sh
+
+*.log
+
+docker/prod
+docker/dev
+
+jest.*

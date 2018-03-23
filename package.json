@@ -26,6 +26,7 @@
     "microrouter": "^3.1.1",
     "mongodb": "^3.0.3",
     "plunger": "^2.3.2",
+    "raven": "^2.4.2",
     "rimraf": "^2.6.2",
     "slugify": "^1.2.9",
     "unzip-stream": "^0.3.0",
