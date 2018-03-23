@@ -9,7 +9,7 @@ RUN yarn --production
 
 # 2/2 Create production image
 FROM node:8-alpine
-ARG BUILD=unknown
+ARG SOURCE_COMMIT=unknown
 
 RUN mkdir -p /opt/link-proxy-worker
 WORKDIR /opt/link-proxy-worker
@@ -21,7 +21,7 @@ ENV NODE_ENV=production
 ENV S3_ACCESS_KEY_FILE=s3_access_key
 ENV S3_SECRET_KEY_FILE=s3_secret_key
 ENV SENTRY_DSN_FILE=sentry_dsn
-ENV SENTRY_RELEASE ${BUILD}
+ENV SENTRY_RELEASE ${SOURCE_COMMIT}
 
 RUN mkdir -p /opt/bin
 COPY docker/scripts/entrypoint.sh /opt/bin/
