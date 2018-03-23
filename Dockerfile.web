@@ -17,11 +17,11 @@ WORKDIR /opt/link-proxy-web
 COPY --from=build /opt/link-proxy-web .
 COPY . .
 
-ENV NODE_ENV=production
-ENV S3_ACCESS_KEY_FILE=s3_access_key
-ENV S3_SECRET_KEY_FILE=s3_secret_key
-ENV SENTRY_DSN_FILE=sentry_dsn
-ENV SENTRY_RELEASE ${SOURCE_COMMIT}
+ENV NODE_ENV=production \
+    S3_ACCESS_KEY_FILE=s3_access_key \
+    S3_SECRET_KEY_FILE=s3_secret_key \
+    SENTRY_DSN_FILE=sentry_dsn \
+    SENTRY_RELEASE=${SOURCE_COMMIT}
 
 RUN mkdir -p /opt/bin
 COPY docker/scripts/entrypoint.sh /opt/bin/
