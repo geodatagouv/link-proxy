@@ -3980,9 +3980,9 @@ pkg-up@^2.0.0:
   dependencies:
     find-up "^2.1.0"
 
-plunger@^2.3.2:
-  version "2.3.2"
-  resolved "https://registry.yarnpkg.com/plunger/-/plunger-2.3.2.tgz#a4f5454100f3f3f3e501efd7f867774c88827815"
+plunger@^2.3.3:
+  version "2.3.3"
+  resolved "https://registry.yarnpkg.com/plunger/-/plunger-2.3.3.tgz#a89ece0e9a6c2289c9ba87de5a029b7926070033"
   dependencies:
     bluebird "^3.5.1"
     chalk "^2.3.2"
