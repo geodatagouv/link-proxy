@@ -18,12 +18,12 @@ const {upload} = require('./upload')
 
 const concurrency = cpus().length
 
-async function analyze(linkId, location, cache) {
+async function analyze(linkId, location, options) {
   const link = await mongo.db.collection('links').findOne({
     _id: new mongo.ObjectID(linkId)
   })
 
-  const check = await createCheck(link, location)
+  const check = await createCheck(link, location, options)
 
   debug(`Running check #${check.number} for link "${check.location}".`)
 
@@ -36,11 +36,11 @@ async function analyze(linkId, location, cache) {
     userAgent: `link-proxy/${pkg.version} (+https://geo.data.gouv.fr/doc/link-proxy)`,
     maxDownloadSize: bytes('1GB'),
     concurrency,
-    cache: cache ? {
-      getFileCache,
-      getUrlCache,
-      setUrlCache
-    } : null
+    cache: {
+      getFileCache: getFileCache(options.noCache),
+      getUrlCache: getUrlCache(options.noCache),
+      setUrlCache: setUrlCache(options.noCache)
+    }
   })
 
   await mongo.db.collection('checks').updateOne({_id: check._id}, {

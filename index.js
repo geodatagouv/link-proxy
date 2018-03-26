@@ -80,7 +80,9 @@ const routes = router(
     checkQueue.add({
       name: json.location,
       linkId: link._id,
-      cache: Boolean(json.cache)
+      options: {
+        noCache: Boolean(json.noCache)
+      }
     }, {
       jobId: link._id,
       removeOnComplete: true,

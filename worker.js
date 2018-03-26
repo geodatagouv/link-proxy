@@ -8,7 +8,7 @@ async function main() {
   await checkQueue.isReady()
   await mongo.connect()
 
-  checkQueue.process(({data: {linkId, name: location, cache}}) => check(linkId, location, cache))
+  checkQueue.process(({data: {linkId, name: location, options}}) => check(linkId, location, options))
 }
 
 main().catch(err => {

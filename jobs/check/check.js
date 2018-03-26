@@ -3,7 +3,7 @@ const cacheControl = require('@tusbar/cache-control')
 
 const mongo = require('../../lib/utils/mongo')
 
-async function createCheck(link, location) {
+async function createCheck(link, location, options) {
   const now = new Date()
 
   const lastCheck = await mongo.db.collection('checks').findOne({
@@ -25,7 +25,8 @@ async function createCheck(link, location) {
     createdAt: now,
     updatedAt: now,
     state: 'started',
-    location
+    location,
+    options
   }
 
   if (link.cacheControl) {
