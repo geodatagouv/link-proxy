@@ -20,7 +20,7 @@ function matchPatterns(files, fileTypes) {
 
   fileTypes.forEach(type => {
     const matchingNodes = rest.filter(file => type.extensions.some(ext =>
-      file.fileTypes.some(type => type.ext.toLowerCase() === ext.toLowerCase())
+      file.fileTypes.some(type => type.ext && type.ext.toLowerCase() === ext.toLowerCase())
     ))
 
     matchingNodes.forEach(node => {
