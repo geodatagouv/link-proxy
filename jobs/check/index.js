@@ -19,6 +19,11 @@ const {upload} = require('./upload')
 const concurrency = cpus().length
 
 async function analyze(linkId, location, options) {
+  options = {
+    noCache: false,
+    ...options
+  }
+
   const link = await mongo.db.collection('links').findOne({
     _id: new mongo.ObjectID(linkId)
   })
