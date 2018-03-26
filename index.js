@@ -79,7 +79,8 @@ const routes = router(
 
     checkQueue.add({
       name: json.location,
-      linkId: link._id
+      linkId: link._id,
+      cache: Boolean(json.cache)
     }, {
       jobId: link._id,
       removeOnComplete: true,
