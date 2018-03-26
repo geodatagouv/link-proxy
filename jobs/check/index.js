@@ -150,14 +150,14 @@ async function analyze(linkId, location, options) {
     return updateLink(link, changes)
   }, {concurrency})
 
+  await Promise.all(result.temporaries.map(temp => rm(temp)))
+
   await mongo.db.collection('checks').updateOne({_id: check._id}, {
     $set: {
       state: 'finished',
       updatedAt: new Date()
     }
   })
-
-  await Promise.all(result.temporaries.map(temp => rm(temp)))
 
   debug(`Check #${check.number} for link "${check.location}" ended successfully.`)
 }
