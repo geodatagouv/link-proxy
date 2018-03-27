@@ -4,11 +4,11 @@ const Bluebird = require('bluebird')
 const {analyzeLocation} = require('plunger')
 const bytes = require('bytes')
 const debug = require('debug')('link-proxy:check')
+const del = require('del')
 
 const pkg = require('../../package.json')
 const mongo = require('../../lib/utils/mongo')
 const store = require('../../lib/utils/store')
-const rm = require('../../lib/utils/rm')
 
 const {createCheck} = require('./check')
 const {updateLink} = require('./link')
@@ -150,7 +150,9 @@ async function analyze(linkId, location, options) {
     return updateLink(link, changes)
   }, {concurrency})
 
-  await Promise.all(result.temporaries.map(temp => rm(temp)))
+  await del(result.temporaries, {
+    force: true
+  })
 
   await mongo.db.collection('checks').updateOne({_id: check._id}, {
     $set: {
