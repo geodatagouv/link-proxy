@@ -25,7 +25,7 @@ This requires a few services in order to function properly:
   - `REDIS_HOST` defaults to `localhost`
   - `REDIS_PORT` defaults to `6379`
 
-> The [`docker-compose`](https://github.com/inspireteam/link-proxy/blob/master/docker/dev/docker-compose.yml) file in this repository exposes all these services for an easy development setup.
+> The [`docker-compose`](https://github.com/inspireteam/link-proxy/blob/master/docker/dev/dependencies.yml) file in this repository exposes all these services for an easy development setup.
 
 It also requires the following:
 
@@ -58,6 +58,20 @@ $ docker pull inspireteam/link-proxy-web:latest
 
 ```bash
 $ docker pull inspireteam/link-proxy-worker:latest
+```
+
+### Development environment
+
+Run all dependency services by using the `dependencies.yml` docker-compose file in [`docker/dev`](https://github.com/inspireteam/link-proxy/blob/master/docker/dev)
+
+```bash
+$ docker-compose -f dependencies.yml up
+```
+
+The link-proxy apps are also available in the `apps.yml` file, if you just need to run all the services, run
+
+```bash
+$ docker-compose -f dependencies.yml -f apps.yml up
 ```
 
 
