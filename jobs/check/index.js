@@ -1,5 +1,4 @@
 const {cpus} = require('os')
-const {resolve} = require('url')
 const Bluebird = require('bluebird')
 const {analyzeLocation} = require('plunger')
 const bytes = require('bytes')
@@ -8,7 +7,6 @@ const del = require('del')
 
 const pkg = require('../../package.json')
 const mongo = require('../../lib/utils/mongo')
-const store = require('../../lib/utils/store')
 
 const {createCheck} = require('./check')
 const {updateLink} = require('./link')
@@ -137,9 +135,7 @@ async function analyze(linkId, location, options) {
 
       await mongo.db.collection('downloads').updateOne({_id: download._id}, {
         $set: {
-          // TODO: Remove url.resolve whenever https://github.com/minio/minio/issues/5687 is fixed
-          //       Multipart uploads do not return a fully qualified URL.
-          url: resolve(store.client.endpoint.href, Location),
+          url: Location,
           etag: ETag
         }
       })
