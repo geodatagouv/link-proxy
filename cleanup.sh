@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 
 # In order for this script to run properly, you will need to install minio/mc locally
 # On a Mac, just run `brew install mc`.
@@ -12,6 +12,8 @@
 #   "api": "s3v4"
 # }
 
+MINIO_BUCKET=${MINIO_BUCKET:-link-proxy/link-proxy-files}
+
 guard() {
   $@ && echo "✨  Done" || echo "❌  Failed"
 }
@@ -22,15 +24,15 @@ guard docker run -it --rm mongo:latest mongo link-proxy --host docker.for.mac.ho
 echo
 
 echo "2️⃣  Drop mc bucket"
-guard mc rm -r --force link-proxy/link-proxy-files
+guard mc rm -r --force $MINIO_BUCKET
 
 echo
 
 echo "3️⃣  Create mc bucket"
-guard mc mb link-proxy/link-proxy-files
+guard mc mb $MINIO_BUCKET
 
 echo
 
 echo "4️⃣  Set public policy on mc bucket"
-guard mc policy download link-proxy/link-proxy-files
+guard mc policy download $MINIO_BUCKET
 
