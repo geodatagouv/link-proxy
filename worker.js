@@ -3,7 +3,8 @@ const mongo = require('./lib/utils/mongo')
 const createRedis = require('./lib/utils/redis')
 const queues = require('./lib/utils/queues')
 
-const check = require('./jobs/check')
+const doCheck = require('./jobs/check')
+const doHook = require('./jobs/hooks')
 
 async function main() {
   const subscriber = createRedis()
@@ -15,7 +16,14 @@ async function main() {
     linkId,
     name: location,
     options
-  }}) => check(linkId, location, options))
+  }}) => doCheck(linkId, location, options))
+
+  queues.hooksQueue.process(({data: {
+    linkId,
+    check,
+    name: location,
+    state
+  }}) => doHook(linkId, check, location, state))
 }
 
 main().catch(err => {
