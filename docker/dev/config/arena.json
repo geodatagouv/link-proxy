@@ -6,6 +6,13 @@
       "name": "check",
       "port": 6379,
       "prefix": "link-proxy"
+    },
+    {
+      "host": "redis",
+      "hostId": "docker",
+      "name": "hooks",
+      "port": 6379,
+      "prefix": "link-proxy"
     }
   ]
 }
