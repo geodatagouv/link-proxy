@@ -3,7 +3,7 @@ const {get, post, router} = require('microrouter')
 
 const sentry = require('./lib/utils/sentry')
 const mongo = require('./lib/utils/mongo')
-const {checkQueue} = require('./lib/utils/queues')
+const queues = require('./lib/utils/queues')
 
 const {findLink, upsertLink, getLinkSummary} = require('./lib/link')
 const {getLinkChecks} = require('./lib/check')
@@ -77,7 +77,7 @@ const routes = router(
 
     const link = await upsertLink(json.location)
 
-    checkQueue.add({
+    queues.checkQueue.add({
       name: json.location,
       linkId: link._id,
       options: {
@@ -97,7 +97,7 @@ async function main() {
   const port = process.env.PORT || 5000
   const server = micro(handleErrors(routes))
 
-  await checkQueue.isReady()
+  await queues.init()
   await mongo.connect()
   await server.listen(port)
 
