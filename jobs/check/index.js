@@ -7,6 +7,7 @@ const del = require('del')
 
 const pkg = require('../../package.json')
 const mongo = require('../../lib/utils/mongo')
+const queues = require('../../lib/utils/queues')
 
 const {createCheck} = require('./check')
 const {updateLink} = require('./link')
@@ -15,6 +16,19 @@ const {flatten} = require('./flatten')
 const {upload} = require('./upload')
 
 const concurrency = cpus().length
+
+function triggerWebhook(link, check, location, state) {
+  queues.hooksQueue.add({
+    linkId: link._id,
+    check: check.number,
+    name: location,
+    state
+  }, {
+    jobId: `${link._id}-${check.number}-${state}`,
+    removeOnComplete: true,
+    timeout: 1000 * 10
+  })
+}
 
 async function analyze(linkId, location, options) {
   options = {
@@ -29,6 +43,7 @@ async function analyze(linkId, location, options) {
   const check = await createCheck(link, location, options)
 
   debug(`Running check #${check.number} for link "${check.location}".`)
+  triggerWebhook(link, check, location, check.state)
 
   if (check.state !== 'started') {
     debug(`Check #${check.number} for link "${check.location}" was ${check.state}.`)
@@ -156,6 +171,8 @@ async function analyze(linkId, location, options) {
       updatedAt: new Date()
     }
   })
+
+  triggerWebhook(link, check, location, 'finished')
 
   debug(`Check #${check.number} for link "${check.location}" ended successfully.`)
 }
