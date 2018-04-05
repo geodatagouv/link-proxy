@@ -79,6 +79,7 @@ const routes = router(
 
     queues.checkQueue.add({
       name: json.location,
+      location: json.location,
       linkId: link._id,
       options: {
         noCache: Boolean(json.noCache)

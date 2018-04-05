@@ -14,7 +14,7 @@ async function main() {
 
   queues.checkQueue.process(({data: {
     linkId,
-    name: location,
+    location,
     options
   }}) => doCheck(linkId, location, options))
 
