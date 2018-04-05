@@ -14,6 +14,7 @@ defaults:
     docker:
       - image: circleci/node:8-stretch
       - image: mongo:3.7
+      - image: redis:4.0
       - image: minio/minio:latest
         command: server /data
         environment:
