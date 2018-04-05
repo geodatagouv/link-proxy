@@ -3,6 +3,8 @@ const cacheControl = require('@tusbar/cache-control')
 
 const mongo = require('../../lib/utils/mongo')
 
+const {isBlacklisted} = require('./utils/blacklist')
+
 async function createCheck(link, location, options) {
   const now = new Date()
 
@@ -29,7 +31,9 @@ async function createCheck(link, location, options) {
     options
   }
 
-  if (link.cacheControl) {
+  if (isBlacklisted(location)) {
+    check.state = 'blacklisted'
+  } else if (link.cacheControl) {
     const cc = cacheControl.parse(link.cacheControl)
 
     if (differenceInSeconds(lastCheck.createdAt, now) < cc.maxAge) {
