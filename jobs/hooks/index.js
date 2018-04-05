@@ -1,6 +1,13 @@
+const Bluebird = require('bluebird')
 const debug = require('debug')('link-proxy:hooks')
+const got = require('got')
 
+const userAgent = require('../../lib/user-agent')
+
+const sentry = require('../../lib/utils/sentry')
 const mongo = require('../../lib/utils/mongo')
+
+const {getSubscribers} = require('./subscriber')
 
 async function send(linkId, action, source) {
   debug(`Running webhook "${action}" for link "${linkId}", triggered by ${source.linkId}/${source.checkNumber}.`)
@@ -31,7 +38,25 @@ async function send(linkId, action, source) {
     }
   }
 
-  console.log(payload)
+  const subscribers = await getSubscribers()
+
+  await Bluebird.map(subscribers, async subscriber => {
+    try {
+      await got.post(subscriber.url, {
+        body: JSON.stringify(payload),
+        headers: {
+          'content-type': 'application/json',
+          'user-agent': userAgent
+        }
+      })
+
+      debug(`Webhook "${action}" for link "${linkId}", was sent to subscriber ${subscriber.name}.`)
+    } catch (err) {
+      sentry.captureException(err)
+
+      debug(`Webhook "${action}" for link "${linkId}", was not sent to subscriber ${subscriber.name}.`)
+    }
+  }, {concurrency: 5})
 
   debug(`Webhook "${action}" for link "${linkId}", triggered by ${source.linkId}/${source.checkNumber}, ended successfully.`)
 }

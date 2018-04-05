@@ -5,7 +5,8 @@ const bytes = require('bytes')
 const debug = require('debug')('link-proxy:check')
 const del = require('del')
 
-const pkg = require('../../package.json')
+const userAgent = require('../../lib/user-agent')
+
 const mongo = require('../../lib/utils/mongo')
 const queues = require('../../lib/utils/queues')
 
@@ -54,7 +55,7 @@ async function analyze(linkId, location, options) {
   }
 
   const tree = await analyzeLocation(location, {
-    userAgent: `link-proxy/${pkg.version} (+https://geo.data.gouv.fr/doc/link-proxy)`,
+    userAgent,
     maxDownloadSize: bytes('1GB'),
     concurrency,
     cache: {
