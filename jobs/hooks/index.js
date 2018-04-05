@@ -25,6 +25,7 @@ async function send(linkId, action, source) {
     action,
     subLink: source.linkId !== linkId,
     triggeredBy: {
+      location: source.location,
       link: source.linkId,
       check: source.checkNumber
     }

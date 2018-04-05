@@ -23,7 +23,8 @@ function triggerWebhook(link, action, source) {
     linkId: link._id,
     source: {
       linkId: source.link._id,
-      checkNumber: source.check.number
+      checkNumber: source.check.number,
+      location: source.location
     },
     action
   }, {
@@ -160,9 +161,9 @@ async function analyze(linkId, location, options) {
 
       if (previous) {
         changed = true
-        triggerWebhook(subLink, 'updated', {link, check})
+        triggerWebhook(subLink, 'updated', {link, check, location})
       } else {
-        triggerWebhook(subLink, 'created', {link, check})
+        triggerWebhook(subLink, 'created', {link, check, location})
       }
 
       if (changed === undefined) {
@@ -176,7 +177,7 @@ async function analyze(linkId, location, options) {
   }, {concurrency})
 
   if (changed !== undefined) {
-    triggerWebhook(link, changed ? 'updated' : 'created', {link, check})
+    triggerWebhook(link, changed ? 'updated' : 'created', {link, check, location})
   }
 
   await del(result.temporaries, {
