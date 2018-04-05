@@ -50,11 +50,11 @@ async function send(linkId, action, source) {
         }
       })
 
-      debug(`Webhook "${action}" for link "${linkId}", was sent to subscriber ${subscriber.name}.`)
+      debug(`Webhook "${action}" for link "${linkId}" was sent to subscriber ${subscriber.name}.`)
     } catch (err) {
       sentry.captureException(err)
 
-      debug(`Webhook "${action}" for link "${linkId}", was not sent to subscriber ${subscriber.name}.`)
+      debug(`Webhook "${action}" for link "${linkId}" was not sent to subscriber ${subscriber.name}.`)
     }
   }, {concurrency: 5})
 
