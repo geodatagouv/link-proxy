@@ -16,6 +16,7 @@ async function send(linkId, action, source) {
     _id: new mongo.ObjectID(linkId)
   }, {
     projection: {
+      updatedAt: 1,
       locations: 1
     }
   })
@@ -28,6 +29,7 @@ async function send(linkId, action, source) {
 
   const payload = {
     link: linkId,
+    updatedAt: link.updatedAt,
     locations: link.locations,
     action,
     subLink: source.linkId !== linkId,
