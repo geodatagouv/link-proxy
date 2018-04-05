@@ -1,15 +1,12 @@
 const sentry = require('./lib/utils/sentry')
 const mongo = require('./lib/utils/mongo')
-const createRedis = require('./lib/utils/redis')
 const queues = require('./lib/utils/queues')
 
 const doCheck = require('./jobs/check')
 const doHook = require('./jobs/hooks')
 
 async function main() {
-  const subscriber = createRedis()
-
-  await queues.init(subscriber)
+  await queues.init(true)
   await mongo.connect()
 
   queues.checkQueue.process(({data: {
