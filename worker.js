@@ -20,10 +20,9 @@ async function main() {
 
   queues.hooksQueue.process(({data: {
     linkId,
-    check,
-    name: location,
-    state
-  }}) => doHook(linkId, check, location, state))
+    action,
+    source
+  }}) => doHook(linkId, action, source))
 }
 
 main().catch(err => {

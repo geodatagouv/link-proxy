@@ -17,14 +17,17 @@ const {upload} = require('./upload')
 
 const concurrency = cpus().length
 
-function triggerWebhook(link, check, location, state) {
+function triggerWebhook(link, action, source) {
   queues.hooksQueue.add({
+    name: link.locations[0],
     linkId: link._id,
-    check: check.number,
-    name: location,
-    state
+    source: {
+      linkId: source.link._id,
+      checkNumber: source.check.number
+    },
+    action
   }, {
-    jobId: `${link._id}-${check.number}-${state}`,
+    jobId: `${link._id}-${action}`,
     removeOnComplete: true,
     timeout: 1000 * 10
   })
@@ -43,7 +46,6 @@ async function analyze(linkId, location, options) {
   const check = await createCheck(link, location, options)
 
   debug(`Running check #${check.number} for link "${check.location}".`)
-  triggerWebhook(link, check, location, check.state)
 
   if (check.state !== 'started') {
     debug(`Check #${check.number} for link "${check.location}" was ${check.state}.`)
@@ -90,8 +92,9 @@ async function analyze(linkId, location, options) {
     return acc
   }, {})
 
+  let changed
   await Bluebird.map(Object.entries(result.links), async ([url, res]) => {
-    const link = linkMap[url]
+    const subLink = linkMap[url]
 
     const changes = {
       links: {
@@ -107,7 +110,7 @@ async function analyze(linkId, location, options) {
       const mainFile = bundle.files[0]
 
       const download = {
-        linkId: link._id,
+        linkId: subLink._id,
         checkId: check._id,
         createdAt: new Date(),
         type: bundle.type,
@@ -123,7 +126,7 @@ async function analyze(linkId, location, options) {
       let previous
       if (bundle.changed !== bundle.files.length) {
         previous = await mongo.db.collection('downloads').findOne({
-          linkId: link._id,
+          linkId: subLink._id,
           type: bundle.type,
           name: mainFile.fileName
         }, {
@@ -155,11 +158,26 @@ async function analyze(linkId, location, options) {
         }
       })
 
+      if (previous) {
+        changed = true
+        triggerWebhook(subLink, 'updated', {link, check})
+      } else {
+        triggerWebhook(subLink, 'created', {link, check})
+      }
+
+      if (changed === undefined) {
+        changed = false
+      }
+
       changes.bundles.add.push(download._id)
     }, {concurrency})
 
-    return updateLink(link, changes)
+    return updateLink(subLink, changes)
   }, {concurrency})
+
+  if (changed !== undefined) {
+    triggerWebhook(link, changed ? 'updated' : 'created', {link, check})
+  }
 
   await del(result.temporaries, {
     force: true
@@ -171,8 +189,6 @@ async function analyze(linkId, location, options) {
       updatedAt: new Date()
     }
   })
-
-  triggerWebhook(link, check, location, 'finished')
 
   debug(`Check #${check.number} for link "${check.location}" ended successfully.`)
 }
