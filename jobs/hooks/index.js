@@ -20,7 +20,7 @@ async function send(linkId, action, source) {
   }
 
   const payload = {
-    _id: linkId,
+    link: linkId,
     locations: link.locations,
     action,
     subLink: source.linkId !== linkId,
