@@ -173,3 +173,44 @@ $ curl localhost:5000/5aa167645d88a1a73a42995e/checks
   }
 ]
 ```
+
+## Webhooks
+
+Whenever a link is updated or created, an HTTP notification can be sent to other applications using webhooks.
+
+The following body will be `POST`ed to a listening web service:
+
+```json
+{
+  "link": "5aa167645d88a1a73a42995e",
+  "updatedAt": "2018-03-08T16:40:03.081Z",
+  "locations": [
+    "https://geo.data.gouv.fr/robots.txt"
+  ],
+  "action": "created",
+  "subLink": false,
+  "triggeredBy": {
+    "location": "https://geo.data.gouv.fr/robots.txt",
+    "link": "5aa167645d88a1a73a42995e",
+    "check": 1
+  }
+}
+```
+
+- **`link`**: identifier of the link described by the webhook.<br>
+  The data can later be retrieved through the API using the `/:linkId` route.
+
+- **`updatedAt`**: time at which the link has been modified.
+
+- **`locations`**: array of locations of that link.<br>
+  For now there will be only one value in the array, it will later be used for resources split across multiple links (for example split archives).
+
+- **`action`**: action of the webhook, can be `created` or `updated` whether the link was first found or its content was updated.
+
+- **`subLink`**: boolean expressing whether the webhook was triggered by running a check on a higher level link or not.<br>
+  When this is `true`, there will not be a `check` associated to the link change.
+
+- **`triggeredBy`**: information of what triggered the webhook:
+  - `location`: URL that the check was created for.
+  - `link`: identifier of the URL that the check was created for.
+  - `check`: number of the check.
