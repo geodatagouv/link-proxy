@@ -94,9 +94,10 @@ const routes = router(
   })
 )
 
+const server = micro(handleErrors(routes))
+
 async function main() {
   const port = process.env.PORT || 5000
-  const server = micro(handleErrors(routes))
 
   await queues.init()
   await mongo.connect()
@@ -107,4 +108,8 @@ async function main() {
 
 main().catch(err => {
   sentry.captureException(err)
+
+  server.close()
+  queues.disconnect()
+  mongo.disconnect()
 })

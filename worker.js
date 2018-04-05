@@ -27,4 +27,7 @@ async function main() {
 
 main().catch(err => {
   sentry.captureException(err)
+
+  queues.disconnect()
+  mongo.disconnect()
 })
