@@ -2,8 +2,15 @@
   "queues": [
     {
       "host": "redis",
-      "hostId": "docker",
+      "hostId": "link-proxy-local",
       "name": "check",
+      "port": 6379,
+      "prefix": "link-proxy"
+    },
+    {
+      "host": "redis",
+      "hostId": "link-proxy-local",
+      "name": "hooks",
       "port": 6379,
       "prefix": "link-proxy"
     }

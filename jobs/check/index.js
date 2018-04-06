@@ -5,8 +5,10 @@ const bytes = require('bytes')
 const debug = require('debug')('link-proxy:check')
 const del = require('del')
 
-const pkg = require('../../package.json')
+const userAgent = require('../../lib/user-agent')
+
 const mongo = require('../../lib/utils/mongo')
+const queues = require('../../lib/utils/queues')
 
 const {createCheck} = require('./check')
 const {updateLink} = require('./link')
@@ -15,6 +17,23 @@ const {flatten} = require('./flatten')
 const {upload} = require('./upload')
 
 const concurrency = cpus().length
+
+function triggerWebhook(link, action, source) {
+  queues.hooksQueue.add({
+    name: link.locations[0],
+    linkId: link._id,
+    source: {
+      linkId: source.link._id,
+      checkNumber: source.check.number,
+      location: source.location
+    },
+    action
+  }, {
+    jobId: `${link._id}-${action}`,
+    removeOnComplete: true,
+    timeout: 1000 * 10
+  })
+}
 
 async function analyze(linkId, location, options) {
   options = {
@@ -36,7 +55,7 @@ async function analyze(linkId, location, options) {
   }
 
   const tree = await analyzeLocation(location, {
-    userAgent: `link-proxy/${pkg.version} (+https://geo.data.gouv.fr/doc/link-proxy)`,
+    userAgent,
     maxDownloadSize: bytes('1GB'),
     concurrency,
     cache: {
@@ -75,8 +94,9 @@ async function analyze(linkId, location, options) {
     return acc
   }, {})
 
+  let changed
   await Bluebird.map(Object.entries(result.links), async ([url, res]) => {
-    const link = linkMap[url]
+    const subLink = linkMap[url]
 
     const changes = {
       links: {
@@ -92,7 +112,7 @@ async function analyze(linkId, location, options) {
       const mainFile = bundle.files[0]
 
       const download = {
-        linkId: link._id,
+        linkId: subLink._id,
         checkId: check._id,
         createdAt: new Date(),
         type: bundle.type,
@@ -108,7 +128,7 @@ async function analyze(linkId, location, options) {
       let previous
       if (bundle.changed !== bundle.files.length) {
         previous = await mongo.db.collection('downloads').findOne({
-          linkId: link._id,
+          linkId: subLink._id,
           type: bundle.type,
           name: mainFile.fileName
         }, {
@@ -140,11 +160,26 @@ async function analyze(linkId, location, options) {
         }
       })
 
+      if (previous) {
+        changed = true
+        triggerWebhook(subLink, 'updated', {link, check, location})
+      } else {
+        triggerWebhook(subLink, 'created', {link, check, location})
+      }
+
+      if (changed === undefined) {
+        changed = false
+      }
+
       changes.bundles.add.push(download._id)
     }, {concurrency})
 
-    return updateLink(link, changes)
+    return updateLink(subLink, changes)
   }, {concurrency})
+
+  if (changed !== undefined) {
+    triggerWebhook(link, changed ? 'updated' : 'created', {link, check, location})
+  }
 
   await del(result.temporaries, {
     force: true

@@ -1,16 +1,30 @@
 const sentry = require('./lib/utils/sentry')
 const mongo = require('./lib/utils/mongo')
-const {checkQueue} = require('./lib/utils/queues')
+const queues = require('./lib/utils/queues')
 
-const check = require('./jobs/check')
+const doCheck = require('./jobs/check')
+const doHook = require('./jobs/hooks')
 
 async function main() {
-  await checkQueue.isReady()
+  await queues.init(true)
   await mongo.connect()
 
-  checkQueue.process(({data: {linkId, name: location, options}}) => check(linkId, location, options))
+  queues.checkQueue.process(({data: {
+    linkId,
+    location,
+    options
+  }}) => doCheck(linkId, location, options))
+
+  queues.hooksQueue.process(({data: {
+    linkId,
+    action,
+    source
+  }}) => doHook(linkId, action, source))
 }
 
 main().catch(err => {
   sentry.captureException(err)
+
+  queues.disconnect()
+  mongo.disconnect()
 })

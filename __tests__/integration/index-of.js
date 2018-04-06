@@ -1,6 +1,7 @@
 const nock = require('nock')
 
 const mongo = require('../../lib/utils/mongo')
+const queues = require('../../lib/utils/queues')
 const {upsertLink, getLinkSummary} = require('../../lib/link')
 const check = require('../../jobs/check')
 
@@ -9,14 +10,17 @@ const {shapefile} = require('../../__test-helpers__/archive')
 
 const NAME = 'test-link-proxy-index-of'
 
-beforeAll(() => {
+beforeAll(async () => {
   process.env.MONGO_DB = NAME
-  return mongo.connect()
+
+  await mongo.connect()
+  await queues.init()
 })
 
 afterAll(async () => {
   await mongo.db.dropDatabase()
   await mongo.disconnect(true)
+  await queues.disconnect()
 })
 
 describe(NAME, () => {
