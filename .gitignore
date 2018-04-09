@@ -12,3 +12,6 @@ coverage/
 
 # Reports
 reports/
+
+# Misc
+docker/prod
