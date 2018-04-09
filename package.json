@@ -4,13 +4,13 @@
   "private": true,
   "description": "Analyze links in your (geo)data catalogs",
   "main": "index.js",
+  "repository": "https://github.com/inspireteam/link-proxy",
   "scripts": {
     "lint": "xo",
     "test": "jest",
     "start:web": "node index.js",
     "start:worker": "node worker.js"
   },
-  "repository": "https://github.com/inspireteam/geoplatform/tree/master/packages/link-proxy",
   "dependencies": {
     "@tusbar/cache-control": "^0.2.1",
     "aws-sdk": "^2.222.1",
