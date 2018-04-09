@@ -13,7 +13,7 @@
   "repository": "https://github.com/inspireteam/geoplatform/tree/master/packages/link-proxy",
   "dependencies": {
     "@tusbar/cache-control": "^0.2.1",
-    "aws-sdk": "^2.204.0",
+    "aws-sdk": "^2.222.1",
     "bluebird": "^3.5.1",
     "bull": "^3.3.10",
     "bytes": "^3.0.0",
@@ -26,7 +26,7 @@
     "lodash": "^4.17.5",
     "micro": "^9.1.0",
     "microrouter": "^3.1.1",
-    "mongodb": "^3.0.3",
+    "mongodb": "^3.0.5",
     "plunger": "^2.3.3",
     "raven": "^2.4.2",
     "slugify": "^1.2.9",
