@@ -1,5 +1,5 @@
 const Bluebird = require('bluebird')
-const debug = require('debug')('link-proxy:hooks')
+const debug = require('debug')('link-proxy:jobs:hooks')
 const got = require('got')
 
 const userAgent = require('../../lib/user-agent')

@@ -14,6 +14,7 @@ beforeAll(async () => {
   process.env.MONGO_DB = NAME
 
   await mongo.connect()
+  await mongo.ensureIndexes()
   await queues.init()
 })
 

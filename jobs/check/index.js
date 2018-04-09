@@ -2,7 +2,7 @@ const {cpus} = require('os')
 const Bluebird = require('bluebird')
 const {analyzeLocation} = require('plunger')
 const bytes = require('bytes')
-const debug = require('debug')('link-proxy:check')
+const debug = require('debug')('link-proxy:jobs:check')
 const del = require('del')
 
 const userAgent = require('../../lib/user-agent')
