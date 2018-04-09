@@ -6,9 +6,11 @@ const check = require('../../jobs/check')
 
 const NAME = 'test-link-proxy-blacklist'
 
-beforeAll(() => {
+beforeAll(async () => {
   process.env.MONGO_DB = NAME
-  return mongo.connect()
+
+  await mongo.connect()
+  await mongo.ensureIndexes()
 })
 
 afterAll(async () => {

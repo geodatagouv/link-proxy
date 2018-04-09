@@ -8,6 +8,7 @@ const doHook = require('./jobs/hooks')
 async function main() {
   await queues.init(true)
   await mongo.connect()
+  await mongo.ensureIndexes()
 
   queues.checkQueue.process(({data: {
     linkId,

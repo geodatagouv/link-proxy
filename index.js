@@ -101,6 +101,7 @@ async function main() {
 
   await queues.init()
   await mongo.connect()
+  await mongo.ensureIndexes()
   await server.listen(port)
 
   console.log(`Server running on port ${port}`)
