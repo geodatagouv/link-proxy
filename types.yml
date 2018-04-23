@@ -1,3 +1,8 @@
+## The order of the types in this file is important.
+## This file exposes an array that defines the order in which the types will be matched.
+##
+## Always ensure that the extensions (and related) are properly lowercased.
+
 - name: geopkg
   extensions:
     - gpkg
@@ -42,6 +47,28 @@
     - id
     - ind
 
+- name: csv
+  extensions:
+    - csv
+    - tsv
+
+- name: tiff
+  extensions:
+    - tiff
+    - tif
+  related:
+    - tfw
+    - ovr
+    - xml
+
+- name: ecw
+  extensions:
+    - ecw
+
+- name: jpeg2000
+  extensions:
+    - jp2
+
 - name: document
   extensions:
     - pdf
@@ -51,14 +78,3 @@
     - xlsx
     - rtf
     - txt
-
-- name: csv
-  extensions:
-    - csv
-    - tsv
-
-# - name: image
-#   extensions:
-#     - ecw
-#     - tiff
-#     - jp2
