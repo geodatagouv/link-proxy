@@ -3,7 +3,7 @@
 ##
 ## Always ensure that the extensions (and related) are properly lowercased.
 
-- name: geopkg
+- name: gpkg
   extensions:
     - gpkg
 
