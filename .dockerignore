@@ -1,5 +1,8 @@
 .git
 .gitignore
+
+.circleci
+
 node_modules
 coverage
 reports
