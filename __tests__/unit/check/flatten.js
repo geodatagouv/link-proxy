@@ -73,4 +73,33 @@ describe('check.flatten', () => {
 
     expect(res).toMatchSnapshot()
   })
+
+  it('should return multiple bundles with similar extensions', () => {
+    const res = flatten({
+      url: 'http://foo',
+      type: 'index-of',
+      children: [
+        {
+          url: 'http://foo/file1.shp',
+          type: 'file',
+          fileName: 'file1.shp',
+          fileTypes: [{ext: 'shp'}]
+        },
+        {
+          url: 'http://foo/file1.dbf',
+          type: 'file',
+          fileName: 'file1.dbf',
+          fileTypes: [{ext: 'dbf'}]
+        },
+        {
+          url: 'http://foo/file2.dbf',
+          type: 'file',
+          fileName: 'file2.dbf',
+          fileTypes: [{ext: 'dbf'}]
+        }
+      ]
+    })
+
+    expect(res).toMatchSnapshot()
+  })
 })

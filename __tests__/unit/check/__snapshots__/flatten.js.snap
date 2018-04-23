@@ -154,6 +154,86 @@ Object {
 }
 `;
 
+exports[`check.flatten should return multiple bundles with similar extensions 1`] = `
+Object {
+  "links": Object {
+    "http://foo": Object {
+      "bundles": Array [
+        Object {
+          "changed": 2,
+          "files": Array [
+            Object {
+              "fileName": "file1.shp",
+              "fileTypes": Array [
+                Object {
+                  "ext": "shp",
+                },
+              ],
+              "type": "file",
+              "url": "http://foo/file1.shp",
+            },
+            Object {
+              "fileName": "file1.dbf",
+              "fileTypes": Array [
+                Object {
+                  "ext": "dbf",
+                },
+              ],
+              "type": "file",
+              "url": "http://foo/file1.dbf",
+            },
+          ],
+          "type": "shp",
+        },
+      ],
+      "errors": Array [],
+      "urls": Array [
+        "http://foo/file1.shp",
+        "http://foo/file1.dbf",
+        "http://foo/file2.dbf",
+      ],
+      "warnings": Array [],
+    },
+    "http://foo/file1.dbf": Object {
+      "bundles": Array [],
+      "errors": Array [],
+      "urls": Array [],
+      "warnings": Array [],
+    },
+    "http://foo/file1.shp": Object {
+      "bundles": Array [],
+      "errors": Array [],
+      "urls": Array [],
+      "warnings": Array [],
+    },
+    "http://foo/file2.dbf": Object {
+      "bundles": Array [
+        Object {
+          "changed": 1,
+          "files": Array [
+            Object {
+              "fileName": "file2.dbf",
+              "fileTypes": Array [
+                Object {
+                  "ext": "dbf",
+                },
+              ],
+              "type": "file",
+              "url": "http://foo/file2.dbf",
+            },
+          ],
+          "type": "dbf",
+        },
+      ],
+      "errors": Array [],
+      "urls": Array [],
+      "warnings": Array [],
+    },
+  },
+  "temporaries": Array [],
+}
+`;
+
 exports[`check.flatten should return the file for a simple document 1`] = `
 Object {
   "links": Object {
