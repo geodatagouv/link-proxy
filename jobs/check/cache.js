@@ -1,3 +1,4 @@
+const types = require('../../lib/types')
 const mongo = require('../../lib/utils/mongo')
 
 function getLink(url) {
@@ -7,7 +8,9 @@ function getLink(url) {
     projection: {
       etag: 1,
       lastModified: 1,
-      cacheControl: 1
+      cacheControl: 1,
+      fileTypes: 1,
+      supported: 1
     }
   })
 }
@@ -21,6 +24,12 @@ function getUrlCache(noCache) {
         return null
       }
 
+      // Previously not supported type should now be analyzed.
+      const supported = types.isSupported(link.fileTypes)
+      if (supported && !link.supported) {
+        return null
+      }
+
       return {
         etag: link.etag,
         lastModified: link.lastModified
@@ -28,13 +37,9 @@ function getUrlCache(noCache) {
     }
 
     const now = new Date()
-
     await mongo.db.collection('links').insert({
       createdAt: now,
       updatedAt: now,
-      etag: token.etag,
-      lastModified: token.lastModified,
-      cacheControl: token.cacheControl,
       locations: [token.url]
     })
 
@@ -45,11 +50,13 @@ function getUrlCache(noCache) {
 function setUrlCache(noCache) {
   return async token => {
     const link = await getLink(token.url)
+    const supported = types.isSupported(token.fileTypes)
 
     if (!noCache &&
         link &&
         link.lastModified === token.lastModified &&
-        link.etag === token.etag
+        link.etag === token.etag &&
+        link.supported === supported
     ) {
       return false
     }
@@ -65,7 +72,9 @@ function setUrlCache(noCache) {
         updatedAt: new Date(),
         etag: token.etag,
         lastModified: token.lastModified,
-        cacheControl: token.cacheControl
+        cacheControl: token.cacheControl,
+        fileTypes: token.fileTypes,
+        supported
       },
       $addToSet: {
         // In the future, it may be interesting to link token.finalUrl and ...token.redirectUrls here.
@@ -98,14 +107,30 @@ function getFileCache(noCache) {
       filePath: token.filePath
     }, {
       projection: {
-        _id: 1
+        _id: 1,
+        supported: 1
       }
     })
 
+    const supported = types.isSupported(token.fileTypes)
+
     if (cache) {
-      // Return true if caching is enabled, false if caching is disabled
-      // noCache === true means that caching is disabled.
-      return !noCache
+      if (noCache) {
+        return false
+      }
+
+      if (supported && !cache.supported) {
+        await mongo.db.collection('files').updateOne({
+          _id: cache._id
+        }, {
+          $set: {
+            supported
+          }
+        })
+        return false
+      }
+
+      return true
     }
 
     const now = new Date()
@@ -116,7 +141,8 @@ function getFileCache(noCache) {
       digest: token.digest,
       fileName: token.fileName,
       fileSize: token.fileSize,
-      filePath: token.filePath
+      filePath: token.filePath,
+      supported
     }
 
     await mongo.db.collection('files').insert(doc)
