@@ -1,9 +1,7 @@
-const {readFileSync} = require('fs')
-const {extname, join} = require('path')
+const {extname} = require('path')
 const {remove} = require('lodash')
-const {safeLoad} = require('js-yaml')
 
-const fileTypes = safeLoad(readFileSync(join(__dirname, '../../types.yml')))
+const fileTypes = require('../../lib/types')
 
 function getRelated(tokens, token, type) {
   return tokens.filter(t => {
