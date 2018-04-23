@@ -50,4 +50,27 @@ describe('check.flatten', () => {
 
     expect(res).toMatchSnapshot()
   })
+
+  it('should not consider related files as main when they also have the main type', () => {
+    const res = flatten({
+      url: 'http://foo',
+      type: 'index-of',
+      children: [
+        {
+          url: 'http://foo/file.tiff',
+          type: 'file',
+          fileName: 'file.tiff',
+          fileTypes: [{ext: 'tiff'}]
+        },
+        {
+          url: 'http://foo/file.ovr',
+          type: 'file',
+          fileName: 'file.ovr',
+          fileTypes: [{ext: 'ovr'}, {ext: 'tiff'}]
+        }
+      ]
+    })
+
+    expect(res).toMatchSnapshot()
+  })
 })
