@@ -56,6 +56,65 @@ Object {
 }
 `;
 
+exports[`check.flatten should not consider related files as main when they also have the main type 1`] = `
+Object {
+  "links": Object {
+    "http://foo": Object {
+      "bundles": Array [
+        Object {
+          "changed": 2,
+          "files": Array [
+            Object {
+              "fileName": "file.tiff",
+              "fileTypes": Array [
+                Object {
+                  "ext": "tiff",
+                },
+              ],
+              "type": "file",
+              "url": "http://foo/file.tiff",
+            },
+            Object {
+              "fileName": "file.ovr",
+              "fileTypes": Array [
+                Object {
+                  "ext": "ovr",
+                },
+                Object {
+                  "ext": "tiff",
+                },
+              ],
+              "type": "file",
+              "url": "http://foo/file.ovr",
+            },
+          ],
+          "type": "tiff",
+        },
+      ],
+      "errors": Array [],
+      "urls": Array [
+        "http://foo/file.tiff",
+        "http://foo/file.ovr",
+      ],
+      "warnings": Array [],
+    },
+    "http://foo/file.ovr": Object {
+      "bundles": Array [],
+      "errors": Array [],
+      "urls": Array [],
+      "warnings": Array [],
+    },
+    "http://foo/file.tiff": Object {
+      "bundles": Array [],
+      "errors": Array [],
+      "urls": Array [],
+      "warnings": Array [],
+    },
+  },
+  "temporaries": Array [],
+}
+`;
+
 exports[`check.flatten should return a sole shapefile in an index-of 1`] = `
 Object {
   "links": Object {
@@ -84,6 +143,86 @@ Object {
             },
           ],
           "type": "shp",
+        },
+      ],
+      "errors": Array [],
+      "urls": Array [],
+      "warnings": Array [],
+    },
+  },
+  "temporaries": Array [],
+}
+`;
+
+exports[`check.flatten should return multiple bundles with similar extensions 1`] = `
+Object {
+  "links": Object {
+    "http://foo": Object {
+      "bundles": Array [
+        Object {
+          "changed": 2,
+          "files": Array [
+            Object {
+              "fileName": "file1.shp",
+              "fileTypes": Array [
+                Object {
+                  "ext": "shp",
+                },
+              ],
+              "type": "file",
+              "url": "http://foo/file1.shp",
+            },
+            Object {
+              "fileName": "file1.dbf",
+              "fileTypes": Array [
+                Object {
+                  "ext": "dbf",
+                },
+              ],
+              "type": "file",
+              "url": "http://foo/file1.dbf",
+            },
+          ],
+          "type": "shp",
+        },
+      ],
+      "errors": Array [],
+      "urls": Array [
+        "http://foo/file1.shp",
+        "http://foo/file1.dbf",
+        "http://foo/file2.dbf",
+      ],
+      "warnings": Array [],
+    },
+    "http://foo/file1.dbf": Object {
+      "bundles": Array [],
+      "errors": Array [],
+      "urls": Array [],
+      "warnings": Array [],
+    },
+    "http://foo/file1.shp": Object {
+      "bundles": Array [],
+      "errors": Array [],
+      "urls": Array [],
+      "warnings": Array [],
+    },
+    "http://foo/file2.dbf": Object {
+      "bundles": Array [
+        Object {
+          "changed": 1,
+          "files": Array [
+            Object {
+              "fileName": "file2.dbf",
+              "fileTypes": Array [
+                Object {
+                  "ext": "dbf",
+                },
+              ],
+              "type": "file",
+              "url": "http://foo/file2.dbf",
+            },
+          ],
+          "type": "dbf",
         },
       ],
       "errors": Array [],

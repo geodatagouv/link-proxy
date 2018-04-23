@@ -1,9 +1,7 @@
-const {readFileSync} = require('fs')
-const {extname, join} = require('path')
+const {extname} = require('path')
 const {remove} = require('lodash')
-const {safeLoad} = require('js-yaml')
 
-const fileTypes = safeLoad(readFileSync(join(__dirname, '../../types.yml')))
+const fileTypes = require('../../lib/types')
 
 function getRelated(tokens, token, type) {
   return tokens.filter(t => {
@@ -14,14 +12,29 @@ function getRelated(tokens, token, type) {
   })
 }
 
+function isMainType(file, type) {
+  const matches = type.extensions.some(
+    ext => file.fileTypes.some(ft => ft.ext && ft.ext.toLowerCase() === ext)
+  )
+
+  if (matches && type.related) {
+    // If the type has related files and the file also matches one of the related extensions,
+    // it does not qualify as the main type of the bundle.
+
+    return !type.related.some(
+      rel => file.fileTypes.some(ft => ft.ext && ft.ext.toLowerCase() === rel)
+    )
+  }
+
+  return matches
+}
+
 function matchPatterns(files, fileTypes) {
   const bundles = []
   const rest = [...files]
 
   fileTypes.forEach(type => {
-    const matchingNodes = rest.filter(file => type.extensions.some(ext =>
-      file.fileTypes.some(type => type.ext && type.ext.toLowerCase() === ext.toLowerCase())
-    ))
+    const matchingNodes = rest.filter(file => isMainType(file, type))
 
     matchingNodes.forEach(node => {
       const bundle = {
