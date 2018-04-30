@@ -26,7 +26,7 @@
     "lodash": "^4.17.10",
     "micro": "^9.3.0",
     "microrouter": "^3.1.2",
-    "mongodb": "^3.0.5",
+    "mongodb": "^3.0.7",
     "plunger": "^2.3.3",
     "raven": "^2.6.0",
     "slugify": "^1.2.9",
