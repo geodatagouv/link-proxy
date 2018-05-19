@@ -3465,9 +3465,9 @@ micromatch@^3.1.4, micromatch@^3.1.8:
     snapdragon "^0.8.1"
     to-regex "^3.0.1"
 
-microrouter@^3.1.2:
-  version "3.1.2"
-  resolved "https://registry.yarnpkg.com/microrouter/-/microrouter-3.1.2.tgz#d098a3ab460160041b01defbc89b0d8ef3a5cf25"
+microrouter@^3.1.3:
+  version "3.1.3"
+  resolved "https://registry.yarnpkg.com/microrouter/-/microrouter-3.1.3.tgz#1e45df77d3e2d773be5da129cfc7d5e6e6c86f4e"
   dependencies:
     url-pattern "^1.0.3"
 
