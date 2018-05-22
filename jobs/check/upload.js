@@ -34,7 +34,8 @@ function uploadSingle(bundle, distribution) {
   const resourceName = [
     hostname,
     formatDate(distribution.createdAt, 'YYYY-MM-DD'),
-    `${distribution._id}-${formatName(file)}`
+    distribution._id,
+    formatName(file)
   ].join('/')
 
   return store.upload(resourceName, createReadStream(file.path))
@@ -79,7 +80,8 @@ async function uploadBundle(bundle, distribution, previous) {
   const resourceName = [
     hostname,
     formatDate(distribution.createdAt, 'YYYY-MM-DD'),
-    `${distribution._id}-${formatName(first, 'zip')}`
+    distribution._id,
+    formatName(first, 'zip')
   ].join('/')
 
   return store.upload(resourceName, zip.outputStream)
