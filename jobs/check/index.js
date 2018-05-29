@@ -118,7 +118,7 @@ async function analyze(linkId, location, options) {
         type: bundle.type,
         archive: bundle.files.length > 1,
         name: mainFile.fileName,
-        path: mainFile.filePath,
+        path: mainFile.filePath || mainFile.fileName,
         files: bundle.files.map(f => ({
           name: f.fileName,
           size: f.fileSize,
