@@ -1,7 +1,6 @@
 const {createReadStream} = require('fs')
 const {parse} = require('url')
 const formatDate = require('date-fns/format')
-const slugify = require('slugify')
 const {ZipFile} = require('yazl')
 const got = require('got')
 const unzip = require('unzip-stream')
@@ -9,11 +8,7 @@ const unzip = require('unzip-stream')
 const store = require('../../lib/utils/store')
 
 function formatName(file, ext) {
-  let name = file.fileName
-
-  if (file.filePath) {
-    name = file.filePath.replace(/\//g, '-')
-  }
+  let name = file.filePath || file.fileName
 
   if (ext) {
     const fileType = file.fileTypes.find(ft => ft.source === 'path:filename')
@@ -23,7 +18,7 @@ function formatName(file, ext) {
     }
   }
 
-  return slugify(name)
+  return name
 }
 
 function uploadSingle(bundle, distribution) {
