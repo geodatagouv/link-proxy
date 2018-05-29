@@ -48,16 +48,6 @@ const routes = router(
     res.end()
   }),
 
-  get('/:link', async req => {
-    const summary = await getLinkSummary(req.params.link)
-
-    if (!summary) {
-      throw micro.createError(404, `link with id ${req.params.link} was not found`)
-    }
-
-    return summary
-  }),
-
   get('/:link/checks', async req => {
     const checks = await getLinkChecks(req.params.link)
 
@@ -66,6 +56,16 @@ const routes = router(
     }
 
     return checks
+  }),
+
+  get('/:link', async req => {
+    const summary = await getLinkSummary(req.params.link)
+
+    if (!summary) {
+      throw micro.createError(404, `link with id ${req.params.link} was not found`)
+    }
+
+    return summary
   }),
 
   post('/', async req => {
