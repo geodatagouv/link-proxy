@@ -36,7 +36,7 @@
     "codecov": "^3.0.2",
     "jest": "^23.0.1",
     "jest-junit": "^4.0.0",
-    "nock": "^9.2.6",
+    "nock": "^9.3.2",
     "xo": "^0.21.1"
   },
   "author": "Bertrand Marron <bertrand.marron@gmail.com>",
