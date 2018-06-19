@@ -42,17 +42,19 @@
   "author": "Bertrand Marron <bertrand.marron@gmail.com>",
   "license": "MIT",
   "jest": {
+    "reporters": [
+      "default",
+      ["jest-junit", {
+        "output": "reports/tests/junit.xml"
+      }]
+    ],
     "globalSetup": "./jest.setup.js",
     "globalTeardown": "./jest.teardown.js",
     "collectCoverage": true,
     "coverageReporters": [
       "lcov",
       "text-summary"
-    ],
-    "testResultsProcessor": "jest-junit"
-  },
-  "jest-junit": {
-    "output": "reports/tests/junit.xml"
+    ]
   },
   "xo": {
     "space": 2,
