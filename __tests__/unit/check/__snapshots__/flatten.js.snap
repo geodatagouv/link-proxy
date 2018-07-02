@@ -2,6 +2,7 @@
 
 exports[`check.flatten should flatten a shapefile in an index-of 1`] = `
 Object {
+  "ignored": Array [],
   "links": Object {
     "http://foo": Object {
       "bundles": Array [
@@ -53,11 +54,13 @@ Object {
     },
   },
   "temporaries": Array [],
+  "typesVersion": 1,
 }
 `;
 
 exports[`check.flatten should not consider related files as main when they also have the main type 1`] = `
 Object {
+  "ignored": Array [],
   "links": Object {
     "http://foo": Object {
       "bundles": Array [
@@ -112,11 +115,13 @@ Object {
     },
   },
   "temporaries": Array [],
+  "typesVersion": 1,
 }
 `;
 
 exports[`check.flatten should return a sole shapefile in an index-of 1`] = `
 Object {
+  "ignored": Array [],
   "links": Object {
     "http://foo": Object {
       "bundles": Array [],
@@ -151,11 +156,13 @@ Object {
     },
   },
   "temporaries": Array [],
+  "typesVersion": 1,
 }
 `;
 
 exports[`check.flatten should return multiple bundles with similar extensions 1`] = `
 Object {
+  "ignored": Array [],
   "links": Object {
     "http://foo": Object {
       "bundles": Array [
@@ -231,11 +238,13 @@ Object {
     },
   },
   "temporaries": Array [],
+  "typesVersion": 1,
 }
 `;
 
 exports[`check.flatten should return the file for a simple document 1`] = `
 Object {
+  "ignored": Array [],
   "links": Object {
     "http://foo": Object {
       "bundles": Array [
@@ -261,5 +270,32 @@ Object {
     },
   },
   "temporaries": Array [],
+  "typesVersion": 1,
+}
+`;
+
+exports[`check.flatten should support ignored files types 1`] = `
+Object {
+  "ignored": Array [
+    Object {
+      "fileTypes": Array [
+        Object {
+          "ext": "unknown stuff",
+        },
+      ],
+      "type": "file",
+      "url": "http://foo",
+    },
+  ],
+  "links": Object {
+    "http://foo": Object {
+      "bundles": Array [],
+      "errors": Array [],
+      "urls": Array [],
+      "warnings": Array [],
+    },
+  },
+  "temporaries": Array [],
+  "typesVersion": 1,
 }
 `;
