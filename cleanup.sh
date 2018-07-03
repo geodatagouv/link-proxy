@@ -13,13 +13,14 @@
 # }
 
 MINIO_BUCKET=${MINIO_BUCKET:-link-proxy/link-proxy-files}
+MONGO_DB=${MONGO_DB:-link-proxy}
 
 guard() {
   $@ && echo "✨  Done" || echo "❌  Failed"
 }
 
 echo "1️⃣  Drop mongo database"
-guard docker run -it --rm mongo:latest mongo link-proxy --host docker.for.mac.host.internal --eval "db.dropDatabase()"
+guard docker run -it --rm mongo:latest mongo $MONGO_DB --host docker.for.mac.host.internal --eval "db.dropDatabase()"
 
 echo
 
