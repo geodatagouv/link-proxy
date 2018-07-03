@@ -78,7 +78,7 @@ function setUrlCache(noCache) {
   }
 }
 
-function getFileCache(noCache) {
+function getFileCache() {
   return async token => {
     const link = await mongo.db.collection('links').findOne({
       locations: {
@@ -103,9 +103,7 @@ function getFileCache(noCache) {
     })
 
     if (cache) {
-      // Return true if caching is enabled, false if caching is disabled
-      // noCache === true means that caching is disabled.
-      return !noCache
+      return true
     }
 
     const now = new Date()
