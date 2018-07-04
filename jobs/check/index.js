@@ -188,7 +188,15 @@ async function analyze(linkId, location, options) {
   await mongo.db.collection('checks').updateOne({_id: check._id}, {
     $set: {
       state: 'finished',
-      updatedAt: new Date()
+      updatedAt: new Date(),
+      ignored: result.ignored.map(token => ({
+        url: token.url || token.fromUrl,
+        digest: token.digest,
+        fileName: token.fileName,
+        fileSize: token.fileSize,
+        filePath: token.filePath,
+        fileTypes: token.fileTypes
+      }))
     }
   })
 
