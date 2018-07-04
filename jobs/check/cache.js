@@ -1,4 +1,5 @@
 const mongo = require('../../lib/utils/mongo')
+const fileTypes = require('../../lib/types')
 
 function getLink(url) {
   return mongo.db.collection('links').findOne({
@@ -78,7 +79,7 @@ function setUrlCache(noCache) {
   }
 }
 
-function getFileCache() {
+function getFileCache(noCache) {
   return async token => {
     const link = await mongo.db.collection('links').findOne({
       locations: {
@@ -95,7 +96,8 @@ function getFileCache() {
     const cache = await mongo.db.collection('files').findOne({
       linkId: link._id,
       digest: token.digest,
-      filePath: token.filePath
+      filePath: token.filePath,
+      typesVersion: fileTypes.version
     }, {
       projection: {
         _id: 1
@@ -103,13 +105,16 @@ function getFileCache() {
     })
 
     if (cache) {
-      return true
+      // Return true if caching is enabled, false if caching is disabled
+      // noCache === true means that caching is disabled.
+      return !noCache
     }
 
     const now = new Date()
 
     const doc = {
       createdAt: now,
+      typesVersion: fileTypes.version,
       linkId: link._id,
       digest: token.digest,
       fileName: token.fileName,

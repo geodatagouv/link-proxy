@@ -3,7 +3,7 @@
 ##
 ## Always ensure that the extensions (and related) are properly lowercased.
 
-version: 1
+version: '1'
 
 types:
   - name: gpkg
