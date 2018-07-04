@@ -144,7 +144,6 @@ function flattenNodes(result, nodes, parentNode) {
 
 function flatten(node) {
   const result = {
-    typesVersion: fileTypes.version,
     temporaries: [],
     ignored: [],
     links: {}

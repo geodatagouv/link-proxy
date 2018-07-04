@@ -54,7 +54,6 @@ Object {
     },
   },
   "temporaries": Array [],
-  "typesVersion": 1,
 }
 `;
 
@@ -115,7 +114,6 @@ Object {
     },
   },
   "temporaries": Array [],
-  "typesVersion": 1,
 }
 `;
 
@@ -156,7 +154,6 @@ Object {
     },
   },
   "temporaries": Array [],
-  "typesVersion": 1,
 }
 `;
 
@@ -238,7 +235,6 @@ Object {
     },
   },
   "temporaries": Array [],
-  "typesVersion": 1,
 }
 `;
 
@@ -270,7 +266,6 @@ Object {
     },
   },
   "temporaries": Array [],
-  "typesVersion": 1,
 }
 `;
 
@@ -296,6 +291,5 @@ Object {
     },
   },
   "temporaries": Array [],
-  "typesVersion": 1,
 }
 `;
