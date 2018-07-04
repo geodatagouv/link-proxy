@@ -108,7 +108,9 @@ async function analyze(linkId, location, options) {
       }
     }
 
-    await Bluebird.map(res.bundles, async bundle => {
+    const changedBundles = res.bundles.filter(bundle => bundle.changed > 0)
+
+    await Bluebird.map(changedBundles, async bundle => {
       const mainFile = bundle.files[0]
 
       const download = {
@@ -126,21 +128,18 @@ async function analyze(linkId, location, options) {
         }))
       }
 
-      let previous
-      if (bundle.changed !== bundle.files.length) {
-        previous = await mongo.db.collection('downloads').findOne({
-          linkId: subLink._id,
-          type: bundle.type,
-          name: mainFile.fileName
-        }, {
-          sort: {
-            createdAt: -1
-          },
-          projection: {
-            url: 1
-          }
-        })
-      }
+      const previous = await mongo.db.collection('downloads').findOne({
+        linkId: subLink._id,
+        type: bundle.type,
+        name: mainFile.fileName
+      }, {
+        sort: {
+          createdAt: -1
+        },
+        projection: {
+          url: 1
+        }
+      })
 
       if (previous) {
         changes.bundles.remove.push(previous._id)
