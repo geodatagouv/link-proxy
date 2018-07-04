@@ -33,7 +33,7 @@ async function createCheck(link, location, options) {
 
   if (isBlacklisted(location)) {
     check.state = 'blacklisted'
-  } else if (link.cacheControl) {
+  } else if (link.cacheControl && !options.noCache) {
     const cc = cacheControl.parse(link.cacheControl)
 
     if (differenceInSeconds(lastCheck.createdAt, now) < cc.maxAge) {
