@@ -26,6 +26,8 @@ Array [
         "size": 3,
       },
     ],
+    "name": "cool.shp",
+    "path": "cool.shp",
     "type": "shp",
   },
 ]
@@ -33,37 +35,6 @@ Array [
 
 exports[`test-link-proxy-index-of should find a shapefile within the zip file of the index-of 1`] = `
 Array [
-  Object {
-    "archive": true,
-    "files": Array [
-      Object {
-        "digest": "sha384-+1t5TeJcJ5X34OTBKFd9lDXmWfSP4yyKwNCd6HqLGKChrQodibskoUMz8lbBRABG",
-        "name": "house.shp",
-        "size": 11,
-      },
-      Object {
-        "digest": "sha384-g/OOiDmdzWdrQElweiK218tYBpzU+Sqpg39YDz/OGKo2bHgTMSfs8PTUFsXaKRtU",
-        "name": "house.cpg",
-        "size": 11,
-      },
-      Object {
-        "digest": "sha384-N0PxnfQbUbtgRHdg85YR5d23TJyCCw9dkMQ2b7sKrMLplKm2yiK2a+bPBWapI+PA",
-        "name": "house.dbf",
-        "size": 11,
-      },
-      Object {
-        "digest": "sha384-KjIjW8mDGhYle3IvWHrtMZ3Yng0z3375s8hE8w9gcirOr8Ha1mldECb4q04fg4vc",
-        "name": "house.prj",
-        "size": 11,
-      },
-      Object {
-        "digest": "sha384-FA1fzHfLn30z4w1QOE8IM3GlS45Xvmodk+MQdzWCkx8ceyOzE3aLBV9Gl7XXZJ4e",
-        "name": "house.shx",
-        "size": 11,
-      },
-    ],
-    "type": "shp",
-  },
   Object {
     "archive": true,
     "files": Array [
@@ -93,6 +64,41 @@ Array [
         "size": 11,
       },
     ],
+    "name": "hotel.shp",
+    "path": "hotel.zip/hotel.shp",
+    "type": "shp",
+  },
+  Object {
+    "archive": true,
+    "files": Array [
+      Object {
+        "digest": "sha384-+1t5TeJcJ5X34OTBKFd9lDXmWfSP4yyKwNCd6HqLGKChrQodibskoUMz8lbBRABG",
+        "name": "house.shp",
+        "size": 11,
+      },
+      Object {
+        "digest": "sha384-g/OOiDmdzWdrQElweiK218tYBpzU+Sqpg39YDz/OGKo2bHgTMSfs8PTUFsXaKRtU",
+        "name": "house.cpg",
+        "size": 11,
+      },
+      Object {
+        "digest": "sha384-N0PxnfQbUbtgRHdg85YR5d23TJyCCw9dkMQ2b7sKrMLplKm2yiK2a+bPBWapI+PA",
+        "name": "house.dbf",
+        "size": 11,
+      },
+      Object {
+        "digest": "sha384-KjIjW8mDGhYle3IvWHrtMZ3Yng0z3375s8hE8w9gcirOr8Ha1mldECb4q04fg4vc",
+        "name": "house.prj",
+        "size": 11,
+      },
+      Object {
+        "digest": "sha384-FA1fzHfLn30z4w1QOE8IM3GlS45Xvmodk+MQdzWCkx8ceyOzE3aLBV9Gl7XXZJ4e",
+        "name": "house.shx",
+        "size": 11,
+      },
+    ],
+    "name": "house.shp",
+    "path": "house.zip/house.shp",
     "type": "shp",
   },
 ]
@@ -129,6 +135,8 @@ Array [
         "size": 11,
       },
     ],
+    "name": "data1.shp",
+    "path": "data1.zip/data1.shp",
     "type": "shp",
   },
   Object {
@@ -160,6 +168,8 @@ Array [
         "size": 11,
       },
     ],
+    "name": "data2.shp",
+    "path": "data2.zip/data2.shp",
     "type": "shp",
   },
 ]
