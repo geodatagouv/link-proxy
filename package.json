@@ -51,6 +51,12 @@
     "globalSetup": "./jest.setup.js",
     "globalTeardown": "./jest.teardown.js",
     "collectCoverage": true,
+    "collectCoverageFrom": [
+      "index.js",
+      "worker.js",
+      "jobs/**/*.js",
+      "lib/**/*.js"
+    ],
     "coverageReporters": [
       "lcov",
       "text-summary"
