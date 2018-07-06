@@ -127,4 +127,25 @@ describe('check.check', () => {
 
     expect(check.state).toBe('started')
   })
+
+  it('should skip immutable files', async () => {
+    const link = {
+      _id: new mongo.ObjectID(),
+      cacheControl: 'immutable'
+    }
+
+    await mongo.db.collection('checks').insertOne({
+      createdAt: new Date(),
+      linkId: link._id,
+      location: 'http://example.org/8'
+    })
+
+    await new Promise(resolve => {
+      setTimeout(() => resolve(), 2000)
+    })
+
+    const check = await createCheck(link, 'http://example.org/8', {})
+
+    expect(check.state).toBe('skipped')
+  })
 })

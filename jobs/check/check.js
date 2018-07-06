@@ -36,7 +36,7 @@ async function createCheck(link, location, options) {
   } else if (lastCheck && link.cacheControl && !options.noCache) {
     const cc = cacheControl.parse(link.cacheControl)
 
-    if (differenceInSeconds(now, lastCheck.createdAt) < cc.maxAge) {
+    if (cc.immutable || differenceInSeconds(now, lastCheck.createdAt) < cc.maxAge) {
       check.state = 'skipped'
     }
   }
