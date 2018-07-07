@@ -102,4 +102,14 @@ describe('check.flatten', () => {
 
     expect(res).toMatchSnapshot()
   })
+
+  it('should support ignored files types', () => {
+    const res = flatten({
+      url: 'http://foo',
+      type: 'file',
+      fileTypes: [{ext: 'unknown stuff'}]
+    })
+
+    expect(res).toMatchSnapshot()
+  })
 })

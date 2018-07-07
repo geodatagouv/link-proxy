@@ -7,6 +7,7 @@ const check = require('../../jobs/check')
 
 const indexOf = require('../../__test-helpers__/index-of')
 const {shapefile} = require('../../__test-helpers__/archive')
+const {downloadsSnapshot} = require('../../__test-helpers__/snapshots')
 
 const NAME = 'test-link-proxy-index-of'
 
@@ -45,11 +46,7 @@ describe(NAME, () => {
     await check(_id, URL)
 
     const summary = await getLinkSummary(_id)
-    expect(summary.downloads.map(({type, archive, files}) => ({
-      type,
-      archive,
-      files
-    }))).toMatchSnapshot()
+    expect(downloadsSnapshot(summary.downloads)).toMatchSnapshot()
   })
 
   it('should find a shapefile within the zip file of the index-of of the index-of', async () => {
@@ -78,11 +75,7 @@ describe(NAME, () => {
     await check(_id, URL)
 
     const summary = await getLinkSummary(_id)
-    expect(summary.downloads.map(({type, archive, files}) => ({
-      type,
-      archive,
-      files
-    }))).toMatchSnapshot()
+    expect(downloadsSnapshot(summary.downloads)).toMatchSnapshot()
   })
 
   it('should find a shapefile listed in the index-of', async () => {
@@ -103,10 +96,6 @@ describe(NAME, () => {
     await check(_id, URL)
 
     const summary = await getLinkSummary(_id)
-    expect(summary.downloads.map(({type, archive, files}) => ({
-      type,
-      archive,
-      files
-    }))).toMatchSnapshot()
+    expect(downloadsSnapshot(summary.downloads)).toMatchSnapshot()
   })
 })

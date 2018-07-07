@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`check.check should create a check for a given location and link 1`] = `
+Object {
+  "_id": Any<ObjectID>,
+  "createdAt": Any<Date>,
+  "linkId": Any<ObjectID>,
+  "location": "http://example.org/1",
+  "number": 1,
+  "options": undefined,
+  "state": "started",
+  "updatedAt": Any<Date>,
+}
+`;

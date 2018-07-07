@@ -12,41 +12,50 @@ function getRelated(tokens, token, type) {
   })
 }
 
-function isMainType(file, type) {
-  const matches = type.extensions.some(
-    ext => file.fileTypes.some(ft => ft.ext && ft.ext.toLowerCase() === ext)
+function isMainType(node, type) {
+  const isMain = type.extensions.some(
+    ext => node.fileTypes.some(ft => ft.ext && ft.ext.toLowerCase() === ext)
   )
 
-  if (matches && type.related) {
-    // If the type has related files and the file also matches one of the related extensions,
-    // it does not qualify as the main type of the bundle.
+  if (isMain && type.related) {
+    // If the type has related files and the file also matches
+    // one of the related extensions, it does not qualify as the
+    // main type of the bundle.
 
     return !type.related.some(
-      rel => file.fileTypes.some(ft => ft.ext && ft.ext.toLowerCase() === rel)
+      rel => node.fileTypes.some(ft => ft.ext && ft.ext.toLowerCase() === rel)
     )
   }
 
-  return matches
+  return isMain
 }
 
-function matchPatterns(files, fileTypes) {
+function matchPatterns(nodes, types = fileTypes.types) {
   const bundles = []
-  const rest = [...files]
+  const ignored = [...nodes]
 
-  fileTypes.forEach(type => {
-    const matchingNodes = rest.filter(file => isMainType(file, type))
+  // It is important to loop over all types sequentially as the order
+  // defined in `types` is important.
+  for (const type of types) {
+    const matching = []
 
-    matchingNodes.forEach(node => {
+    for (const node of ignored) {
+      if (isMainType(node, type)) {
+        matching.push(node)
+      }
+    }
+
+    for (const node of matching) {
       const bundle = {
         type: type.name,
         files: [node],
         changed: node.unchanged ? 0 : 1
       }
 
-      remove(rest, node)
+      remove(ignored, node)
 
       if (type.related && type.related.length > 0) {
-        const related = getRelated(files, node, type)
+        const related = getRelated(ignored, node, type)
 
         bundle.files = bundle.files.concat(related)
 
@@ -55,15 +64,15 @@ function matchPatterns(files, fileTypes) {
             ++bundle.changed
           }
 
-          remove(rest, n)
+          remove(ignored, n)
         })
       }
 
       bundles.push(bundle)
-    })
-  })
+    }
+  }
 
-  return bundles
+  return {bundles, ignored}
 }
 
 function flattenNodes(result, nodes, parentNode) {
@@ -115,7 +124,8 @@ function flattenNodes(result, nodes, parentNode) {
     }
   }
 
-  for (const bundle of matchPatterns(files, fileTypes)) {
+  const {bundles, ignored} = matchPatterns(files)
+  for (const bundle of bundles) {
     const firstUrl = bundle.files[0].url
 
     if (bundle.files.length === 1 && firstUrl) {
@@ -128,11 +138,14 @@ function flattenNodes(result, nodes, parentNode) {
       parentLink.bundles.push(bundle)
     }
   }
+
+  result.ignored.push(...ignored)
 }
 
 function flatten(node) {
   const result = {
     temporaries: [],
+    ignored: [],
     links: {}
   }
 

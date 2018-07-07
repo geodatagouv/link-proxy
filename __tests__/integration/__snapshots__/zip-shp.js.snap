@@ -31,6 +31,8 @@ Array [
         "size": 11,
       },
     ],
+    "name": "data.shp",
+    "path": "data.zip/data.shp",
     "type": "shp",
   },
 ]

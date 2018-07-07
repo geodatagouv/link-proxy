@@ -3,78 +3,81 @@
 ##
 ## Always ensure that the extensions (and related) are properly lowercased.
 
-- name: gpkg
-  extensions:
-    - gpkg
+version: '1'
 
-- name: shp
-  extensions:
-    - shp
-  related:
-    - shx
-    - dbf
-    - prj
-    - sbn
-    - sbx
-    - fbn
-    - fbx
-    - ain
-    - aih
-    - shp.xml
-    - atx
-    - qix
-    - cpg
-    - qpj
+types:
+  - name: gpkg
+    extensions:
+      - gpkg
 
-- name: dbf
-  extensions:
-    - dbf
-  related:
-    - cpg
+  - name: shp
+    extensions:
+      - shp
+    related:
+      - shx
+      - dbf
+      - prj
+      - sbn
+      - sbx
+      - fbn
+      - fbx
+      - ain
+      - aih
+      - shp.xml
+      - atx
+      - qix
+      - cpg
+      - qpj
 
-- name: mif
-  extensions:
-    - mif
-  related:
-    - mid
+  - name: dbf
+    extensions:
+      - dbf
+    related:
+      - cpg
 
-- name: tab
-  extensions:
-    - tab
-  related:
-    - dat
-    - map
-    - id
-    - ind
+  - name: mif
+    extensions:
+      - mif
+    related:
+      - mid
 
-- name: csv
-  extensions:
-    - csv
-    - tsv
+  - name: tab
+    extensions:
+      - tab
+    related:
+      - dat
+      - map
+      - id
+      - ind
 
-- name: tiff
-  extensions:
-    - tiff
-    - tif
-  related:
-    - tfw
-    - ovr
-    - xml
+  - name: csv
+    extensions:
+      - csv
+      - tsv
 
-- name: ecw
-  extensions:
-    - ecw
+  - name: tiff
+    extensions:
+      - tiff
+      - tif
+    related:
+      - tfw
+      - ovr
+      - xml
 
-- name: jpeg2000
-  extensions:
-    - jp2
+  - name: ecw
+    extensions:
+      - ecw
 
-- name: document
-  extensions:
-    - pdf
-    - doc
-    - docx
-    - xls
-    - xlsx
-    - rtf
-    - txt
+  - name: jpeg2000
+    extensions:
+      - jp2
+
+  - name: document
+    extensions:
+      - pdf
+      - doc
+      - docx
+      - xls
+      - xlsx
+      - rtf
+      - txt

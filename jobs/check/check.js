@@ -23,7 +23,7 @@ async function createCheck(link, location, options) {
 
   const check = {
     linkId: link._id,
-    number: lastCheck ? (lastCheck.number || 0) + 1 : 1,
+    number: lastCheck ? (lastCheck.number || 1) + 1 : 1,
     createdAt: now,
     updatedAt: now,
     state: 'started',
@@ -33,10 +33,10 @@ async function createCheck(link, location, options) {
 
   if (isBlacklisted(location)) {
     check.state = 'blacklisted'
-  } else if (link.cacheControl) {
+  } else if (lastCheck && link.cacheControl && !options.noCache) {
     const cc = cacheControl.parse(link.cacheControl)
 
-    if (differenceInSeconds(lastCheck.createdAt, now) < cc.maxAge) {
+    if (cc.immutable || differenceInSeconds(now, lastCheck.createdAt) < cc.maxAge) {
       check.state = 'skipped'
     }
   }

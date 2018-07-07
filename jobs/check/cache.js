@@ -1,4 +1,5 @@
 const mongo = require('../../lib/utils/mongo')
+const fileTypes = require('../../lib/types')
 
 function getLink(url) {
   return mongo.db.collection('links').findOne({
@@ -95,7 +96,8 @@ function getFileCache(noCache) {
     const cache = await mongo.db.collection('files').findOne({
       linkId: link._id,
       digest: token.digest,
-      filePath: token.filePath
+      filePath: token.filePath,
+      typesVersion: fileTypes.version
     }, {
       projection: {
         _id: 1
@@ -112,6 +114,7 @@ function getFileCache(noCache) {
 
     const doc = {
       createdAt: now,
+      typesVersion: fileTypes.version,
       linkId: link._id,
       digest: token.digest,
       fileName: token.fileName,

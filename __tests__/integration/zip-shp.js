@@ -6,6 +6,7 @@ const {upsertLink, getLinkSummary} = require('../../lib/link')
 const check = require('../../jobs/check')
 
 const {shapefile} = require('../../__test-helpers__/archive')
+const {downloadsSnapshot} = require('../../__test-helpers__/snapshots')
 
 const NAME = 'test-link-proxy-zip-shp'
 
@@ -37,10 +38,6 @@ describe(NAME, () => {
     await check(_id, url)
 
     const summary = await getLinkSummary(_id)
-    expect(summary.downloads.map(({type, archive, files}) => ({
-      type,
-      archive,
-      files
-    }))).toMatchSnapshot()
+    expect(downloadsSnapshot(summary.downloads)).toMatchSnapshot()
   })
 })
