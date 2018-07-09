@@ -15,6 +15,7 @@ const {updateLink} = require('./link')
 const {getUrlCache, setUrlCache, getFileCache} = require('./cache')
 const {flatten} = require('./flatten')
 const {upload} = require('./upload')
+const {PlungerError} = require('./errors')
 
 const concurrency = cpus().length
 
@@ -66,7 +67,7 @@ async function analyze(linkId, location, options) {
   })
 
   if (tree.error) {
-    throw new Error(tree.error)
+    throw new PlungerError(tree.error)
   }
 
   await mongo.db.collection('checks').updateOne({_id: check._id}, {

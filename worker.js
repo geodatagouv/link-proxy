@@ -12,7 +12,7 @@ async function main() {
   await mongo.ensureIndexes()
 
   queues.checkQueue.process(({data: {linkId, location, options}}) => doCheck(linkId, location, options))
-  queues.checkQueue.on('failed', ({data: {linkId}}, err) => onCheckFailed(linkId, err))
+  queues.checkQueue.on('failed', (job, err) =>  onCheckFailed(job, err))
 
   queues.hooksQueue.process(({data: {linkId, action, source}}) => doHook(linkId, action, source))
 }
