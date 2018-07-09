@@ -13,6 +13,7 @@ async function createCheck(link, location, options) {
   }, {
     projection: {
       createdAt: 1,
+      state: 1,
       number: 1,
       _id: 0
     },
@@ -20,6 +21,13 @@ async function createCheck(link, location, options) {
       number: -1
     }
   })
+
+  if (lastCheck && lastCheck.state === 'errored') {
+    options = {
+      ...options,
+      noCache: true
+    }
+  }
 
   const check = {
     linkId: link._id,

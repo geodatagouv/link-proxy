@@ -1,5 +1,6 @@
 const micro = require('micro')
 const {get, post, router} = require('microrouter')
+const ms = require('ms')
 
 const sentry = require('./lib/utils/sentry')
 const mongo = require('./lib/utils/mongo')
@@ -87,7 +88,8 @@ const routes = router(
     }, {
       jobId: link._id,
       removeOnComplete: true,
-      timeout: 1000 * 60 * 30
+      removeOnFail: true,
+      timeout: ms('30m')
     })
 
     return link

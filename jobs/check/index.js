@@ -59,11 +59,15 @@ async function analyze(linkId, location, options) {
     maxDownloadSize: bytes('1GB'),
     concurrency,
     cache: {
-      getFileCache: getFileCache(options.noCache),
-      getUrlCache: getUrlCache(options.noCache),
-      setUrlCache: setUrlCache(options.noCache)
+      getFileCache: getFileCache(check.options.noCache),
+      getUrlCache: getUrlCache(check.options.noCache),
+      setUrlCache: setUrlCache(check.options.noCache)
     }
   })
+
+  if (tree.statusCode >= 500) {
+    throw new Error(`Received invalid status code: ${tree.statusCode}`)
+  }
 
   await mongo.db.collection('checks').updateOne({_id: check._id}, {
     $set: {
