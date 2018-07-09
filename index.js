@@ -88,7 +88,6 @@ const routes = router(
     }, {
       jobId: link._id,
       removeOnComplete: true,
-      removeOnFail: true,
       timeout: ms('30m')
     })
 

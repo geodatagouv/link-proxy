@@ -30,7 +30,9 @@ async function onCheckFailed(job, err) {
     debug(`Check #${check.number} for link "${job.data.location}" was errored.`)
   }
 
-  if (!(err instanceof PlungerError)) {
+  if (err instanceof PlungerError) {
+    job.remove()
+  } else {
     onError(job, err)
   }
 }
