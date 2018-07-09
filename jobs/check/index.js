@@ -65,8 +65,8 @@ async function analyze(linkId, location, options) {
     }
   })
 
-  if (tree.statusCode >= 500) {
-    throw new Error(`Received invalid status code: ${tree.statusCode}`)
+  if (tree.error) {
+    throw new Error(tree.error)
   }
 
   await mongo.db.collection('checks').updateOne({_id: check._id}, {

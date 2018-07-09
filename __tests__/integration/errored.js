@@ -2,7 +2,6 @@ const nock = require('nock')
 
 const mongo = require('../../lib/utils/mongo')
 const {upsertLink} = require('../../lib/link')
-const {getLinkChecks} = require('../../lib/check')
 const check = require('../../jobs/check')
 
 const NAME = 'test-link-proxy-errored'
@@ -28,21 +27,13 @@ describe(NAME, () => {
     const url = `${URL}/500`
     const {_id} = await upsertLink(url)
 
-    await expect(check(_id, url)).rejects.toThrow('Received invalid status code: 500')
+    await expect(check(_id, url)).rejects.toThrow('An invalid HTTP code was returned: 500')
   })
 
-  it('should not throw if the check returns a 404', async () => {
-    const URL = `http://${NAME}-error-404`
-
-    nock(URL).get('/404').reply(404, () => null)
-
-    const url = `${URL}/404`
+  it('should fail for unsupported protocols', async () => {
+    const url = `foo://${NAME}-error-protocol`
     const {_id} = await upsertLink(url)
 
-    await check(_id, url)
-
-    const [lastCheck] = await getLinkChecks(_id)
-    expect(lastCheck.state).toBe('finished')
-    expect(lastCheck.statusCode).toBe(404)
+    await expect(check(_id, url)).rejects.toThrow('location must have a valid protocol: http or https')
   })
 })
