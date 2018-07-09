@@ -25,7 +25,7 @@ describe(NAME, () => {
     const {_id} = await upsertLink(URL)
     await check(_id, URL)
 
-    const checks = await getLinkChecks(_id)
-    expect(checks[0].state).toEqual('blacklisted')
+    const [lastCheck] = await getLinkChecks(_id)
+    expect(lastCheck.state).toBe('blacklisted')
   })
 })
