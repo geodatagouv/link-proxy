@@ -37,6 +37,7 @@
     "codecov": "^3.0.4",
     "jest": "^23.3.0",
     "jest-junit": "^5.1.0",
+    "lerna-changelog": "^0.8.0",
     "nock": "^9.4.1",
     "xo": "^0.21.1"
   },
@@ -80,5 +81,17 @@
         ]
       }
     ]
+  },
+  "changelog": {
+    "cacheDir": ".changelog",
+    "labels": {
+      "bug": ":bug: Bug Fix",
+      "cleanup": ":shower: Cleanup",
+      "documentation": ":memo: Documentation",
+      "enhancement": ":rocket: Enhancement",
+      "performance": ":racehorse: Performance",
+      "security": ":policeman: Security"
+    },
+    "repo": "inspireteam/link-proxy"
   }
 }

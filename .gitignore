@@ -15,3 +15,7 @@ reports/
 
 # Misc
 docker/prod
+
+# Changelog
+.changelog
+CHANGELOG.md
