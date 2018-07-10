@@ -69,6 +69,9 @@
   "xo": {
     "space": 2,
     "semicolon": false,
+    "rules": {
+      "unicorn/no-process-exit": false
+    },
     "overrides": [
       {
         "files": "__tests__/**/*.js",

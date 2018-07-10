@@ -11,6 +11,10 @@ async function main() {
   await mongo.connect()
   await mongo.ensureIndexes()
 
+  mongo.client.on('close', () => {
+    shutdown(new Error('Mongo connection was closed'))
+  })
+
   queues.checkQueue.process(({data: {linkId, location, options}}) => doCheck(linkId, location, options))
   queues.checkQueue.on('failed', (job, err) => onCheckFailed(job, err))
 
@@ -18,8 +22,17 @@ async function main() {
 }
 
 main().catch(err => {
-  sentry.captureException(err)
-
-  queues.disconnect()
-  mongo.disconnect()
+  shutdown(err)
 })
+
+async function shutdown(err) {
+  await Promise.all([
+    queues.disconnect(),
+    mongo.disconnect()
+  ])
+
+  if (err) {
+    sentry.captureException(err)
+    process.exit(1)
+  }
+}
