@@ -13,7 +13,7 @@ Analyze links and extract relevant data.
 This requires a few services in order to function properly:
 
 - A MongoDB (>= 3) server:
-  - `MONGO_URL` defaults to `mongodb://localhost`
+  - `MONGO_URL` defaults to `mongodb://localhost:27017`
   - `MONGO_DB` defaults to `link-proxy`
 
 - An S3 compatible service:
