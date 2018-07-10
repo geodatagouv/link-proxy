@@ -4,6 +4,7 @@ const cacheControl = require('@tusbar/cache-control')
 const mongo = require('../../lib/utils/mongo')
 
 const {isBlacklisted} = require('./utils/blacklist')
+const {isUnsupported} = require('./utils/unsupported')
 
 async function createCheck(link, location, options) {
   const now = new Date()
@@ -41,6 +42,8 @@ async function createCheck(link, location, options) {
 
   if (isBlacklisted(location)) {
     check.state = 'blacklisted'
+  } else if (isUnsupported(location)) {
+    check.state = 'unsupported'
   } else if (lastCheck && link.cacheControl && !options.noCache) {
     const cc = cacheControl.parse(link.cacheControl)
 
