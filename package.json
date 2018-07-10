@@ -34,7 +34,7 @@
     "yazl": "^2.4.3"
   },
   "devDependencies": {
-    "codecov": "^3.0.2",
+    "codecov": "^3.0.4",
     "jest": "^23.3.0",
     "jest-junit": "^5.1.0",
     "nock": "^9.4.1",
