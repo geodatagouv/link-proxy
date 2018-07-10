@@ -105,13 +105,26 @@ async function main() {
   await mongo.ensureIndexes()
   await server.listen(port)
 
+  mongo.client.on('close', () => {
+    shutdown(new Error('Mongo connection was closed'))
+  })
+
   console.log(`Server running on port ${port}`)
 }
 
 main().catch(err => {
-  sentry.captureException(err)
-
-  server.close()
-  queues.disconnect()
-  mongo.disconnect()
+  shutdown(err)
 })
+
+async function shutdown(err) {
+  await Promise.all([
+    server.close(),
+    queues.disconnect(),
+    mongo.disconnect()
+  ])
+
+  if (err) {
+    sentry.captureException(err)
+    process.exit(1)
+  }
+}
