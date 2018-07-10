@@ -15,6 +15,7 @@ const {updateLink} = require('./link')
 const {getUrlCache, setUrlCache, getFileCache} = require('./cache')
 const {flatten} = require('./flatten')
 const {upload} = require('./upload')
+const {PlungerError} = require('./errors')
 
 const concurrency = cpus().length
 
@@ -59,11 +60,15 @@ async function analyze(linkId, location, options) {
     maxDownloadSize: bytes('1GB'),
     concurrency,
     cache: {
-      getFileCache: getFileCache(options.noCache),
-      getUrlCache: getUrlCache(options.noCache),
-      setUrlCache: setUrlCache(options.noCache)
+      getFileCache: getFileCache(check.options.noCache),
+      getUrlCache: getUrlCache(check.options.noCache),
+      setUrlCache: setUrlCache(check.options.noCache)
     }
   })
+
+  if (tree.error) {
+    throw new PlungerError(tree.error)
+  }
 
   await mongo.db.collection('checks').updateOne({_id: check._id}, {
     $set: {

@@ -21,7 +21,7 @@ function formatName(file, ext) {
   return name
 }
 
-function uploadSingle(bundle, distribution) {
+async function uploadSingle(bundle, distribution) {
   const file = bundle.files[0]
 
   const {hostname} = parse(file.url || file.fromUrl)

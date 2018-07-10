@@ -3,6 +3,7 @@ const mongo = require('./lib/utils/mongo')
 const queues = require('./lib/utils/queues')
 
 const doCheck = require('./jobs/check')
+const onCheckFailed = require('./jobs/check/failed')
 const doHook = require('./jobs/hooks')
 
 async function main() {
@@ -10,17 +11,10 @@ async function main() {
   await mongo.connect()
   await mongo.ensureIndexes()
 
-  queues.checkQueue.process(({data: {
-    linkId,
-    location,
-    options
-  }}) => doCheck(linkId, location, options))
+  queues.checkQueue.process(({data: {linkId, location, options}}) => doCheck(linkId, location, options))
+  queues.checkQueue.on('failed', (job, err) => onCheckFailed(job, err))
 
-  queues.hooksQueue.process(({data: {
-    linkId,
-    action,
-    source
-  }}) => doHook(linkId, action, source))
+  queues.hooksQueue.process(({data: {linkId, action, source}}) => doHook(linkId, action, source))
 }
 
 main().catch(err => {
