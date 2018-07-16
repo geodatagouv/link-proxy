@@ -32,6 +32,7 @@ function triggerWebhook(link, action, source) {
   }, {
     jobId: `${link._id}-${action}`,
     removeOnComplete: true,
+    removeOnFail: true,
     timeout: 1000 * 10
   })
 }
