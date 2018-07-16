@@ -38,7 +38,7 @@
     "jest": "^23.3.0",
     "jest-junit": "^5.1.0",
     "lerna-changelog": "^0.8.0",
-    "nock": "^9.4.1",
+    "nock": "^9.4.2",
     "xo": "^0.21.1"
   },
   "author": "Bertrand Marron <bertrand.marron@gmail.com>",
