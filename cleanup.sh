@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # In order for this script to run properly, you will need to install minio/mc locally
-# On a Mac, just run `brew install mc`.
+# On a Mac, just run `brew install minio-mc`.
 #
 # Then you will need to add the following `host` configuration to ~/.mc/config.json.
 #
