@@ -9,35 +9,32 @@ const mongo = require('../../lib/utils/mongo')
 
 const {getSubscribers} = require('./subscriber')
 
-async function send(linkId, action, source) {
-  debug(`Running webhook "${action}" for link "${linkId}", triggered by ${source.linkId}/${source.checkNumber}.`)
-
-  const link = await mongo.db.collection('links').findOne({
-    _id: new mongo.ObjectID(linkId)
+async function send(checkId, links) {
+  const check = await mongo.db.collection('checks').findOne({
+    _id: new mongo.ObjectID(checkId)
   }, {
     projection: {
+      _id: 0,
+      linkId: 1,
+      createdAt: 1,
       updatedAt: 1,
-      locations: 1
+      number: 1,
+      state: 1,
+      location: 1,
+      options: 1,
+      statusCode: 1
     }
   })
 
-  if (!link) {
-    debug(`Webhook "${action}" for link "${linkId}", triggered by ${source.linkId}/${source.checkNumber}, failed.`)
-
-    throw new Error(`Link ${linkId} was not found, did not trigger webhook`)
+  if (!check) {
+    throw new Error(`Check with id ${checkId} was not found, aborting webhook`)
   }
 
+  debug(`Running webhook for check ${check.number} of "${check.location}".`)
+
   const payload = {
-    link: linkId,
-    updatedAt: link.updatedAt,
-    locations: link.locations,
-    action,
-    subLink: source.linkId !== linkId,
-    triggeredBy: {
-      location: source.location,
-      link: source.linkId,
-      check: source.checkNumber
-    }
+    check,
+    links
   }
 
   const subscribers = await getSubscribers()
@@ -52,15 +49,15 @@ async function send(linkId, action, source) {
         }
       })
 
-      debug(`Webhook "${action}" for link "${linkId}" was sent to subscriber ${subscriber.name}.`)
+      debug(`Webhook for check ${check.number} of "${check.location}" was sent to subscriber ${subscriber.name}.`)
     } catch (err) {
       sentry.captureException(err)
 
-      debug(`Webhook "${action}" for link "${linkId}" was not sent to subscriber ${subscriber.name}.`)
+      debug(`Webhook for check ${check.number} of "${check.location}" was not sent to subscriber ${subscriber.name}.`)
     }
   }, {concurrency: 5})
 
-  debug(`Webhook "${action}" for link "${linkId}", triggered by ${source.linkId}/${source.checkNumber}, ended successfully.`)
+  debug(`Webhook for check ${check.number} of "${check.location}" ended successfully.`)
 }
 
 module.exports = send

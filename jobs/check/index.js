@@ -11,7 +11,7 @@ const mongo = require('../../lib/utils/mongo')
 const queues = require('../../lib/utils/queues')
 
 const {createCheck} = require('./check')
-const {updateLink} = require('./link')
+const {updateLink, getAllParentLinks} = require('./link')
 const {getUrlCache, setUrlCache, getFileCache} = require('./cache')
 const {flatten} = require('./flatten')
 const {upload} = require('./upload')
@@ -19,18 +19,13 @@ const {PlungerError} = require('./errors')
 
 const concurrency = cpus().length
 
-function triggerWebhook(link, action, source) {
+function triggerWebhook(check, links) {
   queues.hooksQueue.add({
-    name: link.locations[0],
-    linkId: link._id,
-    source: {
-      linkId: source.link._id,
-      checkNumber: source.check.number,
-      location: source.location
-    },
-    action
+    name: check.location,
+    checkId: check._id,
+    links
   }, {
-    jobId: `${link._id}-${action}`,
+    jobId: check._id,
     removeOnComplete: true,
     removeOnFail: true,
     timeout: 1000 * 10
@@ -166,13 +161,6 @@ async function analyze(linkId, location, options) {
         }
       })
 
-      if (previous) {
-        changed = true
-        triggerWebhook(subLink, 'updated', {link, check, location})
-      } else {
-        triggerWebhook(subLink, 'created', {link, check, location})
-      }
-
       if (changed === undefined) {
         changed = false
       }
@@ -182,10 +170,6 @@ async function analyze(linkId, location, options) {
 
     return updateLink(subLink, changes)
   }, {concurrency})
-
-  if (changed !== undefined) {
-    triggerWebhook(link, changed ? 'updated' : 'created', {link, check, location})
-  }
 
   await del(result.temporaries, {
     force: true
@@ -205,6 +189,12 @@ async function analyze(linkId, location, options) {
       }))
     }
   })
+
+  if (changed !== undefined) {
+    const allLinks = await getAllParentLinks(links.map(l => l._id))
+
+    triggerWebhook(check, allLinks)
+  }
 
   debug(`Check #${check.number} for link "${check.location}" ended successfully.`)
 }

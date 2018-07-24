@@ -18,7 +18,7 @@ async function main() {
   queues.checkQueue.process(({data: {linkId, location, options}}) => doCheck(linkId, location, options))
   queues.checkQueue.on('failed', (job, err) => onCheckFailed(job, err))
 
-  queues.hooksQueue.process(({data: {linkId, action, source}}) => doHook(linkId, action, source))
+  queues.hooksQueue.process(({data: {checkId, links}}) => doHook(checkId, links))
 }
 
 main().catch(err => {
