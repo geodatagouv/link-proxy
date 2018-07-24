@@ -1,3 +1,4 @@
+const _ = require('lodash')
 const mongo = require('../../lib/utils/mongo')
 
 async function updateLink(link, changes) {
@@ -22,4 +23,45 @@ async function updateLink(link, changes) {
   return bulk.execute()
 }
 
-module.exports = {updateLink}
+async function getAllParentLinks(linkIds) {
+  const parents = await mongo.db.collection('links').aggregate([
+    {
+      $match: {
+        _id: {
+          $in: linkIds
+        }
+      }
+    },
+    {
+      $graphLookup: {
+        from: 'links',
+        startWith: '$_id',
+        connectFromField: '_id',
+        connectToField: 'links',
+        as: 'parents'
+      }
+    },
+    {
+      $project: {
+        parents: {
+          $map: {
+            input: '$parents',
+            as: 'parent',
+            in: '$$parent._id'
+          }
+        }
+      }
+    }
+  ]).toArray()
+
+  return _(parents)
+    .map(p => ([
+      p._id,
+      ...p.parents
+    ]))
+    .flatten()
+    .uniqWith((a, b) => a && a.equals(b))
+    .value()
+}
+
+module.exports = {updateLink, getAllParentLinks}

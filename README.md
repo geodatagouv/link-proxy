@@ -176,41 +176,30 @@ $ curl localhost:5000/5aa167645d88a1a73a42995e/checks
 
 ## Webhooks
 
-Whenever a link is updated or created, an HTTP notification can be sent to other applications using webhooks.
+Whenever a check is successful, an HTTP notification can be sent to other applications using webhooks.
 
 The following body will be `POST`ed to a listening web service:
 
 ```json
 {
-  "link": "5aa167645d88a1a73a42995e",
-  "updatedAt": "2018-03-08T16:40:03.081Z",
-  "locations": [
-    "https://geo.data.gouv.fr/robots.txt"
-  ],
-  "action": "created",
-  "subLink": false,
-  "triggeredBy": {
+  "check": {
+    "linkId": "5aa167645d88a1a73a42995e",
+    "number": 1,
+    "createdAt": "2018-03-08T16:40:03.011Z",
+    "updatedAt": "2018-03-08T16:40:03.081Z",
+    "state": "finished",
     "location": "https://geo.data.gouv.fr/robots.txt",
-    "link": "5aa167645d88a1a73a42995e",
-    "check": 1
-  }
+    "options": {
+      "noCache": true
+    },
+    "statusCode": 200
+  },
+  "links": [
+    "5aa167645d88a1a73a42995e"
+  ]
 }
 ```
 
-- **`link`**: identifier of the link described by the webhook.<br>
-  The data can later be retrieved through the API using the `/:linkId` route.
+The **`check`** metadata is sent in the webhook along with an array of all the impacted **`links`**.
 
-- **`updatedAt`**: time at which the link has been modified.
-
-- **`locations`**: array of locations of that link.<br>
-  For now there will be only one value in the array, it will later be used for resources split across multiple links (for example split archives).
-
-- **`action`**: action of the webhook, can be `created` or `updated` whether the link was first found or its content was updated.
-
-- **`subLink`**: boolean expressing whether the webhook was triggered by running a check on a higher level link or not.<br>
-  When this is `true`, there will not be a `check` associated to the link change.
-
-- **`triggeredBy`**: information of what triggered the webhook:
-  - `location`: URL that the check was created for.
-  - `link`: identifier of the URL that the check was created for.
-  - `check`: number of the check.
+The `links` array includes all parent links which may be impacted by the change. For example, when analyzing a subtree of an *index-of*, the parent links will be included in `links` so that they can be notified of changes happening down the tree.
