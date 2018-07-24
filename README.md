@@ -1,9 +1,9 @@
-# link-proxy [![CircleCI](https://circleci.com/gh/inspireteam/link-proxy.svg?style=svg)](https://circleci.com/gh/inspireteam/link-proxy)
+# link-proxy [![CircleCI](https://circleci.com/gh/geodatagouv/link-proxy.svg?style=svg)](https://circleci.com/gh/geodatagouv/link-proxy)
 
 Analyze links and extract relevant data.
 
-[![dependencies Status](https://david-dm.org/inspireteam/link-proxy/status.svg)](https://david-dm.org/inspireteam/link-proxy)
-[![codecov](https://codecov.io/gh/inspireteam/link-proxy/branch/master/graph/badge.svg)](https://codecov.io/gh/inspireteam/link-proxy)
+[![dependencies Status](https://david-dm.org/geodatagouv/link-proxy/status.svg)](https://david-dm.org/geodatagouv/link-proxy)
+[![codecov](https://codecov.io/gh/geodatagouv/link-proxy/branch/master/graph/badge.svg)](https://codecov.io/gh/geodatagouv/link-proxy)
 [![XO code style](https://img.shields.io/badge/code_style-XO-5ed9c7.svg)](https://github.com/sindresorhus/xo)
 
 ## Getting started
@@ -25,7 +25,7 @@ This requires a few services in order to function properly:
   - `REDIS_HOST` defaults to `localhost`
   - `REDIS_PORT` defaults to `6379`
 
-> The [`docker-compose`](https://github.com/inspireteam/link-proxy/blob/master/docker/dev/dependencies.yml) file in this repository exposes all these services for an easy development setup.
+> The [`docker-compose`](https://github.com/geodatagouv/link-proxy/blob/master/docker/dev/dependencies.yml) file in this repository exposes all these services for an easy development setup.
 
 It also requires the following:
 
@@ -62,7 +62,7 @@ $ docker pull inspireteam/link-proxy-worker:latest
 
 ### Development environment
 
-Run all dependency services by using the `dependencies.yml` docker-compose file in [`docker/dev`](https://github.com/inspireteam/link-proxy/blob/master/docker/dev)
+Run all dependency services by using the `dependencies.yml` docker-compose file in [`docker/dev`](https://github.com/geodatagouv/link-proxy/blob/master/docker/dev)
 
 ```bash
 $ docker-compose -f dependencies.yml up
