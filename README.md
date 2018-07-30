@@ -46,18 +46,18 @@ Both services are available as docker images:
 
 ### Web service
 
-[![Docker Pulls](https://img.shields.io/docker/pulls/inspireteam/link-proxy-web.svg)](https://hub.docker.com/r/inspireteam/link-proxy-web)
+[![Docker Pulls](https://img.shields.io/docker/pulls/geodatagouv/link-proxy-web.svg)](https://hub.docker.com/r/geodatagouv/link-proxy-web)
 
 ```bash
-$ docker pull inspireteam/link-proxy-web:latest
+$ docker pull geodatagouv/link-proxy-web:latest
 ```
 
 ### Worker service
 
-[![Docker Pulls](https://img.shields.io/docker/pulls/inspireteam/link-proxy-worker.svg)](https://hub.docker.com/r/inspireteam/link-proxy-worker)
+[![Docker Pulls](https://img.shields.io/docker/pulls/geodatagouv/link-proxy-worker.svg)](https://hub.docker.com/r/geodatagouv/link-proxy-worker)
 
 ```bash
-$ docker pull inspireteam/link-proxy-worker:latest
+$ docker pull geodatagouv/link-proxy-worker:latest
 ```
 
 ### Development environment
