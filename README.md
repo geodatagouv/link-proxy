@@ -2,6 +2,7 @@
 
 Analyze links and extract relevant data.
 
+[![Last Release](https://badgen.net/github/release/geodatagouv/link-proxy/stable)](https://github.com/geodatagouv/link-proxy/releases)
 [![dependencies Status](https://badgen.net/david/dep/geodatagouv/link-proxy)](https://david-dm.org/geodatagouv/link-proxy)
 [![codecov](https://badgen.net/codecov/c/github/geodatagouv/link-proxy)](https://codecov.io/gh/geodatagouv/link-proxy)
 [![XO code style](https://badgen.net/badge/code%20style/XO/cyan)](https://github.com/xojs/xo)
