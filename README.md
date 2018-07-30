@@ -2,9 +2,9 @@
 
 Analyze links and extract relevant data.
 
-[![dependencies Status](https://david-dm.org/geodatagouv/link-proxy/status.svg)](https://david-dm.org/geodatagouv/link-proxy)
-[![codecov](https://codecov.io/gh/geodatagouv/link-proxy/branch/master/graph/badge.svg)](https://codecov.io/gh/geodatagouv/link-proxy)
-[![XO code style](https://img.shields.io/badge/code_style-XO-5ed9c7.svg)](https://github.com/sindresorhus/xo)
+[![dependencies Status](https://badgen.net/david/dep/geodatagouv/link-proxy)](https://david-dm.org/geodatagouv/link-proxy)
+[![codecov](https://badgen.net/codecov/c/github/geodatagouv/link-proxy)](https://codecov.io/gh/geodatagouv/link-proxy)
+[![XO code style](https://badgen.net/badge/code%20style/XO/cyan)](https://github.com/xojs/xo)
 
 ## Getting started
 
@@ -46,18 +46,18 @@ Both services are available as docker images:
 
 ### Web service
 
-[![Docker Pulls](https://img.shields.io/docker/pulls/inspireteam/link-proxy-web.svg)](https://hub.docker.com/r/inspireteam/link-proxy-web)
+[![Docker Pulls](https://badgen.net/docker/pulls/geodatagouv/link-proxy-web?icon=docker)](https://hub.docker.com/r/geodatagouv/link-proxy-web)
 
 ```bash
-$ docker pull inspireteam/link-proxy-web:latest
+$ docker pull geodatagouv/link-proxy-web:latest
 ```
 
 ### Worker service
 
-[![Docker Pulls](https://img.shields.io/docker/pulls/inspireteam/link-proxy-worker.svg)](https://hub.docker.com/r/inspireteam/link-proxy-worker)
+[![Docker Pulls](https://badgen.net/docker/pulls/geodatagouv/link-proxy-worker?icon=docker)](https://hub.docker.com/r/geodatagouv/link-proxy-worker)
 
 ```bash
-$ docker pull inspireteam/link-proxy-worker:latest
+$ docker pull geodatagouv/link-proxy-worker:latest
 ```
 
 ### Development environment
