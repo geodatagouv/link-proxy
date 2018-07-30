@@ -17,7 +17,7 @@ services:
       - minio
     environment:
       S3_ENDPOINT: http://minio:9000
-      MONGO_URL: mongodb://mongo
+      MONGO_URL: mongodb://mongo:27017
       REDIS_HOST: redis
 
   link-proxy-web:
@@ -30,7 +30,7 @@ services:
       - redis
       - mongo
     environment:
-      MONGO_URL: mongodb://mongo
+      MONGO_URL: mongodb://mongo:27017
       REDIS_HOST: redis
     ports:
       - 5000:5000
