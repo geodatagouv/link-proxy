@@ -27,13 +27,13 @@ describe(NAME, () => {
     const url = `${URL}/500`
     const {_id} = await upsertLink(url)
 
-    await expect(check(_id, url)).rejects.toThrow('An invalid HTTP code was returned: 500')
+    await expect(check(_id, url)).rejects.toThrow('Response code 500 (Internal Server Error)')
   })
 
   it('should fail for unsupported protocols', async () => {
     const url = `foo://${NAME}-error-protocol`
     const {_id} = await upsertLink(url)
 
-    await expect(check(_id, url)).rejects.toThrow('location must have a valid protocol: http or https')
+    await expect(check(_id, url)).rejects.toThrow('Unsupported protocol "foo:"')
   })
 })
