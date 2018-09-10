@@ -13,18 +13,18 @@ function handleErrors(next) {
   return async (req, res) => {
     try {
       return await next(req, res)
-    } catch (err) {
-      if (err.statusCode) {
-        if (err.originalError) {
-          sentry.captureException(err)
+    } catch (error) {
+      if (error.statusCode) {
+        if (error.originalError) {
+          sentry.captureException(error)
         }
 
-        return micro.send(res, err.statusCode, {
-          error: err.message
+        return micro.send(res, error.statusCode, {
+          error: error.message
         })
       }
 
-      sentry.captureException(err)
+      sentry.captureException(error)
       return micro.send(res, 500, {
         error: 'an unexpected error happened, we have been notified'
       })
@@ -112,8 +112,8 @@ async function main() {
   console.log(`Server running on port ${port}`)
 }
 
-main().catch(err => {
-  shutdown(err)
+main().catch(error => {
+  shutdown(error)
 })
 
 async function shutdown(err) {

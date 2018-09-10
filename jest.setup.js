@@ -9,7 +9,7 @@ async function setup() {
 
   try {
     await store.client.createBucket({Bucket: BUCKET}).promise()
-  } catch (err) {
+  } catch (error) {
     console.error(`\n\nThe bucket "${BUCKET}" already exists, we’re re-using it, tests may fail.\n`)
   }
 }

@@ -1,7 +1,7 @@
 const _ = require('lodash')
 const mongo = require('../../lib/utils/mongo')
 
-async function updateLink(link, changes) {
+function updateLink(link, changes) {
   const bulk = mongo.db.collection('links').initializeOrderedBulkOp()
 
   bulk.find({_id: link._id}).updateOne({

@@ -21,8 +21,8 @@ async function main() {
   queues.hooksQueue.process(({data: {checkId, links}}) => doHook(checkId, links))
 }
 
-main().catch(err => {
-  shutdown(err)
+main().catch(error => {
+  shutdown(error)
 })
 
 async function shutdown(err) {

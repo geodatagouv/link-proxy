@@ -50,8 +50,8 @@ async function send(checkId, links) {
       })
 
       debug(`Webhook for check ${check.number} of "${check.location}" was sent to subscriber ${subscriber.name}.`)
-    } catch (err) {
-      sentry.captureException(err)
+    } catch (error) {
+      sentry.captureException(error)
 
       debug(`Webhook for check ${check.number} of "${check.location}" was not sent to subscriber ${subscriber.name}.`)
     }
