@@ -152,12 +152,12 @@ async function analyze(linkId, location, options) {
       }
 
       await mongo.db.collection('downloads').insertOne(download)
-      const {Location, ETag} = await upload(bundle, download, previous)
+      const res = await upload(bundle, download, previous)
 
       await mongo.db.collection('downloads').updateOne({_id: download._id}, {
         $set: {
-          url: Location,
-          etag: ETag
+          url: res.location,
+          etag: res.etag
         }
       })
 
