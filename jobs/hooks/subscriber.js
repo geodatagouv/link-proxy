@@ -5,7 +5,8 @@ function getSubscribers() {
   const query = mongo.db.collection('subscribers').find({}, {
     projection: {
       name: 1,
-      url: 1
+      url: 1,
+      token: 1
     }
   })
 

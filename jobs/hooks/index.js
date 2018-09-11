@@ -44,6 +44,7 @@ async function send(checkId, links) {
       await got.post(subscriber.url, {
         body: JSON.stringify(payload),
         headers: {
+          authorization: `Basic ${subscriber.token}`,
           'content-type': 'application/json',
           'user-agent': userAgent
         }
