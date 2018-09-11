@@ -40,13 +40,19 @@ async function send(checkId, links) {
   const subscribers = await getSubscribers()
 
   await Bluebird.map(subscribers, async subscriber => {
+    const headers = {
+      'content-type': 'application/json',
+      'user-agent': userAgent
+    }
+
+    if (subscriber.token) {
+      headers.authorization = `Basic ${subscriber.token}`
+    }
+
     try {
       await got.post(subscriber.url, {
         body: JSON.stringify(payload),
-        headers: {
-          'content-type': 'application/json',
-          'user-agent': userAgent
-        }
+        headers
       })
 
       debug(`Webhook for check ${check.number} of "${check.location}" was sent to subscriber ${subscriber.name}.`)
