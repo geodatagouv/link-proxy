@@ -6,6 +6,7 @@
 version: '1'
 
 types:
+  ## Geo
   - name: gpkg
     extensions:
       - gpkg
@@ -28,6 +29,7 @@ types:
       - qix
       - cpg
       - qpj
+      - lyr
 
   - name: dbf
     extensions:
@@ -50,11 +52,60 @@ types:
       - id
       - ind
 
+  - name: kml
+    extensions:
+      - kml
+      - kmz
+
+  - name: gpx
+    extensions:
+      - gpx
+
+  - name: geojson
+    extensions:
+      - geojson
+
+
+  # Pure data
+  - name: grib2
+    extensions:
+      - grib2
+
+  - name: sql
+    extensions:
+      - sql
+
+  - name: owl
+    extensions:
+      - owl
+
+  - name: rdf
+    extensions:
+      - rdf
+      - ttl
+      - n3
+
   - name: csv
     extensions:
       - csv
       - tsv
 
+  - name: xls
+    extensions:
+      - xls
+      - xlsx
+      - ods
+
+
+  # CAD
+  - name: dwg
+    extensions:
+      - dwg
+      - dws
+      - dwt
+
+
+  # Images
   - name: tiff
     extensions:
       - tiff
@@ -72,12 +123,31 @@ types:
     extensions:
       - jp2
 
+  - name: image
+    extensions:
+      - jpeg
+      - jpg
+      - jpe
+      - gif
+      - png
+      - svg
+
+
+  # Documents
   - name: document
     extensions:
       - pdf
+      - odg
+      - epub
+
       - doc
       - docx
-      - xls
-      - xlsx
       - rtf
       - txt
+      - odt
+
+      - pps
+      - ppsx
+      - ppt
+      - pptx
+      - odp
