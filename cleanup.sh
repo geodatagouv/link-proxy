@@ -20,7 +20,7 @@ guard() {
 }
 
 echo "1️⃣  Drop mongo database"
-guard docker run -it --rm mongo:latest mongo $MONGO_DB --host docker.for.mac.host.internal --eval "db.dropDatabase()"
+guard docker run -it --rm --network dev_core mongo:latest mongo $MONGO_DB --host mongo --eval "db.dropDatabase()"
 
 echo
 
