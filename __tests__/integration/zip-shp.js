@@ -40,4 +40,31 @@ describe(NAME, () => {
     const summary = await getLinkSummary(_id)
     expect(downloadsSnapshot(summary.downloads)).toMatchSnapshot()
   })
+
+  it('should override the downloads if data is different', async () => {
+    const URL = `http://${NAME}-shp-zip-caching`
+
+    const url = `${URL}/data.zip`
+    const {_id} = await upsertLink(url)
+
+    nock(URL)
+      .get('/data.zip')
+      .reply(200, () => shapefile('data'), {
+        'Transfer-Encoding': 'chunked'
+      })
+
+    await check(_id, url)
+    const firstSummary = await getLinkSummary(_id)
+    expect(downloadsSnapshot(firstSummary.downloads)).toMatchSnapshot()
+
+    nock(URL)
+      .get('/data.zip')
+      .reply(200, () => shapefile('data', 'foo'), {
+        'Transfer-Encoding': 'chunked'
+      })
+
+    await check(_id, url)
+    const lastSummary = await getLinkSummary(_id)
+    expect(downloadsSnapshot(lastSummary.downloads)).toMatchSnapshot()
+  })
 })
