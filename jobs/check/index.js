@@ -84,7 +84,8 @@ async function analyze(linkId, location, options) {
     })
     .project({
       _id: 1,
-      locations: 1
+      locations: 1,
+      downloads: 1
     })
     .toArray()
 
@@ -129,30 +130,38 @@ async function analyze(linkId, location, options) {
         }))
       }
 
-      const previous = await mongo.db.collection('downloads').findOne({
-        linkId: subLink._id,
-        type: bundle.type,
-        name: mainFile.fileName
-      }, {
-        sort: {
-          createdAt: -1
-        },
-        projection: {
-          url: 1
-        }
-      })
+      let lastDownloadable = null
 
-      if (previous) {
-        changes.bundles.remove.push(previous._id)
+      if (subLink.downloads && subLink.downloads.length > 0) {
+        const previousDownloads = await mongo.db.collection('downloads').find({
+          _id: {
+            $in: subLink.downloads
+          },
+          type: bundle.type,
+          path: mainFile.filePath
+        }, {
+          sort: {
+            createdAt: -1
+          },
+          projection: {
+            url: 1
+          }
+        }).toArray()
 
-        download.previous = {
-          _id: previous._id,
-          changedFiles: bundle.files.filter(f => !f.unchanged).map(f => f.fileName)
+        lastDownloadable = previousDownloads.find(p => p.url)
+
+        if (previousDownloads.length > 0) {
+          changes.bundles.remove.push(
+            ...previousDownloads.map(d => d._id)
+          )
+
+          download.changedFiles = bundle.files.filter(f => !f.unchanged).map(f => f.fileName)
+          download.previous = previousDownloads[0]._id
         }
       }
 
       await mongo.db.collection('downloads').insertOne(download)
-      const res = await upload(bundle, download, previous)
+      const res = await upload(bundle, download, lastDownloadable)
 
       await mongo.db.collection('downloads').updateOne({_id: download._id}, {
         $set: {
