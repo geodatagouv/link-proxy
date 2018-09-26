@@ -30,7 +30,7 @@ function getUrlCache(noCache) {
 
     const now = new Date()
 
-    await mongo.db.collection('links').insert({
+    await mongo.db.collection('links').insertOne({
       createdAt: now,
       updatedAt: now,
       etag: token.etag,
@@ -122,7 +122,7 @@ function getFileCache(noCache) {
       filePath: token.filePath
     }
 
-    await mongo.db.collection('files').insert(doc)
+    await mongo.db.collection('files').insertOne(doc)
 
     return false
   }
