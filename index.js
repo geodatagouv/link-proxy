@@ -7,7 +7,7 @@ const mongo = require('./lib/utils/mongo')
 const queues = require('./lib/utils/queues')
 
 const {findLink, upsertLink, getLinkSummary} = require('./lib/link')
-const {getLinkChecks, getLinkCheck, findLastCheck} = require('./lib/check')
+const {getLinkChecks, getLinkCheck, findLastNonRunningCheck} = require('./lib/check')
 
 function handleErrors(next) {
   return async (req, res) => {
@@ -50,7 +50,7 @@ const routes = router(
   }),
 
   get('/:link/checks/latest', async (req, res) => {
-    const check = await findLastCheck(req.params.link)
+    const check = await findLastNonRunningCheck(req.params.link)
 
     if (!check) {
       throw micro.createError(404, `latest check for link ${req.params.link} was not found`)
