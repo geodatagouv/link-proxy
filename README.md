@@ -117,6 +117,7 @@ $ curl localhost:5000/5aa167645d88a1a73a42995e
   ],
   "downloads": [
     {
+      "_id": "5baa8d29b22014e817d13541",
       "createdAt": "2018-03-08T16:40:03.094Z",
       "type": "document",
       "archive": false,
@@ -173,6 +174,55 @@ $ curl localhost:5000/5aa167645d88a1a73a42995e/checks
     "statusCode": 200
   }
 ]
+```
+
+### `GET /:linkId/checks/:checkNumber`
+
+Retrieve a check for a link.
+
+**Example**
+
+```bash
+$ curl localhost:5000/5aa167645d88a1a73a42995e/checks/1
+
+[
+  {
+    "number": 1,
+    "createdAt": "2018-03-08T16:40:03.011Z",
+    "updatedAt": "2018-03-08T16:40:03.081Z",
+    "state": "finished",
+    "options": {
+      "noCache": false
+    },
+    "statusCode": 200
+  }
+]
+
+```
+### `GET /:linkId/checks/latest`
+
+Find the latest check for a link. It will redirect (302) to the matching check, if found.
+
+**Example**
+
+```bash
+$ curl -v 'localhost:5000/5aa167645d88a1a73a42995e/checks/latest'
+
+*   Trying ::1...
+* TCP_NODELAY set
+* Connected to localhost (::1) port 5000 (#0)
+> GET /5aa167645d88a1a73a42995e/checks/latest HTTP/1.1
+> Host: localhost:5000
+> User-Agent: curl/7.54.0
+> Accept: */*
+>
+< HTTP/1.1 302 Found
+< Location: /5aa167645d88a1a73a42995e/checks/1
+< Date: Thu, 27 Sep 2018 14:17:37 GMT
+< Connection: keep-alive
+< Content-Length: 0
+<
+* Connection #0 to host localhost left intact
 ```
 
 ## Webhooks
