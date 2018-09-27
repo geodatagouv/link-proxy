@@ -1,5 +1,5 @@
 # 1/2 Create build image
-FROM node:8.10-alpine AS build
+FROM node:8-alpine AS build
 
 RUN mkdir -p /opt/link-proxy-web
 WORKDIR /opt/link-proxy-web
