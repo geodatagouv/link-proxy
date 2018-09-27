@@ -5,9 +5,9 @@ const queues = require('../../lib/utils/queues')
 const {upsertLink, getLinkSummary} = require('../../lib/link')
 const check = require('../../jobs/check')
 
-const indexOf = require('../../__test-helpers__/index-of')
-const {shapefile} = require('../../__test-helpers__/archive')
-const {downloadsSnapshot} = require('../../__test-helpers__/snapshots')
+const indexOf = require('../__helpers__/index-of')
+const {shapefile} = require('../__helpers__/archive')
+const {downloadsSnapshot} = require('../__helpers__/snapshots')
 
 const NAME = 'test-link-proxy-index-of'
 

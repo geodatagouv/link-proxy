@@ -44,6 +44,10 @@
   "author": "Bertrand Marron <bertrand.marron@gmail.com>",
   "license": "MIT",
   "jest": {
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      "/__helpers__/"
+    ],
     "reporters": [
       "default",
       [
