@@ -201,7 +201,7 @@ $ curl localhost:5000/5aa167645d88a1a73a42995e/checks/1
 ```
 ### `GET /:linkId/checks/latest`
 
-Find the latest check for a link. It will redirect (302) to the matching check, if found.
+Find the latest non-running check for a link. It will redirect (302) to the matching check, if found.
 
 **Example**
 
