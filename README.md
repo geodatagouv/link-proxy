@@ -1,6 +1,6 @@
 # link-proxy [![CircleCI](https://circleci.com/gh/geodatagouv/link-proxy.svg?style=svg)](https://circleci.com/gh/geodatagouv/link-proxy)
 
-Analyze links and extract relevant data.
+> Analyze links and extract relevant data.
 
 [![Last Release](https://badgen.net/github/release/geodatagouv/link-proxy/stable)](https://github.com/geodatagouv/link-proxy/releases)
 [![dependencies Status](https://badgen.net/david/dep/geodatagouv/link-proxy)](https://david-dm.org/geodatagouv/link-proxy)
