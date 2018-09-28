@@ -55,6 +55,11 @@ async function analyze(linkId, location, options) {
     userAgent,
     maxDownloadSize: bytes('1GB'),
     concurrency,
+    timeout: {
+      connection: 6000,
+      activity: 5000,
+      download: 0
+    },
     cache: {
       getFileCache: getFileCache(check.options.noCache),
       getUrlCache: getUrlCache(check.options.noCache),
