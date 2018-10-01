@@ -250,7 +250,7 @@ Object {
             Object {
               "fileTypes": Array [
                 Object {
-                  "ext": "txt",
+                  "ext": "doc",
                 },
               ],
               "type": "file",

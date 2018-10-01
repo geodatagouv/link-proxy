@@ -5,7 +5,7 @@ describe('check.flatten', () => {
     const res = flatten({
       url: 'http://foo',
       type: 'file',
-      fileTypes: [{ext: 'txt'}]
+      fileTypes: [{ext: 'doc'}]
     })
 
     expect(res).toMatchSnapshot()
