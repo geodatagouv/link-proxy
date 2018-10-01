@@ -143,7 +143,6 @@ types:
       - doc
       - docx
       - rtf
-      - txt
       - odt
 
       - pps
