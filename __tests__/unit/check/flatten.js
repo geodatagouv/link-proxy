@@ -112,4 +112,16 @@ describe('check.flatten', () => {
 
     expect(res).toMatchSnapshot()
   })
+
+  it('should correctly process N_PERIM_MAET_ZINF_S_R53_2009', () => {
+    expect(
+      flatten(require('./__fixtures__/N_PERIM_MAET_ZINF_S_R53_2009.json'))
+    ).toMatchSnapshot()
+  })
+
+  it('should correctly process HYD_ZON_BassVers_Rade_compl_s', () => {
+    expect(
+      flatten(require('./__fixtures__/HYD_ZON_BassVers_Rade_compl_s.json'))
+    ).toMatchSnapshot()
+  })
 })

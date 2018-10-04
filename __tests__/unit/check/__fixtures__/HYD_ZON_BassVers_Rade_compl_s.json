@@ -1,0 +1,240 @@
+{
+  "inputType": "http",
+  "url": "https://applications002.brest-metropole.fr/VIPDU72/GPB/HYD_ZON_BassVers_Rade_compl_s.zip",
+  "statusCode": 200,
+  "redirectUrls": [],
+  "finalUrl": "https://applications002.brest-metropole.fr/VIPDU72/GPB/HYD_ZON_BassVers_Rade_compl_s.zip",
+  "etag": "\"3b3b329cc05ad41:0\"",
+  "lastModified": "Wed, 03 Oct 2018 02:27:20 GMT",
+  "fileName": "HYD_ZON_BassVers_Rade_compl_s.zip",
+  "fileTypes": [
+    {
+      "ext": false,
+      "mime": "application/x-zip-compressed",
+      "source": "http:content-type"
+    },
+    {
+      "ext": "zip",
+      "mime": "application/zip",
+      "source": "http:filename"
+    },
+    {
+      "ext": "zip",
+      "mime": "application/zip",
+      "source": "path:chunk"
+    },
+    {
+      "ext": "zip",
+      "mime": "application/zip",
+      "source": "path:filename"
+    }
+  ],
+  "temporary": "/var/folders/wb/4xx5dj9j0r12lym3mgxhj0l00000gn/T/plunger_cCZ3Ug",
+  "fileSize": 394333,
+  "digest": "sha384-ji+83Tr2nS8EXshEJpmikDn+XsGrKO2WT9TQMcNsGJb3K0Drl2InEpBnKzgJMG3x",
+  "path": "/var/folders/wb/4xx5dj9j0r12lym3mgxhj0l00000gn/T/plunger_cCZ3Ug/HYD_ZON_BassVers_Rade_compl_s.zip",
+  "type": "archive",
+  "children": [
+    {
+      "inputType": "path",
+      "path": "/var/folders/wb/4xx5dj9j0r12lym3mgxhj0l00000gn/T/plunger_cCZ3Ug/_unarchived",
+      "filePath": "HYD_ZON_BassVers_Rade_compl_s.zip",
+      "fromUrl": "https://applications002.brest-metropole.fr/VIPDU72/GPB/HYD_ZON_BassVers_Rade_compl_s.zip",
+      "type": "directory",
+      "children": [
+        {
+          "inputType": "path",
+          "path": "/var/folders/wb/4xx5dj9j0r12lym3mgxhj0l00000gn/T/plunger_cCZ3Ug/_unarchived/HYD_ZON_BassVers_Rade_compl_s.cpg",
+          "filePath": "HYD_ZON_BassVers_Rade_compl_s.zip/HYD_ZON_BassVers_Rade_compl_s.cpg",
+          "fromUrl": "https://applications002.brest-metropole.fr/VIPDU72/GPB/HYD_ZON_BassVers_Rade_compl_s.zip",
+          "fileName": "HYD_ZON_BassVers_Rade_compl_s.cpg",
+          "fileTypes": [
+            {
+              "ext": "cpg",
+              "mime": false,
+              "source": "path:filename"
+            }
+          ],
+          "digest": "sha384-yrZQ9NCRVOcfAB1mtzjinEi2XP1B2g3NkXaQ59S0R8Oh8HevZUR6dq960k5Y29Gw",
+          "fileSize": 5,
+          "type": "file",
+          "analyzed": true
+        },
+        {
+          "inputType": "path",
+          "path": "/var/folders/wb/4xx5dj9j0r12lym3mgxhj0l00000gn/T/plunger_cCZ3Ug/_unarchived/HYD_ZON_BassVers_Rade_compl_s.dbf",
+          "filePath": "HYD_ZON_BassVers_Rade_compl_s.zip/HYD_ZON_BassVers_Rade_compl_s.dbf",
+          "fromUrl": "https://applications002.brest-metropole.fr/VIPDU72/GPB/HYD_ZON_BassVers_Rade_compl_s.zip",
+          "fileName": "HYD_ZON_BassVers_Rade_compl_s.dbf",
+          "fileTypes": [
+            {
+              "ext": "dbf",
+              "mime": false,
+              "source": "path:filename"
+            }
+          ],
+          "digest": "sha384-HNgRMoBEqK3/SI3LJVuUTdEYluGIUNYKKtLC/B1Al8KGCZOcjiRrsd7/uuKjezRm",
+          "fileSize": 9122,
+          "type": "file",
+          "analyzed": true
+        },
+        {
+          "inputType": "path",
+          "path": "/var/folders/wb/4xx5dj9j0r12lym3mgxhj0l00000gn/T/plunger_cCZ3Ug/_unarchived/HYD_ZON_BassVers_Rade_compl_s.lyr",
+          "filePath": "HYD_ZON_BassVers_Rade_compl_s.zip/HYD_ZON_BassVers_Rade_compl_s.lyr",
+          "fromUrl": "https://applications002.brest-metropole.fr/VIPDU72/GPB/HYD_ZON_BassVers_Rade_compl_s.zip",
+          "fileName": "HYD_ZON_BassVers_Rade_compl_s.lyr",
+          "fileTypes": [
+            {
+              "ext": "msi",
+              "mime": "application/x-msi",
+              "source": "path:chunk"
+            },
+            {
+              "ext": "lyr",
+              "mime": false,
+              "source": "path:filename"
+            }
+          ],
+          "digest": "sha384-l0OBnMIirew9MrhR0OcJh1WZEuMd2k+h1eRVu3f4mxW7L2Gu0UVY8LOUX/nEXbna",
+          "fileSize": 7680,
+          "type": "file",
+          "analyzed": true
+        },
+        {
+          "inputType": "path",
+          "path": "/var/folders/wb/4xx5dj9j0r12lym3mgxhj0l00000gn/T/plunger_cCZ3Ug/_unarchived/HYD_ZON_BassVers_Rade_compl_s.pdf",
+          "filePath": "HYD_ZON_BassVers_Rade_compl_s.zip/HYD_ZON_BassVers_Rade_compl_s.pdf",
+          "fromUrl": "https://applications002.brest-metropole.fr/VIPDU72/GPB/HYD_ZON_BassVers_Rade_compl_s.zip",
+          "fileName": "HYD_ZON_BassVers_Rade_compl_s.pdf",
+          "fileTypes": [
+            {
+              "ext": "pdf",
+              "mime": "application/pdf",
+              "source": "path:chunk"
+            },
+            {
+              "ext": "pdf",
+              "mime": "application/pdf",
+              "source": "path:filename"
+            }
+          ],
+          "digest": "sha384-42ytPduwa/qtWDIUK+ldw/rfi1ZOITDJmIknCyKIZous7//KS/OLErs4IRuE6DHQ",
+          "fileSize": 240401,
+          "type": "file",
+          "analyzed": true
+        },
+        {
+          "inputType": "path",
+          "path": "/var/folders/wb/4xx5dj9j0r12lym3mgxhj0l00000gn/T/plunger_cCZ3Ug/_unarchived/HYD_ZON_BassVers_Rade_compl_s.prj",
+          "filePath": "HYD_ZON_BassVers_Rade_compl_s.zip/HYD_ZON_BassVers_Rade_compl_s.prj",
+          "fromUrl": "https://applications002.brest-metropole.fr/VIPDU72/GPB/HYD_ZON_BassVers_Rade_compl_s.zip",
+          "fileName": "HYD_ZON_BassVers_Rade_compl_s.prj",
+          "fileTypes": [
+            {
+              "ext": "prj",
+              "mime": false,
+              "source": "path:filename"
+            }
+          ],
+          "digest": "sha384-Nbb1qvYtn5QKJpEZXaMOurKSMOK/v8g2IQTG25BoNQIJ+iEk0vWEo89AP9jpchoa",
+          "fileSize": 452,
+          "type": "file",
+          "analyzed": true
+        },
+        {
+          "inputType": "path",
+          "path": "/var/folders/wb/4xx5dj9j0r12lym3mgxhj0l00000gn/T/plunger_cCZ3Ug/_unarchived/HYD_ZON_BassVers_Rade_compl_s.sbn",
+          "filePath": "HYD_ZON_BassVers_Rade_compl_s.zip/HYD_ZON_BassVers_Rade_compl_s.sbn",
+          "fromUrl": "https://applications002.brest-metropole.fr/VIPDU72/GPB/HYD_ZON_BassVers_Rade_compl_s.zip",
+          "fileName": "HYD_ZON_BassVers_Rade_compl_s.sbn",
+          "fileTypes": [
+            {
+              "ext": "sbn",
+              "mime": false,
+              "source": "path:filename"
+            }
+          ],
+          "digest": "sha384-OrdG6F1SvjqHRy32JPmuyQ/lpMwxgA022zFC495OrcUEBDTN+IQApiVolj/jysci",
+          "fileSize": 1100,
+          "type": "file",
+          "analyzed": true
+        },
+        {
+          "inputType": "path",
+          "path": "/var/folders/wb/4xx5dj9j0r12lym3mgxhj0l00000gn/T/plunger_cCZ3Ug/_unarchived/HYD_ZON_BassVers_Rade_compl_s.sbx",
+          "filePath": "HYD_ZON_BassVers_Rade_compl_s.zip/HYD_ZON_BassVers_Rade_compl_s.sbx",
+          "fromUrl": "https://applications002.brest-metropole.fr/VIPDU72/GPB/HYD_ZON_BassVers_Rade_compl_s.zip",
+          "fileName": "HYD_ZON_BassVers_Rade_compl_s.sbx",
+          "fileTypes": [
+            {
+              "ext": "sbx",
+              "mime": false,
+              "source": "path:filename"
+            }
+          ],
+          "digest": "sha384-HzSR2zoMgAI3ERb6eqv3Q+vVSGqnPp4i37gozO7CSXMymZFFy5uRrw29TV/VlSlh",
+          "fileSize": 212,
+          "type": "file",
+          "analyzed": true
+        },
+        {
+          "inputType": "path",
+          "path": "/var/folders/wb/4xx5dj9j0r12lym3mgxhj0l00000gn/T/plunger_cCZ3Ug/_unarchived/HYD_ZON_BassVers_Rade_compl_s.shp",
+          "filePath": "HYD_ZON_BassVers_Rade_compl_s.zip/HYD_ZON_BassVers_Rade_compl_s.shp",
+          "fromUrl": "https://applications002.brest-metropole.fr/VIPDU72/GPB/HYD_ZON_BassVers_Rade_compl_s.zip",
+          "fileName": "HYD_ZON_BassVers_Rade_compl_s.shp",
+          "fileTypes": [
+            {
+              "ext": "shp",
+              "mime": false,
+              "source": "path:filename"
+            }
+          ],
+          "digest": "sha384-a81Czi0DMyjdFLO2qDKJj4WM9RdSPsH301M/oTcWclPXT+lzIHQe6OkXxP3fqtHA",
+          "fileSize": 232164,
+          "type": "file",
+          "analyzed": true
+        },
+        {
+          "inputType": "path",
+          "path": "/var/folders/wb/4xx5dj9j0r12lym3mgxhj0l00000gn/T/plunger_cCZ3Ug/_unarchived/HYD_ZON_BassVers_Rade_compl_s.shp.xml",
+          "filePath": "HYD_ZON_BassVers_Rade_compl_s.zip/HYD_ZON_BassVers_Rade_compl_s.shp.xml",
+          "fromUrl": "https://applications002.brest-metropole.fr/VIPDU72/GPB/HYD_ZON_BassVers_Rade_compl_s.zip",
+          "fileName": "HYD_ZON_BassVers_Rade_compl_s.shp.xml",
+          "fileTypes": [
+            {
+              "ext": "xml",
+              "mime": "application/xml",
+              "source": "path:filename"
+            }
+          ],
+          "digest": "sha384-l0/ZWOc8uKD4ltaKQVcz7Yg3r05QBAJGxWAnAcgyd5lD8tzbMBcIvJezQiv1lgQ0",
+          "fileSize": 15029,
+          "type": "file",
+          "analyzed": true
+        },
+        {
+          "inputType": "path",
+          "path": "/var/folders/wb/4xx5dj9j0r12lym3mgxhj0l00000gn/T/plunger_cCZ3Ug/_unarchived/HYD_ZON_BassVers_Rade_compl_s.shx",
+          "filePath": "HYD_ZON_BassVers_Rade_compl_s.zip/HYD_ZON_BassVers_Rade_compl_s.shx",
+          "fromUrl": "https://applications002.brest-metropole.fr/VIPDU72/GPB/HYD_ZON_BassVers_Rade_compl_s.zip",
+          "fileName": "HYD_ZON_BassVers_Rade_compl_s.shx",
+          "fileTypes": [
+            {
+              "ext": "shx",
+              "mime": false,
+              "source": "path:filename"
+            }
+          ],
+          "digest": "sha384-EpxwLDdYG9mDRaeldP4EXAYa0+g8scEbgheOexa6bp7wOxg1vWXzrTBJkKidR3Ji",
+          "fileSize": 868,
+          "type": "file",
+          "analyzed": true
+        }
+      ],
+      "analyzed": true
+    }
+  ],
+  "analyzed": true
+}

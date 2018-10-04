@@ -1,0 +1,153 @@
+{
+  "inputType": "http",
+  "url": "http://atom.geo-ide.developpement-durable.gouv.fr/atomArchive/GetResource?id=29e549c8-cd91-4e09-8750-941db34dc916&dataType=dataset",
+  "statusCode": 200,
+  "redirectUrls": [],
+  "finalUrl": "http://atom.geo-ide.developpement-durable.gouv.fr/atomArchive/GetResource?id=29e549c8-cd91-4e09-8750-941db34dc916&dataType=dataset",
+  "fileName": "dataset-1538645795676.zip",
+  "fileTypes": [
+    {
+      "ext": "zip",
+      "mime": "application/zip",
+      "source": "http:content-type"
+    },
+    {
+      "ext": "zip",
+      "mime": "application/zip",
+      "source": "http:filename"
+    },
+    {
+      "ext": "zip",
+      "mime": "application/zip",
+      "source": "path:chunk"
+    },
+    {
+      "ext": "zip",
+      "mime": "application/zip",
+      "source": "path:filename"
+    }
+  ],
+  "temporary": "/var/folders/wb/4xx5dj9j0r12lym3mgxhj0l00000gn/T/plunger_uhyNu2",
+  "fileSize": 2136059,
+  "digest": "sha384-nKE3iPtBCWW8QFWEcFMVpOwjA3VSLE3Ozr7ExBezIdnd2Y3X+VCVbuFowGJ9/Swz",
+  "path": "/var/folders/wb/4xx5dj9j0r12lym3mgxhj0l00000gn/T/plunger_uhyNu2/dataset-1538645795676.zip",
+  "type": "archive",
+  "children": [
+    {
+      "inputType": "path",
+      "path": "/var/folders/wb/4xx5dj9j0r12lym3mgxhj0l00000gn/T/plunger_uhyNu2/_unarchived",
+      "filePath": "dataset-1538645795676.zip",
+      "fromUrl": "http://atom.geo-ide.developpement-durable.gouv.fr/atomArchive/GetResource?id=29e549c8-cd91-4e09-8750-941db34dc916&dataType=dataset",
+      "type": "directory",
+      "children": [
+        {
+          "inputType": "path",
+          "path": "/var/folders/wb/4xx5dj9j0r12lym3mgxhj0l00000gn/T/plunger_uhyNu2/_unarchived/dataset",
+          "filePath": "dataset-1538645795676.zip/dataset",
+          "fromUrl": "http://atom.geo-ide.developpement-durable.gouv.fr/atomArchive/GetResource?id=29e549c8-cd91-4e09-8750-941db34dc916&dataType=dataset",
+          "type": "directory",
+          "children": [
+            {
+              "inputType": "path",
+              "path": "/var/folders/wb/4xx5dj9j0r12lym3mgxhj0l00000gn/T/plunger_uhyNu2/_unarchived/dataset/N_PERIM_MAET_ZINF_S_R53_2009.DAT",
+              "filePath": "dataset-1538645795676.zip/dataset/N_PERIM_MAET_ZINF_S_R53_2009.DAT",
+              "fromUrl": "http://atom.geo-ide.developpement-durable.gouv.fr/atomArchive/GetResource?id=29e549c8-cd91-4e09-8750-941db34dc916&dataType=dataset",
+              "fileName": "N_PERIM_MAET_ZINF_S_R53_2009.DAT",
+              "fileTypes": [
+                {
+                  "ext": "DAT",
+                  "mime": false,
+                  "source": "path:filename"
+                }
+              ],
+              "digest": "sha384-Z780GZB5hptF9ANSpEEp30oN9O1EoHrKkoZXSAIE4PthCKxCJDAR2kgIFeM9o4Pw",
+              "fileSize": 12912,
+              "type": "file",
+              "analyzed": true
+            },
+            {
+              "inputType": "path",
+              "path": "/var/folders/wb/4xx5dj9j0r12lym3mgxhj0l00000gn/T/plunger_uhyNu2/_unarchived/dataset/N_PERIM_MAET_ZINF_S_R53_2009.ID",
+              "filePath": "dataset-1538645795676.zip/dataset/N_PERIM_MAET_ZINF_S_R53_2009.ID",
+              "fromUrl": "http://atom.geo-ide.developpement-durable.gouv.fr/atomArchive/GetResource?id=29e549c8-cd91-4e09-8750-941db34dc916&dataType=dataset",
+              "fileName": "N_PERIM_MAET_ZINF_S_R53_2009.ID",
+              "fileTypes": [
+                {
+                  "ext": "ID",
+                  "mime": false,
+                  "source": "path:filename"
+                }
+              ],
+              "digest": "sha384-9GJxVM1/ARRIfMqjy+FPQeOpvK39S0prtUHyZzl/VagqXlBOuVXDcIaiLS9snPcT",
+              "fileSize": 300,
+              "type": "file",
+              "analyzed": true
+            },
+            {
+              "inputType": "path",
+              "path": "/var/folders/wb/4xx5dj9j0r12lym3mgxhj0l00000gn/T/plunger_uhyNu2/_unarchived/dataset/N_PERIM_MAET_ZINF_S_R53_2009.MAP",
+              "filePath": "dataset-1538645795676.zip/dataset/N_PERIM_MAET_ZINF_S_R53_2009.MAP",
+              "fromUrl": "http://atom.geo-ide.developpement-durable.gouv.fr/atomArchive/GetResource?id=29e549c8-cd91-4e09-8750-941db34dc916&dataType=dataset",
+              "fileName": "N_PERIM_MAET_ZINF_S_R53_2009.MAP",
+              "fileTypes": [
+                {
+                  "ext": "MAP",
+                  "mime": "application/json",
+                  "source": "path:filename"
+                }
+              ],
+              "digest": "sha384-TWSCOZ85t5wXpcFAlC1inpzrUp7x053BYIxPcai1bsimSuFV7ThFAUpK553LrrMF",
+              "fileSize": 2560000,
+              "type": "file",
+              "analyzed": true
+            },
+            {
+              "inputType": "path",
+              "path": "/var/folders/wb/4xx5dj9j0r12lym3mgxhj0l00000gn/T/plunger_uhyNu2/_unarchived/dataset/N_PERIM_MAET_ZINF_S_R53_2009.TAB",
+              "filePath": "dataset-1538645795676.zip/dataset/N_PERIM_MAET_ZINF_S_R53_2009.TAB",
+              "fromUrl": "http://atom.geo-ide.developpement-durable.gouv.fr/atomArchive/GetResource?id=29e549c8-cd91-4e09-8750-941db34dc916&dataType=dataset",
+              "fileName": "N_PERIM_MAET_ZINF_S_R53_2009.TAB",
+              "fileTypes": [
+                {
+                  "ext": "TAB",
+                  "mime": false,
+                  "source": "path:filename"
+                }
+              ],
+              "digest": "sha384-NbvX0wBc0CPcajtZ/SHaVn6fa/p+4UrPiko110mTD5jLLtCb6oEnEg7BbZhNHl2q",
+              "fileSize": 446,
+              "type": "file",
+              "analyzed": true
+            },
+            {
+              "inputType": "path",
+              "path": "/var/folders/wb/4xx5dj9j0r12lym3mgxhj0l00000gn/T/plunger_uhyNu2/_unarchived/dataset/fr-120066022-jdd-c4fe283f-abce-4c2e-b75f-8ee82fb78cf5.xml",
+              "filePath": "dataset-1538645795676.zip/dataset/fr-120066022-jdd-c4fe283f-abce-4c2e-b75f-8ee82fb78cf5.xml",
+              "fromUrl": "http://atom.geo-ide.developpement-durable.gouv.fr/atomArchive/GetResource?id=29e549c8-cd91-4e09-8750-941db34dc916&dataType=dataset",
+              "fileName": "fr-120066022-jdd-c4fe283f-abce-4c2e-b75f-8ee82fb78cf5.xml",
+              "fileTypes": [
+                {
+                  "ext": "xml",
+                  "mime": "application/xml",
+                  "source": "path:chunk"
+                },
+                {
+                  "ext": "xml",
+                  "mime": "application/xml",
+                  "source": "path:filename"
+                }
+              ],
+              "digest": "sha384-gKKOWZTkRXrvTqxwWMjBHASy2BnFJk25+60zDW18WDpHwqfBd/0ga369bbaH8tQ6",
+              "fileSize": 26309,
+              "type": "file",
+              "analyzed": true
+            }
+          ],
+          "analyzed": true
+        }
+      ],
+      "analyzed": true
+    }
+  ],
+  "analyzed": true
+}
