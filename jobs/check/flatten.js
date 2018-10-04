@@ -1,14 +1,25 @@
-const {extname} = require('path')
 const {remove} = require('lodash')
 
 const fileTypes = require('../../lib/types')
+const {getPossibleExtensions} = require('../../lib/utils/filename')
 
 function getRelated(tokens, token, type) {
-  return tokens.filter(t => {
-    const ext = extname(token.fileName).substring(1)
-    const extensionless = token.fileName.slice(0, -ext.length - 1)
+  const main = getPossibleExtensions(token.fileName).find(({ext}) => {
+    const lext = ext.toLowerCase()
 
-    return type.related.some(ext => t.fileName === `${extensionless}.${ext}`)
+    return type.extensions.some(e => e === lext)
+  })
+
+  return tokens.filter(t => {
+    const comp = getPossibleExtensions(t.fileName).find(
+      ({name}) => name === main.name
+    )
+
+    if (!comp) {
+      return false
+    }
+
+    return type.related.some(r => r === comp.ext.toLowerCase())
   })
 }
 
