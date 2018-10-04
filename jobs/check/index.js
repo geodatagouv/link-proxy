@@ -143,7 +143,7 @@ async function analyze(linkId, location, options) {
             $in: subLink.downloads
           },
           type: bundle.type,
-          path: mainFile.filePath
+          name: mainFile.fileName
         }, {
           sort: {
             createdAt: -1
