@@ -35,4 +35,4 @@ RUN mkdir -p /opt/bin
 COPY docker/scripts/entrypoint.sh /opt/bin/
 
 ENTRYPOINT ["/opt/bin/entrypoint.sh"]
-CMD ["yarn", "start:worker"]
+CMD ["node", "worker.js"]

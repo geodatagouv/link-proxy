@@ -28,4 +28,4 @@ COPY docker/scripts/entrypoint.sh /opt/bin/
 
 EXPOSE 5000
 ENTRYPOINT ["/opt/bin/entrypoint.sh"]
-CMD ["yarn", "start:web"]
+CMD ["node", "index.js"]
