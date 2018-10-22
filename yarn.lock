@@ -56,10 +56,10 @@
   dependencies:
     defer-to-connect "^1.0.1"
 
-"@tusbar/cache-control@^0.2.1":
-  version "0.2.1"
-  resolved "https://registry.yarnpkg.com/@tusbar/cache-control/-/cache-control-0.2.1.tgz#f8c70862210c806f991a7703ab0cf58de54214af"
-  integrity sha512-ANB5V76JegxjuNDlztZnvaiJhOScnamWde8Z0HwkmS7WTuhCRG2fgsPDjU+yo0+i4GLAWcTBuuE0kigWUXUo1w==
+"@tusbar/cache-control@^0.3.0":
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/@tusbar/cache-control/-/cache-control-0.3.0.tgz#d9b98b5235dca7bfc18e053560e846f41efea403"
+  integrity sha512-mckbh76GPoqLN8EZ9381pUxaN4R0V0yTp7adY9PciORe7dzzGFlhFR34ywHHykX6fUhWe8hJhDUxVPhWbuwR4Q==
 
 "@types/node@*":
   version "10.5.2"
