@@ -1315,7 +1315,7 @@ debug@^2.2.0, debug@^2.3.3, debug@^2.6.8, debug@^2.6.9:
   dependencies:
     ms "2.0.0"
 
-debug@^4.1.0:
+debug@^4.0.1, debug@^4.1.0:
   version "4.1.0"
   resolved "https://registry.yarnpkg.com/debug/-/debug-4.1.0.tgz#373687bffa678b38b1cd91f861b63850035ddc87"
   integrity sha512-heNPJUJIqC+xB6ayLAMHaIrmN9HKa7aQO8MGqKpvCA+uJYVcvR6l5kgdrhRuwPFHU7P5/A1w0BjByPHwpfTDKg==
@@ -2188,10 +2188,10 @@ file-entry-cache@^2.0.0:
     flat-cache "^1.2.1"
     object-assign "^4.0.1"
 
-file-type@^9.0.0:
-  version "9.0.0"
-  resolved "https://registry.yarnpkg.com/file-type/-/file-type-9.0.0.tgz#a68d5ad07f486414dfb2c8866f73161946714a18"
-  integrity sha512-Qe/5NJrgIOlwijpq3B7BEpzPFcgzggOTagZmkXQY4LA6bsXKTUstK7Wp12lEJ/mLKTpvIZxmIuRcLYWT6ov9lw==
+file-type@^10.0.0:
+  version "10.1.0"
+  resolved "https://registry.yarnpkg.com/file-type/-/file-type-10.1.0.tgz#f692a28722e1ac8e206e68fcc2fb032a759d16d0"
+  integrity sha512-fkjfXnqBRrdUFTS6opakWyMXb+uzDv8zOCqjSOWPbzMLnYnmnUEv/RNY9igkk4nc8TVL44Xd1OCC2fJXH3eb7Q==
 
 filename-regex@^2.0.0:
   version "2.0.1"
@@ -5082,19 +5082,19 @@ pkg-up@^2.0.0:
   dependencies:
     find-up "^2.1.0"
 
-plunger@^3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/plunger/-/plunger-3.0.0.tgz#cfcb3a9455a5493ddf3c5ee242aa18f5553e3992"
-  integrity sha512-fqaY112XPeuUZqHKtPcZgZpG9MOnZXxWnUaTtW95sPA81tNHbHure/0MEZJMNDIazsNRooDR5v1I3b1s81GepA==
+plunger@^3.1.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/plunger/-/plunger-3.1.0.tgz#363ab715be3820cbf0971134ce34fb0feca6998b"
+  integrity sha512-e4h3Y+czSYUDy4ABTpjCe6EBnP1hjA3hbFAoSP9WFckPOmJsHZZ58BLwlIY9veBw/G/pKXrm+PbCQ9tGdpj/9w==
   dependencies:
     bluebird "^3.5.1"
     chalk "^2.3.2"
     content-disposition "^0.5.2"
     content-type "^1.0.2"
-    debug "^3.1.0"
+    debug "^4.0.1"
     execa "^1.0.0"
     feedparser "^2.2.9"
-    file-type "^9.0.0"
+    file-type "^10.0.0"
     got "^9.0.0"
     hasha "^3.0.0"
     htmlparser2 "^3.9.2"
