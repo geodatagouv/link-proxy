@@ -1,10 +1,11 @@
 const micro = require('micro')
 const {get, post, router} = require('microrouter')
 const ms = require('ms')
+const {enqueue, configureQueues, joinJobQueue, disconnectQueues} = require('bull-manager')
 
 const sentry = require('./lib/utils/sentry')
 const mongo = require('./lib/utils/mongo')
-const queues = require('./lib/utils/queues')
+const createRedis = require('./lib/utils/redis')
 
 const {findLink, upsertLink, getLinkSummary} = require('./lib/link')
 const {getLinkChecks, getLinkCheck, findLastNonRunningCheck} = require('./lib/check')
@@ -100,17 +101,13 @@ const routes = router(
 
     const link = await upsertLink(json.location)
 
-    queues.checkQueue.add({
+    await enqueue('check', {
       name: json.location,
       location: json.location,
       linkId: link._id,
       options: {
         noCache: Boolean(json.noCache)
       }
-    }, {
-      jobId: link._id,
-      removeOnComplete: true,
-      timeout: ms('30m')
     })
 
     return link
@@ -122,10 +119,27 @@ const server = micro(handleErrors(routes))
 async function main() {
   const port = process.env.PORT || 5000
 
-  await queues.init()
   await mongo.connect()
   await mongo.ensureIndexes()
   await server.listen(port)
+
+  configureQueues({
+    createRedis: createRedis({
+      onError: shutdown
+    }),
+    prefix: 'link-proxy'
+  })
+
+  await joinJobQueue('check', {
+    jobIdKey: 'linkId',
+    timeout: ms('30m')
+  })
+
+  await joinJobQueue('webhook', {
+    jobIdKey: 'checkId',
+    timeout: ms('10s'),
+    removeOnFail: true
+  })
 
   mongo.client.on('close', () => {
     shutdown(new Error('Mongo connection was closed'))
@@ -141,7 +155,7 @@ main().catch(error => {
 async function shutdown(err) {
   await Promise.all([
     server.close(),
-    queues.disconnect(),
+    disconnectQueues(),
     mongo.disconnect()
   ])
 

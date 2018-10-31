@@ -27,13 +27,27 @@ describe(NAME, () => {
     const url = `${URL}/500`
     const {_id} = await upsertLink(url)
 
-    await expect(check(_id, url)).rejects.toThrow('Response code 500 (Internal Server Error)')
+    const res = check.handler({
+      data: {
+        linkId: _id,
+        location: url
+      }
+    })
+
+    await expect(res).rejects.toThrow('Response code 500 (Internal Server Error)')
   })
 
   it('should fail for unsupported protocols', async () => {
     const url = `foo://${NAME}-error-protocol`
     const {_id} = await upsertLink(url)
 
-    await expect(check(_id, url)).rejects.toThrow('Unsupported protocol "foo:"')
+    const res = check.handler({
+      data: {
+        linkId: _id,
+        location: url
+      }
+    })
+
+    await expect(res).rejects.toThrow('Unsupported protocol "foo:"')
   })
 })

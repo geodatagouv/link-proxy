@@ -10,7 +10,7 @@
     {
       "host": "redis",
       "hostId": "link-proxy-local",
-      "name": "hooks",
+      "name": "webhook",
       "port": 6379,
       "prefix": "link-proxy"
     }

@@ -1,7 +1,6 @@
 const nock = require('nock')
 
 const mongo = require('../../lib/utils/mongo')
-const queues = require('../../lib/utils/queues')
 const {upsertLink, getLinkSummary} = require('../../lib/link')
 const check = require('../../jobs/check')
 
@@ -11,18 +10,20 @@ const {downloadsSnapshot} = require('../__helpers__/snapshots')
 
 const NAME = 'test-link-proxy-index-of'
 
+jest.mock('bull-manager', () => ({
+  enqueue: jest.fn()
+}))
+
 beforeAll(async () => {
   process.env.MONGO_DB = NAME
 
   await mongo.connect()
   await mongo.ensureIndexes()
-  await queues.init()
 })
 
 afterAll(async () => {
   await mongo.db.dropDatabase()
   await mongo.disconnect(true)
-  await queues.disconnect()
 })
 
 describe(NAME, () => {
@@ -43,7 +44,12 @@ describe(NAME, () => {
       })
 
     const {_id} = await upsertLink(URL)
-    await check(_id, URL)
+    await check.handler({
+      data: {
+        linkId: _id,
+        location: URL
+      }
+    })
 
     const summary = await getLinkSummary(_id)
     expect(downloadsSnapshot(summary.downloads)).toMatchSnapshot()
@@ -72,7 +78,12 @@ describe(NAME, () => {
     })
 
     const {_id} = await upsertLink(URL)
-    await check(_id, URL)
+    await check.handler({
+      data: {
+        linkId: _id,
+        location: URL
+      }
+    })
 
     const summary = await getLinkSummary(_id)
     expect(downloadsSnapshot(summary.downloads)).toMatchSnapshot()
@@ -93,7 +104,12 @@ describe(NAME, () => {
     })
 
     const {_id} = await upsertLink(URL)
-    await check(_id, URL)
+    await check.handler({
+      data: {
+        linkId: _id,
+        location: URL
+      }
+    })
 
     const summary = await getLinkSummary(_id)
     expect(downloadsSnapshot(summary.downloads)).toMatchSnapshot()

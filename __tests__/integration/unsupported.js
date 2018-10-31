@@ -22,7 +22,12 @@ describe(NAME, () => {
     const URL = 'http://something/foo.7z.001'
 
     const {_id} = await upsertLink(URL)
-    await check(_id, URL)
+    await check.handler({
+      data: {
+        linkId: _id,
+        location: URL
+      }
+    })
 
     const [lastCheck] = await getLinkChecks(_id)
     expect(lastCheck.state).toBe('unsupported')

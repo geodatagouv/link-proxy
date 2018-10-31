@@ -23,7 +23,12 @@ describe(NAME, () => {
     const URL = `${store.client.endpoint.href}/foo.zip`
 
     const {_id} = await upsertLink(URL)
-    await check(_id, URL)
+    await check.handler({
+      data: {
+        linkId: _id,
+        location: URL
+      }
+    })
 
     const [lastCheck] = await getLinkChecks(_id)
     expect(lastCheck.state).toBe('blacklisted')

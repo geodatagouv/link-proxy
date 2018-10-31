@@ -1,24 +1,50 @@
+const ms = require('ms')
+const {configureQueues, createJobQueue, disconnectQueues} = require('bull-manager')
+
 const sentry = require('./lib/utils/sentry')
 const mongo = require('./lib/utils/mongo')
-const queues = require('./lib/utils/queues')
+const createRedis = require('./lib/utils/redis')
 
-const doCheck = require('./jobs/check')
-const onCheckFailed = require('./jobs/check/failed')
-const doHook = require('./jobs/hooks')
+const check = require('./jobs/check')
+const webhook = require('./jobs/webhook')
 
 async function main() {
-  await queues.init(true)
   await mongo.connect()
   await mongo.ensureIndexes()
+
+  configureQueues({
+    isSubscriber: true,
+    createRedis: createRedis({
+      onError: shutdown
+    }),
+    prefix: 'link-proxy',
+    onError: (job, err) => sentry.captureException(err, {
+      extra: {
+        queue: job.queue.name,
+        ...job.data
+      }
+    })
+  })
+
+  await createJobQueue('check', check.handler, {
+    concurrency: 2,
+    onError: check.onError
+  }, {
+    jobIdKey: 'linkId',
+    timeout: ms('30m')
+  })
+
+  await createJobQueue('webhook', webhook.handler, {
+    concurrency: 5
+  }, {
+    jobIdKey: 'checkId',
+    timeout: ms('10s'),
+    removeOnFail: true
+  })
 
   mongo.client.on('close', () => {
     shutdown(new Error('Mongo connection was closed'))
   })
-
-  queues.checkQueue.process(({data: {linkId, location, options}}) => doCheck(linkId, location, options))
-  queues.checkQueue.on('failed', (job, err) => onCheckFailed(job, err))
-
-  queues.hooksQueue.process(({data: {checkId, links}}) => doHook(checkId, links))
 }
 
 main().catch(error => {
@@ -27,7 +53,7 @@ main().catch(error => {
 
 async function shutdown(err) {
   await Promise.all([
-    queues.disconnect(),
+    disconnectQueues(),
     mongo.disconnect()
   ])
 

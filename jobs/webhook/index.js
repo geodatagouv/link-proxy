@@ -1,5 +1,5 @@
 const Bluebird = require('bluebird')
-const debug = require('debug')('link-proxy:jobs:hooks')
+const debug = require('debug')('link-proxy:jobs:webhook')
 const got = require('got')
 
 const userAgent = require('../../lib/user-agent')
@@ -9,7 +9,7 @@ const mongo = require('../../lib/utils/mongo')
 
 const {getSubscribers} = require('./subscriber')
 
-async function send(checkId, links) {
+async function sendWebhook(checkId, links) {
   const check = await mongo.db.collection('checks').findOne({
     _id: new mongo.ObjectID(checkId)
   }, {
@@ -66,4 +66,6 @@ async function send(checkId, links) {
   debug(`Webhook for check ${check.number} of "${check.location}" ended successfully.`)
 }
 
-module.exports = send
+exports.handler = ({data: {checkId, links}}) => {
+  return sendWebhook(checkId, links)
+}
