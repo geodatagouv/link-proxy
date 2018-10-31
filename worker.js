@@ -1,12 +1,10 @@
-const ms = require('ms')
 const {configureQueues, createJobQueue, disconnectQueues} = require('bull-manager')
 
 const sentry = require('./lib/utils/sentry')
 const mongo = require('./lib/utils/mongo')
 const createRedis = require('./lib/utils/redis')
 
-const check = require('./jobs/check')
-const webhook = require('./jobs/webhook')
+const jobs = require('./jobs/definitions')
 
 async function main() {
   await mongo.connect()
@@ -26,21 +24,16 @@ async function main() {
     })
   })
 
-  await createJobQueue('check', check.handler, {
-    concurrency: 2,
-    onError: check.onError
-  }, {
-    jobIdKey: 'linkId',
-    timeout: ms('30m')
-  })
+  await Promise.all(
+    jobs.map(job => {
+      const {handler, onError} = require(`./jobs/${job.name}`)
 
-  await createJobQueue('webhook', webhook.handler, {
-    concurrency: 5
-  }, {
-    jobIdKey: 'checkId',
-    timeout: ms('10s'),
-    removeOnFail: true
-  })
+      return createJobQueue(job.name, handler, {
+        concurrency: job.concurrency,
+        onError
+      }, job.options)
+    })
+  )
 
   mongo.client.on('close', () => {
     shutdown(new Error('Mongo connection was closed'))

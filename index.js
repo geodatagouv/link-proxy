@@ -1,11 +1,12 @@
 const micro = require('micro')
 const {get, post, router} = require('microrouter')
-const ms = require('ms')
 const {enqueue, configureQueues, joinJobQueue, disconnectQueues} = require('bull-manager')
 
 const sentry = require('./lib/utils/sentry')
 const mongo = require('./lib/utils/mongo')
 const createRedis = require('./lib/utils/redis')
+
+const jobs = require('./jobs/definitions')
 
 const {findLink, upsertLink, getLinkSummary} = require('./lib/link')
 const {getLinkChecks, getLinkCheck, findLastNonRunningCheck} = require('./lib/check')
@@ -130,16 +131,11 @@ async function main() {
     prefix: 'link-proxy'
   })
 
-  await joinJobQueue('check', {
-    jobIdKey: 'linkId',
-    timeout: ms('30m')
-  })
-
-  await joinJobQueue('webhook', {
-    jobIdKey: 'checkId',
-    timeout: ms('10s'),
-    removeOnFail: true
-  })
+  await Promise.all(
+    jobs.map(job => {
+      return joinJobQueue(job.name, job.options)
+    })
+  )
 
   mongo.client.on('close', () => {
     shutdown(new Error('Mongo connection was closed'))
