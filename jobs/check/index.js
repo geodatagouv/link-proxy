@@ -4,11 +4,11 @@ const {analyzeLocation} = require('plunger')
 const bytes = require('bytes')
 const debug = require('debug')('link-proxy:jobs:check')
 const del = require('del')
+const {enqueue} = require('bull-manager')
 
 const userAgent = require('../../lib/user-agent')
 
 const mongo = require('../../lib/utils/mongo')
-const queues = require('../../lib/utils/queues')
 
 const {createCheck} = require('./check')
 const {updateLink, getAllParentLinks} = require('./link')
@@ -19,20 +19,7 @@ const {PlungerError} = require('./errors')
 
 const concurrency = cpus().length
 
-function triggerWebhook(check, links) {
-  queues.hooksQueue.add({
-    name: check.location,
-    checkId: check._id,
-    links
-  }, {
-    jobId: check._id,
-    removeOnComplete: true,
-    removeOnFail: true,
-    timeout: 1000 * 10
-  })
-}
-
-async function analyze(linkId, location, options) {
+const handler = async ({data: {linkId, location, options}}) => {
   options = {
     noCache: false,
     ...options
@@ -207,10 +194,49 @@ async function analyze(linkId, location, options) {
   if (changed !== undefined) {
     const allLinks = await getAllParentLinks(links.map(l => l._id))
 
-    triggerWebhook(check, allLinks)
+    enqueue('webhook', {
+      name: check.location,
+      checkId: check._id,
+      links: allLinks
+    })
   }
 
   debug(`Check #${check.number} for link "${check.location}" ended successfully.`)
 }
 
-module.exports = analyze
+const onError = async (job, err) => {
+  const check = await mongo.db.collection('checks').findOne({
+    linkId: new mongo.ObjectID(job.data.linkId)
+  }, {
+    projection: {
+      _id: 1,
+      number: 1,
+      options: 1
+    },
+    sort: {
+      number: -1
+    }
+  })
+
+  if (check) {
+    await mongo.db.collection('checks').updateOne({_id: check._id}, {
+      $set: {
+        state: 'errored',
+        error: err.message
+      }
+    })
+
+    debug(`Check #${check.number} for link "${job.data.location}" was errored.`)
+  }
+
+  if (err instanceof PlungerError) {
+    job.remove()
+  } else {
+    throw err
+  }
+}
+
+module.exports = {
+  handler,
+  onError
+}
