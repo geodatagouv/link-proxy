@@ -32,7 +32,7 @@
     "plunger": "^3.2.0",
     "raven": "^2.6.4",
     "unzip-stream": "^0.3.0",
-    "yazl": "^2.4.3"
+    "yazl": "^2.5.0"
   },
   "devDependencies": {
     "codecov": "^3.1.0",
