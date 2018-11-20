@@ -1,5 +1,5 @@
 # 1/2 Create build image
-FROM node:8-slim AS build
+FROM node:10-slim AS build
 
 RUN mkdir -p /opt/link-proxy-worker
 WORKDIR /opt/link-proxy-worker
@@ -8,7 +8,7 @@ COPY package.json yarn.lock ./
 RUN yarn --production
 
 # 2/2 Create production image
-FROM node:8-slim
+FROM node:10-slim
 ARG SOURCE_COMMIT=unknown
 
 RUN apt-get update -qq && \
