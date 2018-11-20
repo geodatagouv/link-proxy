@@ -7,7 +7,7 @@ defaults:
   nodejs_container: &nodejs_container
     working_directory: *workspace_root
     docker:
-      - image: circleci/node:8-stretch
+      - image: circleci/node:10-stretch
 
   golang_container: &golang_container
     working_directory: *workspace_root
@@ -17,7 +17,7 @@ defaults:
   test_container: &test_container
     working_directory: *workspace_root
     docker:
-      - image: circleci/node:8-stretch
+      - image: circleci/node:10-stretch
       - image: mongo:4.0
       - image: redis:4.0
       - image: minio/minio:RELEASE.2018-07-23T18-34-49Z
@@ -38,8 +38,8 @@ defaults:
     restore_cache:
       name: Restore node_modules cache
       keys:
-        - v1-link-proxy-node-{{ checksum "yarn.lock" }}
-        - v1-link-proxy-node-
+        - v2-link-proxy-node-{{ checksum "yarn.lock" }}
+        - v2-link-proxy-node-
 
 
 jobs:
@@ -62,22 +62,22 @@ jobs:
       - restore_cache:
           name: Restore yarn cache
           keys:
-            - v1-link-proxy-yarn-{{ checksum "yarn.lock" }}
-            - v1-link-proxy-yarn-
+            - v2-link-proxy-yarn-{{ checksum "yarn.lock" }}
+            - v2-link-proxy-yarn-
 
       - run:
           name: Install dependencies
-          command: yarn
+          command: yarn --frozen-lockfile --ignore-platform
 
       - save_cache:
           name: Save yarn cache
-          key: v1-link-proxy-yarn-{{ checksum "yarn.lock" }}
+          key: v2-link-proxy-yarn-{{ checksum "yarn.lock" }}
           paths:
             - ~/.cache/yarn
 
       - save_cache:
           name: Save node_modules cache
-          key: v1-link-proxy-node-{{ checksum "yarn.lock" }}
+          key: v2-link-proxy-node-{{ checksum "yarn.lock" }}
           paths:
             - node_modules
 
