@@ -6,12 +6,7 @@ module.exports = [
     concurrency: 2,
     options: {
       jobIdKey: 'linkId',
-      timeout: ms('30m'),
-      attempts: 2,
-      backoff: {
-        delay: ms('10m'),
-        type: 'fixed'
-      }
+      timeout: ms('30m')
     }
   },
 
