@@ -2,6 +2,7 @@ const {configureQueues, createJobQueue, disconnectQueues} = require('bull-manage
 
 const sentry = require('./lib/utils/sentry')
 const mongo = require('./lib/utils/mongo')
+const store = require('./lib/utils/store')
 const createRedis = require('./lib/utils/redis')
 
 const jobs = require('./jobs/definitions')
@@ -9,6 +10,7 @@ const jobs = require('./jobs/definitions')
 async function main() {
   await mongo.connect()
   await mongo.ensureIndexes()
+  await store.createBucket()
 
   configureQueues({
     isSubscriber: true,
