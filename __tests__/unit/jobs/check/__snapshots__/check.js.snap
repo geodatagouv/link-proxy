@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`check.check should create a check for a given location and link 1`] = `
+exports[`jobs.check.check should create a check for a given location and link 1`] = `
 Object {
   "_id": Any<ObjectID>,
   "createdAt": Any<Date>,

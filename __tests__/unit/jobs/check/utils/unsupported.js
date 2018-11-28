@@ -1,6 +1,6 @@
-const {isUnsupported} = require('../../../../jobs/check/utils/unsupported')
+const {isUnsupported} = require('../../../../../jobs/check/utils/unsupported')
 
-describe('check.utils.unsupported', () => {
+describe('jobs.check.utils.unsupported', () => {
   it('should not support split 7z archives', () => {
     expect(
       isUnsupported('https://foo.com/hello.7z.001')

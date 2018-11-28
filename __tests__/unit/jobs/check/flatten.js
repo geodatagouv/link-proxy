@@ -1,6 +1,6 @@
-const {flatten} = require('../../../jobs/check/flatten')
+const {flatten} = require('../../../../jobs/check/flatten')
 
-describe('check.flatten', () => {
+describe('jobs.check.flatten', () => {
   it('should return the file for a simple document', () => {
     const res = flatten({
       url: 'http://foo',
