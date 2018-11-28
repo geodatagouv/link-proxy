@@ -1,10 +1,10 @@
-const {createCheck} = require('../../../jobs/check/check')
-const mongo = require('../../../lib/utils/mongo')
-const store = require('../../../lib/utils/store')
+const {createCheck} = require('../../../../jobs/check/check')
+const mongo = require('../../../../lib/utils/mongo')
+const store = require('../../../../lib/utils/store')
 
 const NAME = 'test-link-proxy-unit-check-check'
 
-describe('check.check', () => {
+describe('jobs.check.check', () => {
   beforeAll(async () => {
     process.env.MONGO_DB = NAME
 

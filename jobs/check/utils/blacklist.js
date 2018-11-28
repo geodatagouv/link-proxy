@@ -1,19 +1,23 @@
 const {parse} = require('url')
+const {isMatch} = require('matcher')
 
 const store = require('../../../lib/utils/store')
+
+const blacklisted = [
+  store.client.endpoint.host,
+
+  'data.gouv.fr',
+  '*.data.gouv.fr'
+]
 
 function isBlacklisted(location) {
   const {host} = parse(location)
 
-  const blacklisted = [
-    store.client.endpoint.host,
-
-    'cadastre.data.gouv.fr'
-
-    // TODO: add config/database stored list of domains to blacklist as well.
-  ]
-
-  return blacklisted.includes(host)
+  return blacklisted.some(
+    pattern => isMatch(host, pattern, {
+      caseSensitive: false
+    })
+  )
 }
 
 module.exports = {isBlacklisted}
