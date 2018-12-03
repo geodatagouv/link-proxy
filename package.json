@@ -33,7 +33,7 @@
     "plunger": "^3.2.1",
     "raven": "^2.6.4",
     "unzip-stream": "^0.3.0",
-    "yazl": "^2.5.0"
+    "yazl": "^2.5.1"
   },
   "resolutions": {
     "fsevents": "^2.0.1"
