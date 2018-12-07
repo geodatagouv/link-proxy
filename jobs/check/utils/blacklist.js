@@ -7,7 +7,9 @@ const blacklisted = [
   store.client.endpoint.host,
 
   'data.gouv.fr',
-  '*.data.gouv.fr'
+  '*.data.gouv.fr',
+
+  '*.openstreetmap.fr'
 ]
 
 function isBlacklisted(location) {
