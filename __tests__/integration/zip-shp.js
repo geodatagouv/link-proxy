@@ -78,7 +78,10 @@ describe(NAME, () => {
     await check.handler({
       data: {
         linkId: _id,
-        location: url
+        location: url,
+        options: {
+          noCache: true
+        }
       }
     })
 
