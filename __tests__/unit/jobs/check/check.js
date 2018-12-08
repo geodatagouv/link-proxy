@@ -66,7 +66,7 @@ describe('jobs.check.check', () => {
       cacheControl: 'max-age=1234567890'
     }
 
-    const check = await createCheck(link, 'http://example.org/4', {})
+    const check = await createCheck(link, 'http://example.org/4')
 
     expect(check.state).toBe('started')
   })
@@ -80,10 +80,11 @@ describe('jobs.check.check', () => {
     await mongo.db.collection('checks').insertOne({
       createdAt: new Date(),
       linkId: link._id,
+      state: 'finished',
       location: 'http://example.org/5'
     })
 
-    const check = await createCheck(link, 'http://example.org/5', {})
+    const check = await createCheck(link, 'http://example.org/5')
 
     expect(check.state).toBe('skipped')
   })
@@ -123,7 +124,7 @@ describe('jobs.check.check', () => {
       setTimeout(() => resolve(), 2000)
     })
 
-    const check = await createCheck(link, 'http://example.org/7', {})
+    const check = await createCheck(link, 'http://example.org/7')
 
     expect(check.state).toBe('started')
   })
@@ -137,6 +138,7 @@ describe('jobs.check.check', () => {
     await mongo.db.collection('checks').insertOne({
       createdAt: new Date(),
       linkId: link._id,
+      state: 'finished',
       location: 'http://example.org/8'
     })
 
@@ -144,8 +146,23 @@ describe('jobs.check.check', () => {
       setTimeout(() => resolve(), 2000)
     })
 
-    const check = await createCheck(link, 'http://example.org/8', {})
+    const check = await createCheck(link, 'http://example.org/8')
 
     expect(check.state).toBe('skipped')
+  })
+
+  it('should set noCache to true if the lastCheck is errored', async () => {
+    const link = {_id: new mongo.ObjectID()}
+
+    await mongo.db.collection('checks').insertOne({
+      createdAt: new Date(),
+      linkId: link._id,
+      state: 'errored',
+      location: 'http://example.org/9'
+    })
+
+    const check = await createCheck(link, 'http://example.org/9', {})
+
+    expect(check.options.noCache).toBe(true)
   })
 })
