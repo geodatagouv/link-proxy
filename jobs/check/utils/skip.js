@@ -6,14 +6,19 @@ function shouldSkip(link, lastCheck) {
 
   if (link.cacheControl) {
     const cc = cacheControl.parse(link.cacheControl)
-    if (cc.immutable || differenceInSeconds(now, lastCheck.createdAt) < cc.maxAge) {
+    if (cc.immutable) {
       return true
     }
-  } else if (differenceInDays(now, lastCheck.createdAt) < 7) {
-    return true
+
+    if (cc.maxAge) {
+      return differenceInSeconds(now, lastCheck.createdAt) < cc.maxAge
+    }
+
+    // If the Cache-Control header does not include `immutable` or `max-age`,
+    // fall back to the 7 days cache.
   }
 
-  return false
+  return differenceInDays(now, lastCheck.createdAt) < 7
 }
 
 module.exports = {shouldSkip}

@@ -32,6 +32,16 @@ describe('jobs.check.utils.skip', () => {
     expect(skip).toBe(false)
   })
 
+  it('should not use Cache-Control if maxAge or imutable is not defined', () => {
+    const skip = shouldSkip({
+      cacheControl: cacheControl.format({private: true})
+    }, {
+      createdAt: subDays(new Date(), 6)
+    })
+
+    expect(skip).toBe(true)
+  })
+
   it('should skip check if last check is not older than 7 days', () => {
     const skip = shouldSkip({}, {
       createdAt: subDays(new Date(), 4)
