@@ -102,8 +102,7 @@ const routes = router(
 
     const link = await upsertLink(json.location)
 
-    await enqueue('check', {
-      name: json.location,
+    await enqueue('check', json.location, {
       location: json.location,
       linkId: link._id,
       options: {
