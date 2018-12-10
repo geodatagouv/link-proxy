@@ -194,8 +194,7 @@ const handler = async ({data: {linkId, location, options}}) => {
   if (changed !== undefined) {
     const allLinks = await getAllParentLinks(links.map(l => l._id))
 
-    enqueue('webhook', {
-      name: check.location,
+    enqueue('webhook', check.location, {
       checkId: check._id,
       links: allLinks
     })
