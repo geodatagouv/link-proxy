@@ -47,6 +47,27 @@ describe(NAME, () => {
     expect(downloadsSnapshot(summary.downloads)).toMatchSnapshot()
   })
 
+  it('should normalize output urls', async () => {
+    const URL = `http://${NAME}-shp-zip-normalize`
+
+    nock(URL)
+      .get('/data.zip').reply(200, () => shapefile('foo bar with spaces'), {
+        'Transfer-Encoding': 'chunked'
+      })
+
+    const url = `${URL}/data.zip`
+    const {_id} = await upsertLink(url)
+    await check.handler({
+      data: {
+        linkId: _id,
+        location: url
+      }
+    })
+
+    const summary = await getLinkSummary(_id)
+    expect(summary.downloads[0].url.endsWith('data.zip/foo%20bar%20with%20spaces.zip')).toBeTruthy()
+  })
+
   it('should override the downloads if data is different', async () => {
     const URL = `http://${NAME}-shp-zip-caching`
 
