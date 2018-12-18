@@ -714,10 +714,10 @@ builtin-modules@^1.0.0:
   resolved "https://registry.yarnpkg.com/builtin-modules/-/builtin-modules-1.1.1.tgz#270f076c5a72c02f5b65a47df94c5fe3a278892f"
   integrity sha1-Jw8HbFpywC9bZaR9+Uxf46J4iS8=
 
-bull-manager@^1.1.3:
-  version "1.1.3"
-  resolved "https://registry.yarnpkg.com/bull-manager/-/bull-manager-1.1.3.tgz#f956ca36c5038ae42f78f44be3528fa7fc929b43"
-  integrity sha512-v5KMVYw1fskSWDTRgHO4K6BYF49PMbuOTga3egrEJTc1ybKZfoP+m4ksOIej7ME9QMpIJL2/Ki0oiOGKI49waA==
+bull-manager@^1.1.4:
+  version "1.1.4"
+  resolved "https://registry.yarnpkg.com/bull-manager/-/bull-manager-1.1.4.tgz#085d2d99a80d60f0c05ab8af547e3a50fa4e0760"
+  integrity sha512-wpnKQWB1IsSVrSBxkC13AiYhKl1TyjujeBxL41LKANxpF7/7MmmkUJdojBqM0UTrCk7NMhrYYTNBh6k9G9DO3Q==
   dependencies:
     lodash "^4.17.11"
 
