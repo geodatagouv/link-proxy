@@ -13,7 +13,7 @@
   },
   "dependencies": {
     "@tusbar/cache-control": "^0.3.0",
-    "aws-sdk": "^2.373.0",
+    "aws-sdk": "^2.378.0",
     "bluebird": "^3.5.3",
     "bull": "^3.5.2",
     "bull-manager": "^1.1.4",
