@@ -124,4 +124,10 @@ describe('jobs.check.flatten', () => {
       flatten(require('./__fixtures__/HYD_ZON_BassVers_Rade_compl_s.json'))
     ).toMatchSnapshot()
   })
+
+  it('should correctly process Presence_poissons_2011_N2000_Etangs_et_vallee_TdB', () => {
+    expect(
+      flatten(require('./__fixtures__/Presence_poissons_2011_N2000_Etangs_et_vallee_TdB.json'))
+    ).toMatchSnapshot()
+  })
 })
