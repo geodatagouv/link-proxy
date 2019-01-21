@@ -1,6 +1,7 @@
 .git
 .gitignore
 
+.editorconfig
 .circleci
 
 node_modules
