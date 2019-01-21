@@ -82,12 +82,29 @@ async function uploadBundle(bundle, distribution, previous) {
   return store.upload(resourceName, zip.outputStream)
 }
 
-function upload(bundle, distribution, previous) {
+async function upload(bundle, distribution, previous) {
   if (bundle.files.length === 1) {
     return uploadSingle(bundle, distribution)
   }
 
-  return uploadBundle(bundle, distribution, previous)
+  try {
+    return await uploadBundle(bundle, distribution, previous)
+  } catch (error) {
+    if (error.message === 'Not a valid zip file') {
+      // Previous bundle couldn’t be extracted as a zip file.
+      // We’re making sure that all the files are changed, so we can upload
+      // a fresh new bundle.
+      return uploadBundle({
+        ...bundle,
+        files: bundle.files.map(f => ({
+          ...f,
+          unchanged: false
+        }))
+      }, distribution)
+    }
+
+    throw error
+  }
 }
 
 module.exports = {upload}
