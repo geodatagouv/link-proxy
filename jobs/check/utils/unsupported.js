@@ -1,4 +1,4 @@
-const {parse} = require('url')
+const {parse} = require('url') // eslint-disable-line node/no-deprecated-api
 
 const UNSUPPORTED = [
   /\.7z\.\d{3}$/

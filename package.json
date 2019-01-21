@@ -45,7 +45,7 @@
     "jest-junit": "^6.0.1",
     "lerna-changelog": "^0.8.2",
     "nock": "^10.0.6",
-    "xo": "^0.23.0"
+    "xo": "^0.24.0"
   },
   "author": "Bertrand Marron <bertrand.marron@gmail.com>",
   "license": "MIT",
