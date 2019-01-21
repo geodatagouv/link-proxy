@@ -1,4 +1,4 @@
-const {parse} = require('url')
+const {parse} = require('url') // eslint-disable-line node/no-deprecated-api
 const {isMatch} = require('matcher')
 
 const store = require('../../../lib/utils/store')

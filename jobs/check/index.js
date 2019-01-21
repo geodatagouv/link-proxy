@@ -85,6 +85,7 @@ const handler = async ({data: {linkId, location, options}}) => {
     for (const loc of link.locations) {
       acc[loc] = link
     }
+
     return acc
   }, {})
 

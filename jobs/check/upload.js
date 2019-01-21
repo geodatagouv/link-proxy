@@ -1,5 +1,5 @@
 const {createReadStream} = require('fs')
-const {parse} = require('url')
+const {parse} = require('url') // eslint-disable-line node/no-deprecated-api
 const formatDate = require('date-fns/format')
 const {ZipFile} = require('yazl')
 const got = require('got')
