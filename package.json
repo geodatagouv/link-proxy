@@ -12,7 +12,7 @@
     "start:worker": "node worker.js"
   },
   "dependencies": {
-    "@tusbar/cache-control": "^0.3.0",
+    "@tusbar/cache-control": "^0.3.1",
     "aws-sdk": "^2.387.0",
     "bluebird": "^3.5.3",
     "bull": "^3.5.2",
