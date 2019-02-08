@@ -1,7 +1,0 @@
-#!/bin/bash
-
-# This file is used by cloud.docker.com.
-# It overrides the build phase, in order to specify custom build arguments.
-# See https://docs.docker.com/docker-cloud/builds/advanced for more details.
-
-docker build --build-arg SOURCE_COMMIT=$SOURCE_COMMIT -f $DOCKERFILE_PATH -t $IMAGE_NAME .
