@@ -12,6 +12,7 @@
     "start:worker": "node worker.js"
   },
   "dependencies": {
+    "@sentry/node": "^4.5.3",
     "@tusbar/cache-control": "^0.3.1",
     "aws-sdk": "^2.400.0",
     "bluebird": "^3.5.3",
@@ -32,7 +33,6 @@
     "ms": "^2.1.1",
     "normalize-url": "^4.1.0",
     "plunger": "^3.2.1",
-    "raven": "^2.6.4",
     "unzip-stream": "^0.3.0",
     "yazl": "^2.5.1"
   },
